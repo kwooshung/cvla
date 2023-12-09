@@ -1,0 +1,40 @@
+import { ICommitType } from '@/interface';
+
+const conf: ICommitType[] = [
+  { emoji: '🍻 ', name: 'initial', description: 'Initial commit' },
+  { emoji: '🆕 ', name: 'add', description: 'Adding a file' },
+  { emoji: '✨ ', name: 'feature', description: 'New feature' },
+  { emoji: '🐛 ', name: 'fix', description: 'Bug fix' },
+  { emoji: '📚 ', name: 'docs', description: 'Changes only in documentation' },
+  { emoji: '💅 ', name: 'format', description: 'Formatting fixes like spaces, semicolons' },
+  { emoji: '♻️ ', name: 'refactor', description: 'Code refactoring, distinguishable from features and fixes' },
+  { emoji: '⚡️ ', name: 'performance', description: 'Performance improvement' },
+  { emoji: '💩 ', name: 'optimization', description: 'Code optimization' },
+  { emoji: '⚰️ ', name: 'remove', description: 'Deprecating code' },
+  { emoji: '🔒 ', name: 'security', description: 'Security fixes or updates' },
+  { emoji: '🔗 ', name: 'dependency', description: 'Dependency updates' },
+  { emoji: '⚙️ ', name: 'config', description: 'Configuration file changes' },
+  { emoji: '📡 ', name: 'deployment', description: 'Changes related to project deployment' },
+  { emoji: '📦️ ', name: 'release', description: 'Releasing a new version' },
+  { emoji: '🗄️ ', name: 'migration', description: 'Database or data-related changes' },
+  { emoji: '🖌️ ', name: 'ui', description: 'Adjustments and changes' },
+  { emoji: '🏷️ ', name: 'i18n', description: 'Multi-language internationalization related changes' },
+  { emoji: '♿ ', name: 'accessibility', description: 'Improving product accessibility' },
+  { emoji: '✅ ', name: 'test', description: 'Adding or updating tests' },
+  { emoji: '🚧 ', name: 'wip', description: 'Work in progress' },
+  { emoji: '🚀 ', name: 'tool', description: 'Development tool changes (build tools, scaffolding tools, etc.)' },
+  { emoji: '🔄 ', name: 'workflow', description: 'CI configurations, scripts, and other workflow-related file changes' },
+  { emoji: '💻 ', name: 'dev Environment', description: 'Development tool and environment configuration changes' },
+  { emoji: '🏭 ', name: 'prod Environment', description: 'Production environment configuration changes' },
+  { emoji: '⏪ ', name: 'revert', description: 'Code rollback' },
+  { emoji: '⌛ ', name: 'merge', description: 'Merging code' },
+  { emoji: '📝 ', name: 'changelog', description: 'Updating the changelog' },
+  { emoji: '⚗️ ', name: 'experimental', description: 'Experimental feature, potential errors and unknown issues' },
+  { emoji: '📜 ', name: 'license', description: 'Adding or updating the license' },
+  { emoji: '👀 ', name: 'review', description: 'Modifying code review suggestions' },
+  { emoji: '🥚 ', name: 'easter', description: 'Little surprises' },
+  { emoji: '🌐 ', name: 'network', description: 'Changes related to network requests and communication' },
+  { emoji: '📂 ', name: 'file', description: 'Adding, deleting, moving files' }
+];
+
+export default conf;
