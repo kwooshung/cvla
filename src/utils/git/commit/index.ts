@@ -34,7 +34,7 @@ class commit {
    * 私有函数：构建提交类型字符串。
    * @returns {string} 提交类型字符串。
    */
-  private buildType(): string {
+  private buildTypeAndScope(): string {
     const { type, scope } = this.data;
     return `${type}${scope ? `(${scope})` : ''}`;
   }
@@ -109,7 +109,7 @@ class commit {
    * @returns {string} 提交信息字符串。
    */
   private buildMessage(): string {
-    const type = this.buildType();
+    const typeAndScope = this.buildTypeAndScope();
     const subject = this.buildSubject();
     const body = this.buildBody();
     const breaking = this.buildBreakingChange();
@@ -120,7 +120,7 @@ class commit {
     const messageParts: string[] = [];
 
     // 添加类型和主题
-    messageParts.push(`${type}: ${subject}`);
+    messageParts.push(`${typeAndScope}: ${subject}`);
 
     // 添加正文
     body && messageParts.push(body);
@@ -174,7 +174,8 @@ class commit {
             }
           }
 
-          processBar.start(3 + customLen, 0);
+          const total = 3 + customLen;
+          processBar.start(total, 0);
 
           processBar.increment(1);
           this.data.subject = await translate.text(this.data.subject, target, origin);
@@ -199,6 +200,7 @@ class commit {
             }
           }
 
+          processBar.setTotal(total);
           processBar.stop();
 
           if (errors.length <= 0) {

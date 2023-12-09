@@ -1,8 +1,8 @@
 import pc from 'picocolors';
-import { forEach as _forEach, range as _range, isUndefined as _isUn, remove as _remove, isPlainObject as _isObj, isArray as _isArr, isString as _isStr, isNumber as _isNumber } from 'lodash-es';
+import { range as _range, isUndefined as _isUn, isPlainObject as _isObj, isArray as _isArr } from 'lodash-es';
 
 import { IConfig, IGitCommitData, TGitCustomField } from '@/interface';
-import { command, convert, console as cs, version as V, git } from '@/utils';
+import { command, convert, console as cs, git } from '@/utils';
 import menuState from '../_state';
 
 /**
