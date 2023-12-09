@@ -1,0 +1,5 @@
+{
+  "*.{js,jsx,ts,tsx}": ["node scripts/build.mjs", "npx prettier --write", "npx eslint --fix"],
+  "*.json": ["npx prettier --write"],
+  "*.test.{js,ts}": ["npx jest --findRelatedTests"]
+}
