@@ -1,12 +1,12 @@
-import cvlarTypes from './scripts/ks-cvlar.types.mjs';
-import cvlarScopes from './scripts/ks-cvlar.scopes.mjs';
+const cvlarTypes = require('./scripts/ks-cvlar.types.cjs');
+const cvlarScopes = require('./scripts/ks-cvlar.scopes.cjs');
 
 /**
  * 以下所有配置项，均支持此种配置，如：开启配置：只赋值 'default'、'{}' 或 '无此项配置' 即可，这将启用 '默认配置';
  * 关闭配置：只需要赋值 'false' 即可;
  * 推荐使用命令 'cvlar i' 初始化配置文件
  */
-export default {
+module.exports = {
   // Git提交，方便在菜单中选择性提交内容
   commit: {
     types: cvlarTypes,

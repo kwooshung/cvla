@@ -1,10 +1,10 @@
-const commitTypes = require('./scripts/commitTypes.cjs');
-const commitScopes = require('./scripts/commitScopes.cjs');
+const types = require('./scripts/ks-cvlar.types.cjs');
+const scopes = require('./scripts/ks-cvlar.scopes.cjs');
+const { ConvertToLintTypes, ConvertToLintScopes } = require('./dist/index.cjs');
 
 module.exports = {
-  extends: ['git-commit-emoji', 'cz'],
   rules: {
-    'type-enum': [2, 'always', commitTypes.map((type) => type.value)],
-    'scope-enum': [2, 'always', commitScopes.map((scope) => scope[0])]
+    'type-enum': [2, 'always', ConvertToLintTypes(types)],
+    'scope-enum': [2, 'always', ConvertToLintScopes(scopes)]
   }
 };

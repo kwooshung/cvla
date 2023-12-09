@@ -2,7 +2,7 @@ import { ICommitType } from '@/interface';
 import conf from '@/utils/config/def/types/zh-CN';
 import toLintType from '.';
 
-describe('@/convert/toLintType/index.ts', () => {
+describe('@/convert/toLintTypes/index.ts', () => {
   it('正确转换 commintlint 配置项 type-enum 数组', () => {
     const expected = conf.map((type: ICommitType) => `${type.emoji ?? ''}${type.name}`);
     const result = toLintType(conf);

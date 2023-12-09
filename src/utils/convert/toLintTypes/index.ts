@@ -5,6 +5,6 @@ import { ICommitType } from '@/interface';
  * @param {ICommitType[]} types 类型
  * @returns {ICommitLintType[]} 转换后的 Types
  */
-const toLintType = (types: ICommitType[]): string[] => types.map((type: ICommitType) => `${type.emoji}${type.name}`);
+const toLintTypes = (types: ICommitType[]): string[] => types.map((type: ICommitType) => `${type.emoji}${type.name}`);
 
-export default toLintType;
+export default toLintTypes;

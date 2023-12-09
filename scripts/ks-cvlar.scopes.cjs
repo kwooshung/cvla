@@ -1,4 +1,4 @@
-export default [
+module.exports = [
   {
     name: 'components',
     description: '组件相关'

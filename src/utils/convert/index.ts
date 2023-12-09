@@ -1,16 +1,16 @@
-import toLintType from './toLintType';
+import toLintTypes from './toLintTypes';
 import toLintScopes from './toLintScopes';
 import toJsJsonString from './toJsJsonString';
 import replacePlaceholders from './replacePlaceholders';
 import formatNumberWithCommas from './formatNumberWithCommas';
 
-export { default as ConvertToLintType } from './toLintType';
+export { default as ConvertToLintTypes } from './toLintTypes';
 export { default as ConvertToLintScopes } from './toLintScopes';
 export { default as ConvertToJsJsonString } from './toJsJsonString';
 export { default as ConvertReplacePlaceholders } from './replacePlaceholders';
 export { default as ConvertFormatNumberWithCommas } from './formatNumberWithCommas';
 export default {
-  toLintType,
+  toLintTypes,
   toLintScopes,
   toJsJsonString,
   replacePlaceholders,
