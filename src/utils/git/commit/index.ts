@@ -226,7 +226,7 @@ class commit {
    * @returns {string} Git提交命令字符串。
    */
   public async generate(): Promise<string> {
-    return this.buildMessage();
+    return this.buildMessage().replace(/\n/g, '\\n');
   }
 }
 
