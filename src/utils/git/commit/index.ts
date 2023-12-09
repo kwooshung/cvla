@@ -20,6 +20,9 @@ class commit {
    */
   private CONF: IConfig;
 
+  private NEWLine = `
+  `;
+
   /**
    * 构造函数
    * @param {IGitCommitData} data 提交信息数据
@@ -52,7 +55,7 @@ class commit {
    * @returns {string} 正文字符串。
    */
   private buildBody(): string {
-    return this.data.body?.replace(/\s*\|\s*/g, '\n') || '';
+    return this.data.body?.replace(/\s*\|\s*/g, this.NEWLine) || '';
   }
 
   /**
@@ -90,7 +93,7 @@ class commit {
         const issueIds = this.parseIssues(issue.ids);
         return `${issue.close}: ${issueIds.join(', ')}`;
       });
-      return closeIssues.join('\n');
+      return closeIssues.join(this.NEWLine);
     }
     return '';
   }
@@ -101,7 +104,7 @@ class commit {
    * @returns {string} 自定义字段组合成的字符串。
    */
   private buildCustomFields(fields: TGitCustomField[]): string {
-    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join('\n\n');
+    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join(`${this.NEWLine}${this.NEWLine}`);
   }
 
   /**
@@ -135,7 +138,7 @@ class commit {
     customFields && messageParts.push(customFields);
 
     // 使用换行符连接各个部分
-    return messageParts.join('\n\n');
+    return messageParts.join(`${this.NEWLine}${this.NEWLine}`);
   }
 
   /**

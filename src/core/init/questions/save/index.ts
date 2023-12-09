@@ -87,9 +87,10 @@ const build = async (
     }
     // 否则就不是通用规范，即 CommonJS(CJS) 规范
     else {
-      code.push(`const cvlarTypes = require('${`${fileRelativePath}ks-cvlar.types`}');\n`);
+      const ext = base.extension === 'cjs' ? '.cjs' : '';
+      code.push(`const cvlarTypes = require('${`${fileRelativePath}ks-cvlar.types${ext}`}');\n`);
 
-      _isObj(commit.config) && _isArray(commit.config['scopes']) && code.push(`const cvlarScopes = require('${`${fileRelativePath}ks-cvlar.scopes`}');\n`);
+      _isObj(commit.config) && _isArray(commit.config['scopes']) && code.push(`const cvlarScopes = require('${`${fileRelativePath}ks-cvlar.scopes${ext}`}');\n`);
     }
 
     // 如果 commit.config 是 普通的 object
