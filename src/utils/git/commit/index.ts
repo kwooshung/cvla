@@ -20,9 +20,6 @@ class commit {
    */
   private CONF: IConfig;
 
-  private NEWLine = `
-  `;
-
   /**
    * 构造函数
    * @param {IGitCommitData} data 提交信息数据
@@ -55,7 +52,7 @@ class commit {
    * @returns {string} 正文字符串。
    */
   private buildBody(): string {
-    return this.data.body?.replace(/\s*\|\s*/g, this.NEWLine) || '';
+    return this.data.body?.replace(/\s*\|\s*/g, '\n') || '';
   }
 
   /**
@@ -93,7 +90,7 @@ class commit {
         const issueIds = this.parseIssues(issue.ids);
         return `${issue.close}: ${issueIds.join(', ')}`;
       });
-      return closeIssues.join(this.NEWLine);
+      return closeIssues.join('\n');
     }
     return '';
   }
@@ -104,7 +101,7 @@ class commit {
    * @returns {string} 自定义字段组合成的字符串。
    */
   private buildCustomFields(fields: TGitCustomField[]): string {
-    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join(`${this.NEWLine}${this.NEWLine}`);
+    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join('\n\n');
   }
 
   /**
@@ -138,7 +135,7 @@ class commit {
     customFields && messageParts.push(customFields);
 
     // 使用换行符连接各个部分
-    return messageParts.join(`${this.NEWLine}${this.NEWLine}`);
+    return messageParts.join('\n\n');
   }
 
   /**
@@ -182,15 +179,15 @@ class commit {
 
           processBar.increment(1);
           this.data.subject = await translate.text(this.data.subject, target, origin);
-          await translate.delay();
+          await translate.delay(300);
 
           processBar.increment(1);
           this.data.body = await translate.text(this.data.body, target, origin);
-          await translate.delay();
+          await translate.delay(300);
 
           processBar.increment(1);
           this.data.breaking = await translate.text(this.data.breaking, target, origin);
-          await translate.delay();
+          await translate.delay(300);
 
           if (customLen > 0) {
             for (const val of this.data.custom) {
@@ -198,7 +195,7 @@ class commit {
               if (val.type === 'input') {
                 processBar.increment(1);
                 val.value = await translate.text(val.value, target, origin);
-                await translate.delay();
+                await translate.delay(300);
               }
             }
           }
@@ -231,7 +228,10 @@ class commit {
    * @returns {string} Git提交命令字符串。
    */
   public async generate(): Promise<string> {
-    return this.buildMessage();
+    const commitMessage = this.buildMessage();
+    const lines = commitMessage.split('\n');
+    const args = lines.map((line) => `-m "${line.replace(/"/g, '\\"')}"`).join(' ');
+    return args;
   }
 }
 

@@ -499,7 +499,7 @@ class gitControl {
 
         if (val.trim()) {
           await this.parentCmd('git', ['add', '.']);
-          await this.parentCmd('git', ['commit', '-m', `"${code}"`]);
+          await this.parentCmd('git', ['commit', code]);
           console.log('\n\n\n');
         }
       }
