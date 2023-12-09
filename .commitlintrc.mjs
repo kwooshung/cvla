@@ -1,5 +1,5 @@
-import types from './scripts/types.mjs';
-import scopes from './scripts/scopes.mjs';
+import types from './scripts/ks-cvlar.types.mjs';
+import scopes from './scripts/ks-cvlar.scopes.mjs';
 import { ConvertToLintType, ConvertToLintScopes } from '@kwooshung/clvr';
 
 module.exports = {
