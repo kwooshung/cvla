@@ -507,6 +507,25 @@ class gitControl {
             isCreate = await g.saveTempCommitMessageFile(code);
             await this.parentCmd('git', ['commit', '-F', `${await g.getTempCommitMessageFile()}`], `git commit -m "${code}"`);
 
+            if (
+              await command.prompt.select({
+                message: this.CONF.i18n.git.commit.push.message,
+                choices: [
+                  {
+                    name: this.CONF.i18n.yes,
+                    value: true
+                  },
+                  {
+                    name: this.CONF.i18n.no,
+                    value: false
+                  }
+                ],
+                default: this.CONF.i18n.git.commit.push.default
+              })
+            ) {
+              await this.parentCmd('git', git.push());
+            }
+
             console.log('\n\n\n');
           } catch (e) {
             console.log(pc.red(e.message));
