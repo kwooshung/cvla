@@ -503,9 +503,10 @@ class gitControl {
         if (code.trim()) {
           let isCreate = false;
           try {
-            await this.parentCmd('git', ['add', '.']);
+            await this.parentCmd('git', git.add.current);
             isCreate = await g.saveTempCommitMessageFile(code);
             await this.parentCmd('git', ['commit', '-F', `${await g.getTempCommitMessageFile()}`], `git commit -m "${code}"`);
+
             console.log('\n\n\n');
           } catch (e) {
             console.log(pc.red(e.message));
