@@ -145,12 +145,13 @@ class questions {
    * 私有函数：命令
    * @param {string} code 命令代码
    * @param {string[]} args 命令参数
+   * @param {string} commandPrint 命令输出替代代码
    * @returns {void} 无返回值
    */
-  private cmd(code: string, args: string[]): Promise<void> {
+  private cmd(code: string, args: string[], commandPrint?: string): Promise<void> {
     let command = `${pc.bold(pc.cyan(`${code} ${args.join(' ')}`))}\n`;
 
-    console.log(`\n${pc.magenta('▶')} ${pc.cyan('runing: ')}${command}`);
+    console.log(`\n${pc.magenta('▶')} ${pc.cyan('runing: ')}${commandPrint ?? command}`);
 
     return new Promise((resolve, reject) => {
       const spawnedProcess = spawn(code, args, {
@@ -159,7 +160,7 @@ class questions {
       });
 
       // 命令代码
-      command = `${pc.cyan('command: ')}${command}`;
+      command = `${pc.cyan('command: ')}${commandPrint ?? command}`;
 
       // 进程关闭时
       spawnedProcess.on('close', (code) => {

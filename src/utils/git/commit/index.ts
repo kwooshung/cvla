@@ -4,7 +4,7 @@ import progress from 'cli-progress';
 
 import { isUndefined as _isUn, isString as _isStr } from 'lodash-es';
 import { TGitCustomField, IGitCommitData, IConfig } from '@/interface';
-import { translate } from '@/utils';
+import { io, translate } from '@/utils';
 
 /**
  * 类：Git提交信息
@@ -19,6 +19,11 @@ class commit {
    * 私有属性：配置信息
    */
   private CONF: IConfig;
+
+  /**
+   * 私有属性：临时文件路径
+   */
+  private tempFile: string;
 
   /**
    * 构造函数
@@ -81,6 +86,15 @@ class commit {
   }
 
   /**
+   * 私有函数：构建自定义字段字符串。
+   * @param {TGitCustomField[]} fields 自定义字段数组。
+   * @returns {string} 自定义字段组合成的字符串。
+   */
+  private buildCustomFields(fields: TGitCustomField[]): string {
+    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join('\n');
+  }
+
+  /**
    * 私有函数：构建关闭Issue的字符串。
    * @returns {string} 关闭Issue的字符串。
    */
@@ -93,15 +107,6 @@ class commit {
       return closeIssues.join('\n');
     }
     return '';
-  }
-
-  /**
-   * 私有函数：构建自定义字段字符串。
-   * @param {TGitCustomField[]} fields 自定义字段数组。
-   * @returns {string} 自定义字段组合成的字符串。
-   */
-  private buildCustomFields(fields: TGitCustomField[]): string {
-    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join('\n\n');
   }
 
   /**
@@ -128,14 +133,45 @@ class commit {
     // 添加BREAKING CHANGE
     breaking && messageParts.push(breaking);
 
-    // 添加关闭Issue
-    closeIssues && messageParts.push(closeIssues);
-
     // 添加自定义字段
     customFields && messageParts.push(customFields);
 
+    // 添加关闭Issue
+    closeIssues && messageParts.push(closeIssues);
+
     // 使用换行符连接各个部分
     return messageParts.join('\n\n');
+  }
+
+  /**
+   * 公开函数：保存提交信息到临时文件
+   * @param {string} code 提交信息代码
+   * @returns {Promise<boolean>} 是否成功
+   */
+  public async saveTempCommitMessageFile(code: string): Promise<boolean> {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+
+    this.tempFile = `./.cvlar-commit-message-${hours}${minutes}${seconds}.tmp`;
+    return await io.write(this.tempFile, code);
+  }
+
+  /**
+   * 公开函数：删除临时文件
+   * @returns {Promise<boolean>} 是否成功
+   */
+  public async deleteTempCommitMessageFile(): Promise<boolean> {
+    return await io.remove(this.tempFile);
+  }
+
+  /**
+   * 公开函数：获得临时文件路径
+   * @returns {Promise<string>} 文件路径
+   */
+  public async getTempCommitMessageFile(): Promise<string> {
+    return this.tempFile;
   }
 
   /**
@@ -228,10 +264,7 @@ class commit {
    * @returns {string} Git提交命令字符串。
    */
   public async generate(): Promise<string> {
-    const commitMessage = this.buildMessage();
-    const lines = commitMessage.split('\n');
-    const args = lines.map((line) => `-m "${line.replace(/"/g, '\\"')}"`).join(' ');
-    return args;
+    return this.buildMessage();
   }
 }
 

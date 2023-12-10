@@ -28,8 +28,11 @@ class gitControl {
 
   /**
    * 私有函数：父级命令
+   * @param {string} code 命令代码
+   * @param {string[]} args 命令参数
+   * @param {string} commandPrint 命令输出替代代码
    */
-  private parentCmd: (type: string, args: string[]) => Promise<void>;
+  private parentCmd: (code: string, args: string[], commandPrint?: string) => Promise<void>;
 
   /**
    * 构造函数
@@ -37,7 +40,7 @@ class gitControl {
    * @param {Function} addBack 添加返回菜单
    * @param {Function} cmd 命令
    */
-  private constructor(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>) {
+  private constructor(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[], commandPrint?: string) => Promise<void>) {
     this.CONF = conf;
     this.addBack = addBack;
     this.parentCmd = cmd;
@@ -50,7 +53,7 @@ class gitControl {
    * @param {Function} cmd 命令
    * @returns {gitControl} 包管理器
    */
-  public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>): gitControl {
+  public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[], commandPrint?: string) => Promise<void>): gitControl {
     return gitControl.instance ?? new gitControl(conf, addBack, cmd);
   }
 
@@ -182,8 +185,8 @@ class gitControl {
       await this.commitSubject(datas);
       await this.commitBody(datas);
       await this.commitBreaking(datas);
-      await this.commitIssues(datas);
       await this.commitCustom(datas);
+      await this.commitIssues(datas);
       await this.commitConfirm(datas);
     }
   }
@@ -497,9 +500,16 @@ class gitControl {
           });
         }
 
-        if (val.trim()) {
-          await this.parentCmd('git', ['add', '.']);
-          await this.parentCmd('git', ['commit', code]);
+        if (code.trim()) {
+          let isCreate = false;
+          try {
+            await this.parentCmd('git', ['add', '.']);
+            isCreate = await g.saveTempCommitMessageFile(code);
+            await this.parentCmd('git', ['commit', '-F', `${await g.getTempCommitMessageFile()}`], `git commit -m "${code}"`);
+          } finally {
+            isCreate && (await g.deleteTempCommitMessageFile());
+          }
+
           console.log('\n\n\n');
         }
       }

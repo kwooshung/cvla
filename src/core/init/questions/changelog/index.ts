@@ -187,13 +187,13 @@ const changelog = async (configCommit: IResultConfigCommit): Promise<TConfigChan
       // 每条日志，内容模版
       config.template.content = await command.prompt.input({
         message: get('changelog.template.content.message'),
-        default: '## 🎉 {{tag}} `{{date}}`\\n{{logs}}'
+        default: '## 🎉 {{tag}} `{{date}}`\n{{logs}}'
       });
 
       // 每个版本之间的分隔符
       config.template.separator = await command.prompt.input({
         message: get('changelog.template.separator.message'),
-        default: '\\n\\n---\\n\\n'
+        default: '\n\n---\n\n'
       });
 
       // 每个日志文件，页脚内容模版

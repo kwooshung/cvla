@@ -153,9 +153,9 @@ module.exports = {
        *     {{logs}}
        *   日志会按照提交类型顺序分类
        */
-      content: '## 🎉 {{tag}} `{{date}}`\\n{{logs}}',
+      content: '## 🎉 {{tag}} `{{date}}`\n{{Type}}{{Scope}}\n{{Subject}}{{Body}}',
       // CHANGELOG 文件中，每个版本日志之间的分隔符，支持 md 语法
-      separator: '\\n\\n---\\n\\n',
+      separator: '\n\n---\n\n',
       // CHANGELOG 文件的尾部模板，支持 md 语法
       after: ''
     },
@@ -243,33 +243,6 @@ module.exports = {
           // },
           required: false,
           requiredMessage: '长说明不能为空'
-        },
-        issues: {
-          message: '是否需要关闭 issue？',
-          default: false, // true：自动选择是，false：自动选择否，默认：false
-          close: {
-            message: '选择关闭 issue 的关键词，支持多选',
-            choices: [
-              {
-                name: '修复',
-                value: 'fixes',
-                description: '修复'
-              },
-              {
-                name: '增强',
-                value: 'resolves',
-                description: '增强'
-              },
-              {
-                name: '关闭',
-                value: 'closes',
-                description: '关闭'
-              }
-            ],
-            number: {
-              message: '{0} 的 issue 编号 (例如：#11 #17 #27)'
-            }
-          }
         },
         /**
          * 自定义字段，支持两种类型：input、select、checkbox
@@ -522,6 +495,33 @@ module.exports = {
             loop: true // 可选，默认true，表示选项是循环显示的
           }
         ],
+        issues: {
+          message: '是否需要关闭 issue？',
+          default: false, // true：自动选择是，false：自动选择否，默认：false
+          close: {
+            message: '选择关闭 issue 的关键词，支持多选',
+            choices: [
+              {
+                name: '修复',
+                value: 'fixes',
+                description: '修复'
+              },
+              {
+                name: '增强',
+                value: 'resolves',
+                description: '增强'
+              },
+              {
+                name: '关闭',
+                value: 'closes',
+                description: '关闭'
+              }
+            ],
+            number: {
+              message: '{0} 的 issue 编号 (例如：#11 #17 #27)'
+            }
+          }
+        },
         translate: {
           connect: {
             message: '正在连接 Google翻译，并检查是否可用...',

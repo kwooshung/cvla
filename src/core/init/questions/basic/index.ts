@@ -63,20 +63,20 @@ const basic = async (conf: IConfigResult | false): Promise<IResultConfigBase | b
     }
   }
 
-  // 选择规范，mjs（ES Modules）或 cjs（CommonJS）
-  result.standard = await command.prompt.select({
-    message: get('basic.standard.message'),
-    choices: [
-      {
-        name: 'ES Modules',
-        value: true
-      },
-      {
-        name: 'CommonJS',
-        value: false
-      }
-    ]
-  });
+  // 选择规范，mjs（ES Modules）或 cjs（CommonJS）, 由于 commitlint 不支持 esm，所以暂时不提供选择
+  // result.standard = await command.prompt.select({
+  //   message: get('basic.standard.message'),
+  //   choices: [
+  //     {
+  //       name: 'ES Modules',
+  //       value: true
+  //     },
+  //     {
+  //       name: 'CommonJS',
+  //       value: false
+  //     }
+  //   ]
+  // });
 
   const extensionOptions = {
     message: get('basic.extension.message'),
