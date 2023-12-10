@@ -154,7 +154,7 @@ class questions {
 
     return new Promise((resolve, reject) => {
       const spawnedProcess = spawn(code, args, {
-        stdio: 'inherit', // 这会将子进程的输出直接连接到当前进程
+        // stdio: 'inherit', // 这会将子进程的输出直接连接到当前进程
         shell: true // 使用系统的 shell 执行命令
       });
 
