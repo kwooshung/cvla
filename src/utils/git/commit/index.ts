@@ -112,7 +112,7 @@ class commit {
   private convertArgs(commitMessage: string): string {
     const normalizedMessage = commitMessage.replace(/\n\s*\n/g, '\n\n');
     const sections = normalizedMessage.split('\n\n').filter((section) => section.trim() !== '');
-    return sections.map((section) => `-m "${section.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`).join(' ');
+    return sections.map((section) => `-m "${section.replace(/"/g, '\\"').replace(/\n/g, '\n')}"`).join(' ');
   }
 
   /**
