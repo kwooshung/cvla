@@ -105,6 +105,48 @@ class commit {
   }
 
   /**
+   * 转化参数
+   * @param {string} commitMessage 提交信息
+   * @return {string} 处理后的参数字符串
+   */
+  private convertArgs(commitMessage: string): string {
+    const lines = commitMessage.split('\n');
+    let currentMessagePart = '';
+    let emptyLineCount = 0;
+    const args = [];
+
+    lines.forEach((line) => {
+      if (line.trim() === '') {
+        // 空行，增加空行计数
+        emptyLineCount++;
+        if (emptyLineCount === 1) {
+          // 第一个空行，添加到当前消息部分
+          currentMessagePart += '\n';
+        }
+      } else {
+        if (emptyLineCount >= 2) {
+          // 两个或更多连续空行，开始一个新的提交消息部分
+          if (currentMessagePart !== '') {
+            args.push(`-m "${currentMessagePart.replace(/"/g, '\\"')}"`);
+          }
+          currentMessagePart = line;
+        } else {
+          // 不足两个连续空行，继续当前提交消息部分
+          currentMessagePart += (currentMessagePart ? '\n' : '') + line;
+        }
+        emptyLineCount = 0;
+      }
+    });
+
+    // 添加最后一个消息部分
+    if (currentMessagePart !== '') {
+      args.push(`-m "${currentMessagePart.replace(/"/g, '\\"')}"`);
+    }
+
+    return args.join(' ');
+  }
+
+  /**
    * 私有函数：构建完整的提交信息。
    * @returns {string} 提交信息字符串。
    */
@@ -135,7 +177,13 @@ class commit {
     closeIssues && messageParts.push(closeIssues);
 
     // 使用换行符连接各个部分
-    return messageParts.join('\n\n');
+    const commitMessage = messageParts.join('\n\n');
+
+    if (commitMessage) {
+      return this.convertArgs(commitMessage);
+    }
+
+    return '';
   }
 
   /**
@@ -228,10 +276,7 @@ class commit {
    * @returns {string} Git提交命令字符串。
    */
   public async generate(): Promise<string> {
-    const commitMessage = this.buildMessage();
-    const lines = commitMessage.split('\n');
-    const args = lines.map((line) => `-m "${line.replace(/"/g, '\\"')}"`).join(' ');
-    return args;
+    return this.buildMessage();
   }
 }
 
