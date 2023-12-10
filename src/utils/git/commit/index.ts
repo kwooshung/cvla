@@ -128,11 +128,11 @@ class commit {
     // 添加BREAKING CHANGE
     breaking && messageParts.push(breaking);
 
-    // 添加关闭Issue
-    closeIssues && messageParts.push(closeIssues);
-
     // 添加自定义字段
     customFields && messageParts.push(customFields);
+
+    // 添加关闭Issue
+    closeIssues && messageParts.push(closeIssues);
 
     // 使用换行符连接各个部分
     return messageParts.join('\n\n');

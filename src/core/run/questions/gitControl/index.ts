@@ -182,8 +182,8 @@ class gitControl {
       await this.commitSubject(datas);
       await this.commitBody(datas);
       await this.commitBreaking(datas);
-      await this.commitIssues(datas);
       await this.commitCustom(datas);
+      await this.commitIssues(datas);
       await this.commitConfirm(datas);
     }
   }

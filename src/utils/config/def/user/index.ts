@@ -148,9 +148,9 @@ const user: IConfig = {
        *     {{logs}}
        *   日志会按照提交类型顺序分类
        */
-      content: '## 🎉 {{tag}} `{{date}}`\\n{{logs}}',
+      content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
       // CHANGELOG 文件中，每个版本日志之间的分隔符，支持 md 语法
-      separator: '\\n\\n---\\n\\n',
+      separator: '\n\n---\n\n',
       // CHANGELOG 文件的尾部模板，支持 md 语法
       after: ''
     },
