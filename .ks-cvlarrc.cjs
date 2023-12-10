@@ -554,6 +554,10 @@ module.exports = {
           editor: {
             message: '按下 <回车> 键，打开 `文本编辑器`，修改后保存并关闭，即可提交'
           }
+        },
+        push: {
+          message: '是否需要推送到远程仓库？',
+          default: false // true：自动选择是，false：自动选择否，默认：false
         }
       },
       version: {

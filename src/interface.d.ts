@@ -596,20 +596,20 @@ interface IResultConfigCommit {
 }
 
 /**
- * 类型：Git > issue
- */
-type TGitIssue = {
-  close: string;
-  ids: string;
-};
-
-/**
  * 类型：Git > 自定义字段
  */
 type TGitCustomField = {
   type: string;
   field?: string;
   value: string;
+};
+
+/**
+ * 类型：Git > issue
+ */
+type TGitIssue = {
+  close: string;
+  ids: string;
 };
 
 /**
@@ -621,8 +621,8 @@ interface IGitCommitData {
   subject: string;
   body?: string;
   breaking?: string;
-  issues?: TGitIssue[];
   custom?: TGitCustomField[];
+  issues?: TGitIssue[];
 }
 
 /**
