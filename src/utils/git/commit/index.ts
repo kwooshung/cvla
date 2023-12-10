@@ -120,7 +120,7 @@ class commit {
     return sections
       .map((section) => {
         // 在 Windows 环境中，使用 "^" 作为行继续符号
-        const formattedSection = section.replace(/\n/g, ' \r\n');
+        const formattedSection = section.replace(/\n/g, '^\r\n');
         return `-m "${formattedSection}"`;
       })
       .join(' ');
