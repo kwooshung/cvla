@@ -110,20 +110,9 @@ class commit {
    * @return {string} 处理后的参数字符串
    */
   private convertArgs(commitMessage: string): string {
-    // 首先替换连续的空行为一个空行
     const normalizedMessage = commitMessage.replace(/\n\s*\n/g, '\n\n');
-
-    // 将提交信息分割成独立的部分
     const sections = normalizedMessage.split('\n\n').filter((section) => section.trim() !== '');
-
-    // 生成 git commit 命令的参数
-    return sections
-      .map((section) => {
-        // 在 Windows 环境中，使用 "^" 作为行继续符号
-        const formattedSection = section.replace(/\n/g, ' ^\r\n');
-        return `-m "${formattedSection}"`;
-      })
-      .join(' ');
+    return sections.map((section) => `-m "${section.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`).join(' ');
   }
 
   /**
