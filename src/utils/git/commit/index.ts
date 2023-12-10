@@ -81,6 +81,15 @@ class commit {
   }
 
   /**
+   * 私有函数：构建自定义字段字符串。
+   * @param {TGitCustomField[]} fields 自定义字段数组。
+   * @returns {string} 自定义字段组合成的字符串。
+   */
+  private buildCustomFields(fields: TGitCustomField[]): string {
+    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join('\n');
+  }
+
+  /**
    * 私有函数：构建关闭Issue的字符串。
    * @returns {string} 关闭Issue的字符串。
    */
@@ -96,54 +105,14 @@ class commit {
   }
 
   /**
-   * 私有函数：构建自定义字段字符串。
-   * @param {TGitCustomField[]} fields 自定义字段数组。
-   * @returns {string} 自定义字段组合成的字符串。
-   */
-  private buildCustomFields(fields: TGitCustomField[]): string {
-    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join('\n\n');
-  }
-
-  /**
    * 转化参数
    * @param {string} commitMessage 提交信息
    * @return {string} 处理后的参数字符串
    */
   private convertArgs(commitMessage: string): string {
-    const lines = commitMessage.split('\n');
-    let currentMessagePart = '';
-    let emptyLineCount = 0;
-    const args = [];
-
-    lines.forEach((line) => {
-      if (line.trim() === '') {
-        // 空行，增加空行计数
-        emptyLineCount++;
-        if (emptyLineCount === 1) {
-          // 第一个空行，添加到当前消息部分
-          currentMessagePart += '\n';
-        }
-      } else {
-        if (emptyLineCount >= 2) {
-          // 两个或更多连续空行，开始一个新的提交消息部分
-          if (currentMessagePart !== '') {
-            args.push(`-m "${currentMessagePart.replace(/"/g, '\\"')}"`);
-          }
-          currentMessagePart = line;
-        } else {
-          // 不足两个连续空行，继续当前提交消息部分
-          currentMessagePart += (currentMessagePart ? '\n' : '') + line;
-        }
-        emptyLineCount = 0;
-      }
-    });
-
-    // 添加最后一个消息部分
-    if (currentMessagePart !== '') {
-      args.push(`-m "${currentMessagePart.replace(/"/g, '\\"')}"`);
-    }
-
-    return args.join(' ');
+    const normalizedMessage = commitMessage.replace(/\n\s*\n/g, '\n\n');
+    const sections = normalizedMessage.split('\n\n').filter((section) => section.trim() !== '');
+    return sections.map((section) => `-m "${section.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`).join(' ');
   }
 
   /**
