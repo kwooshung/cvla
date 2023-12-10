@@ -506,15 +506,18 @@ class gitControl {
             await this.parentCmd('git', ['add', '.']);
             isCreate = await g.saveTempCommitMessageFile(code);
             await this.parentCmd('git', ['commit', '-F', `${await g.getTempCommitMessageFile()}`], `git commit -m "${code}"`);
+            console.log('\n\n\n');
+          } catch (e) {
+            console.log(pc.red(e.message));
+            console.log('\n\n\n');
           } finally {
             isCreate && (await g.deleteTempCommitMessageFile());
           }
-
-          console.log('\n\n\n');
         }
       }
     } catch (e) {
       console.log(pc.red(e.message));
+      console.log('\n\n\n');
     }
   }
 }
