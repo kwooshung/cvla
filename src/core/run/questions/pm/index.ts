@@ -75,8 +75,11 @@ class pm {
 
   /**
    * 私有函数：父级命令
+   * @param {string} code 命令代码
+   * @param {string[]} args 命令参数
+   * @param {string} commandPrint 命令输出替代代码
    */
-  private parentCmd: (type: string, args: string[]) => Promise<void>;
+  private parentCmd: (code: string, args: string[], commandPrint?: string) => Promise<void>;
 
   /**
    * 构造函数
@@ -84,7 +87,7 @@ class pm {
    * @param {Function} addBack 添加返回菜单
    * @param {Function} cmd 命令
    */
-  private constructor(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>) {
+  private constructor(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[], commandPrint?: string) => Promise<void>) {
     this.CONF = conf;
     this.addBack = addBack;
     this.parentCmd = cmd;
@@ -98,7 +101,7 @@ class pm {
    * @param {Function} cmd 命令
    * @returns {pm} 包管理器
    */
-  public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>): pm {
+  public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[], commandPrint?: string) => Promise<void>): pm {
     return pm.instance ?? new pm(conf, addBack, cmd);
   }
 

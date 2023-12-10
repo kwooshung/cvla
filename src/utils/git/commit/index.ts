@@ -4,7 +4,7 @@ import progress from 'cli-progress';
 
 import { isUndefined as _isUn, isString as _isStr } from 'lodash-es';
 import { TGitCustomField, IGitCommitData, IConfig } from '@/interface';
-import { translate } from '@/utils';
+import { io, translate } from '@/utils';
 
 /**
  * 类：Git提交信息
@@ -19,6 +19,11 @@ class commit {
    * 私有属性：配置信息
    */
   private CONF: IConfig;
+
+  /**
+   * 私有属性：临时文件路径
+   */
+  private tempFile: string;
 
   /**
    * 构造函数
@@ -105,17 +110,6 @@ class commit {
   }
 
   /**
-   * 转化参数
-   * @param {string} commitMessage 提交信息
-   * @return {string} 处理后的参数字符串
-   */
-  private convertArgs(commitMessage: string): string {
-    const normalizedMessage = commitMessage.replace(/\n\s*\n/g, '\n\n');
-    const sections = normalizedMessage.split('\n\n').filter((section) => section.trim() !== '');
-    return sections.map((section) => `-m "${section.replace(/"/g, '\\"').replace(/\n/g, '\\n')}"`).join(' ');
-  }
-
-  /**
    * 私有函数：构建完整的提交信息。
    * @returns {string} 提交信息字符串。
    */
@@ -146,13 +140,38 @@ class commit {
     closeIssues && messageParts.push(closeIssues);
 
     // 使用换行符连接各个部分
-    const commitMessage = messageParts.join('\n\n');
+    return messageParts.join('\n\n');
+  }
 
-    if (commitMessage) {
-      return this.convertArgs(commitMessage);
-    }
+  /**
+   * 公开函数：保存提交信息到临时文件
+   * @param {string} code 提交信息代码
+   * @returns {Promise<boolean>} 是否成功
+   */
+  public async saveTempCommitMessageFile(code: string): Promise<boolean> {
+    const now = new Date();
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
 
-    return '';
+    this.tempFile = `./.cvlar-commit-message-${hours}${minutes}${seconds}.tmp`;
+    return await io.write(this.tempFile, code);
+  }
+
+  /**
+   * 公开函数：删除临时文件
+   * @returns {Promise<boolean>} 是否成功
+   */
+  public async deleteTempCommitMessageFile(): Promise<boolean> {
+    return await io.remove(this.tempFile);
+  }
+
+  /**
+   * 公开函数：获得临时文件路径
+   * @returns {Promise<string>} 文件路径
+   */
+  public async getTempCommitMessageFile(): Promise<string> {
+    return this.tempFile;
   }
 
   /**

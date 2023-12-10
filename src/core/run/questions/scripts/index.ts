@@ -26,8 +26,11 @@ class scripts {
 
   /**
    * 私有函数：命令
+   * @param {string} code 命令代码
+   * @param {string[]} args 命令参数
+   * @param {string} commandPrint 命令输出替代代码
    */
-  private cmd: (type: string, args: string[]) => Promise<void>;
+  private parentCmd: (code: string, args: string[], commandPrint?: string) => Promise<void>;
 
   /**
    * 构造函数
@@ -35,10 +38,10 @@ class scripts {
    * @param {Function} addBack 添加返回菜单
    * @param {Function} cmd 命令
    */
-  private constructor(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>) {
+  private constructor(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[], commandPrint?: string) => Promise<void>) {
     this.CONF = conf;
     this.addBack = addBack;
-    this.cmd = cmd;
+    this.parentCmd = cmd;
   }
 
   /**
@@ -47,7 +50,7 @@ class scripts {
    * @param {Function} addBack 添加返回菜单
    * @param {Function} cmd 命令
    */
-  public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>): scripts {
+  public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[], commandPrint?: string) => Promise<void>): scripts {
     return scripts.instance ?? new scripts(conf, addBack, cmd);
   }
 
@@ -104,7 +107,7 @@ class scripts {
       // 如果 配置中 存在 package.manager，则显示 package 管理
       if (_isObj(this.CONF.package['manager'])) {
         menuState.set('exit');
-        await this.cmd(this.CONF.package['manager'].type, ['run', code]);
+        await this.parentCmd(this.CONF.package['manager'].type, ['run', code]);
       }
     }
   }
