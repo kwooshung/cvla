@@ -41,7 +41,7 @@ class commit {
    */
   private buildTypeAndScope(): string {
     const { type, scope } = this.data;
-    return `${type}${scope ? `(${scope})` : ''}`;
+    return `${type}${scope ? `(${scope})` : ''}`.trim();
   }
 
   /**
@@ -49,7 +49,7 @@ class commit {
    * @returns {string} 提交主题字符串。
    */
   private buildSubject(): string {
-    return this.data.subject;
+    return this.data.subject.trim();
   }
 
   /**
@@ -57,7 +57,7 @@ class commit {
    * @returns {string} 正文字符串。
    */
   private buildBody(): string {
-    return this.data.body?.replace(/\s*\|\s*/g, '\n') || '';
+    return this.data.body?.replace(/\s*\|\s*/g, '\n').trim() || '';
   }
 
   /**
@@ -65,7 +65,7 @@ class commit {
    * @returns {string} BREAKING CHANGE字符串。
    */
   private buildBreakingChange(): string {
-    return this.data.breaking ? `${this.CONF.i18n.git.commit.breaking.field}${this.data.breaking}` : '';
+    return this.data.breaking ? `${this.CONF.i18n.git.commit.breaking.field}${this.data.breaking}`.trim() : '';
   }
 
   /**
@@ -91,7 +91,12 @@ class commit {
    * @returns {string} 自定义字段组合成的字符串。
    */
   private buildCustomFields(fields: TGitCustomField[]): string {
-    return fields.map((field) => (field.field ? `${field.field}${field.value}` : field.value)).join('\n');
+    return fields
+      .map((field) => {
+        const value = field.field ? `${field.field}${field.value}` : field.value;
+        return value.toString().trim();
+      })
+      .join('\n');
   }
 
   /**
