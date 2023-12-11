@@ -23,7 +23,7 @@ const select = async (options: ISelectOptions): Promise<any> => {
   options.choices = options.choices.map((choice: TSelectChoice<unknown>) => {
     if (choice.description) {
       if (choice.description && !choice.description.startsWith(`${pc.blue('!')} `)) {
-        choice.description = `${pc.blue('!')} ${options.descriptionDim ? pc.dim(choice.description) : choice.description}`;
+        choice.description = `${pc.blue('!')} ${defaultOptions.descriptionDim ? pc.dim(choice.description) : choice.description}`;
       }
     }
     return choice;

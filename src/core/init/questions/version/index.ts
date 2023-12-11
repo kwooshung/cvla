@@ -1,5 +1,6 @@
 import { TConfigVersion } from '@/interface';
-import { command, version as _version } from '@/utils';
+import { command } from '@/utils';
+// import { command, version as _version } from '@/utils';
 import { get } from '../../locales';
 
 /**
@@ -29,32 +30,37 @@ const version = async (): Promise<TConfigVersion> => {
 
   if (versionManage) {
     config = {
-      validate: 'default',
       package: true
     };
 
-    if (
-      !(await command.prompt.select({
-        message: get('version.validate.message'),
-        choices: [
-          {
-            name: get('yes'),
-            value: true,
-            description: get('version.validate.description')
-          },
-          {
-            name: get('no'),
-            value: false
-          }
-        ]
-      }))
-    ) {
-      // 是否输入新的规则
-      config.validate = await command.prompt.input({
-        message: get('version.validate.change.message'),
-        default: 'default'
-      });
-    }
+    // 不允许自定义版本号规则
+    // config = {
+    //   validate: 'default',
+    //   package: true
+    // };
+
+    // if (
+    //   !(await command.prompt.select({
+    //     message: get('version.validate.message'),
+    //     choices: [
+    //       {
+    //         name: get('yes'),
+    //         value: true,
+    //         description: get('version.validate.description')
+    //       },
+    //       {
+    //         name: get('no'),
+    //         value: false
+    //       }
+    //     ]
+    //   }))
+    // ) {
+    //   // 是否输入新的规则
+    //   config.validate = await command.prompt.input({
+    //     message: get('version.validate.change.message'),
+    //     default: 'default'
+    //   });
+    // }
 
     config.package = await command.prompt.select({
       message: get('version.package.message'),

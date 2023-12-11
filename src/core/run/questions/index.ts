@@ -149,7 +149,7 @@ class questions {
    * @returns {void} 无返回值
    */
   private cmd(code: string, args: string[], commandPrint?: string): Promise<void> {
-    let command = `${pc.bold(pc.cyan(`${code} ${args.join(' ')}`))}\n`;
+    let command = `${pc.bold(pc.cyan(`${code} ${args.join(' ')}`))}`;
 
     console.log(`\n${pc.magenta('▶')} ${pc.cyan('runing: ')}${commandPrint ?? command}`);
 
@@ -165,10 +165,10 @@ class questions {
       // 进程关闭时
       spawnedProcess.on('close', (code) => {
         if (code === 0) {
-          console.log(`\n${pc.green('✔')} ${command}`);
+          console.log(`${pc.green('✔')} ${command}`);
           resolve();
         } else {
-          console.log(`\n${pc.red('✖')} ${command}`);
+          console.log(`${pc.red('✖')} ${command}`);
           cs.error(`命令执行失败，退出码：${code}`, `Command execution failed, exit code: ${code}`);
           reject();
         }
