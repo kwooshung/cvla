@@ -650,6 +650,10 @@ module.exports = {
             default: '' // 可选值：'short'、'long'，默认：'no'
           }
         },
+        file: {
+          message: '是否更新 package.json 中的版本号？',
+          default: true // true：自动选择是，false：自动选择否，默认：true
+        },
         push: {
           message: '是否推送 tags 到远程仓库？',
           default: true // true：自动选择是，false：自动选择否，默认：false

@@ -1,2 +1,2 @@
-const get = () => '0.0.1';
+const get = () => 'v0.0.1-alpha.1';
 export default get;

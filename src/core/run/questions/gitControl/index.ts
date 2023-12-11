@@ -605,28 +605,29 @@ class gitControl {
 
   /**
    * 私有函数：git > version > 版本类型通用菜单
+   * @returns {Promise<string>} 指定类型的版本号
    */
   private async versionTypesMenu(): Promise<string> {
     if (this.loadPackageJson()) {
       const packageJson: IPackageJsonData = this.PACK.data as IPackageJsonData;
-      const currentVersion = packageJson.version;
+      const currentVersion = packageJson.version ?? '0.0.0';
       const nextMajorVersion = semver.inc(currentVersion, 'major');
       const nextMinorVersion = semver.inc(currentVersion, 'minor');
       const nextPatchVersion = semver.inc(currentVersion, 'patch');
 
       const choices = [
         {
-          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.major.message, pc.green(currentVersion), pc.bold(pc.green(nextMajorVersion))),
+          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.major.message, pc.green(`v${currentVersion}`), pc.bold(pc.green(`v${nextMajorVersion}`))),
           value: nextMajorVersion,
           description: this.CONF.i18n.git.version.upgrade.type.major.description
         },
         {
-          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.minor.message, pc.green(currentVersion), pc.bold(pc.green(nextMinorVersion))),
+          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.minor.message, pc.green(`v${currentVersion}`), pc.bold(pc.green(`v${nextMinorVersion}`))),
           value: nextMinorVersion,
           description: this.CONF.i18n.git.version.upgrade.type.minor.description
         },
         {
-          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.patch.message, pc.green(currentVersion), pc.bold(pc.green(nextPatchVersion))),
+          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.patch.message, pc.green(`v${currentVersion}`), pc.bold(pc.green(`v${nextPatchVersion}`))),
           value: nextPatchVersion,
           description: this.CONF.i18n.git.version.upgrade.type.patch.description
         }
@@ -645,9 +646,10 @@ class gitControl {
 
   /**
    * 私有函数：git > version > 版本号标识符
+   * @param {string} versionType 指定类型的版本号
    * @returns {Promise<string>} 版本号标识符
    */
-  private async versionFlag(): Promise<string> {
+  private async versionFlag(versionType: string): Promise<string> {
     const isAdd = await command.prompt.select({
       message: this.CONF.i18n.git.version.flag.message,
       choices: [
@@ -668,7 +670,7 @@ class gitControl {
         const currentVersion = packageJson.version;
 
         let suffixId = 1;
-        let suffixIdMessage = convert.replacePlaceholders(this.CONF.i18n.git.version.flag.iterations.message.no, pc.green(currentVersion), pc.cyan(1));
+        let suffixIdMessage = '';
 
         // 选择预发布类型
         const choices = this.CONF.i18n.git.version.flag.select.choices;
@@ -685,6 +687,12 @@ class gitControl {
         });
 
         if (type !== '..') {
+          suffixIdMessage = convert.replacePlaceholders(
+            this.CONF.i18n.git.version.flag.iterations.message.no,
+            pc.green(`v${currentVersion}`),
+            `${pc.dim(pc.green(`v${versionType}`))}-${pc.green(type)}.${pc.cyan(1)}`
+          );
+
           // 如果当前版本号中已经包含了预发布类型
           if (currentVersion.includes(`-${type}.`)) {
             // 再获取当前预发布版本的的迭代号
@@ -717,13 +725,40 @@ class gitControl {
   }
 
   /**
+   * 私有函数：git > version > 更新 package.json 中的版本号
+   * @param {string} newVersion 新版本号
+   * @returns {void} 无返回值
+   */
+  private async versionUpdatePackageJson(newVersion: string): Promise<void> {
+    if (
+      await command.prompt.select({
+        message: this.CONF.i18n.git.version.file.message,
+        choices: [
+          {
+            name: this.CONF.i18n.yes,
+            value: true
+          },
+          {
+            name: this.CONF.i18n.no,
+            value: false
+          }
+        ],
+        default: this.CONF.i18n.git.version.file.default
+      })
+    ) {
+      this.PACK.data['version'] = newVersion;
+      _package.write(this.PACK);
+    }
+  }
+
+  /**
    * 私有函数：git > version > 升级
    */
   private async versionUpgrade(): Promise<void> {
     const versionType = await this.versionTypesMenu();
 
     if (versionType && versionType !== '..') {
-      const versionFlag = await this.versionFlag();
+      const versionFlag = await this.versionFlag(versionType);
       const newVersion = V.normalize(`${versionType}${versionFlag}`);
 
       let annotate = '';
@@ -762,6 +797,8 @@ class gitControl {
 
       // 如果版本号有效，则添加 tag
       if (semver.valid(newVersion)) {
+        this.versionUpdatePackageJson(newVersion);
+
         await this.parentCmd('git', git.add.current);
 
         if (annotate.trim() === '') {
@@ -789,6 +826,8 @@ class gitControl {
           await this.parentCmd('git', git.push(true));
         }
       }
+
+      console.log('\n\n\n');
     }
   }
 
