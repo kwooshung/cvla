@@ -1,8 +1,8 @@
 import pc from 'picocolors';
-import { range as _range, isUndefined as _isUn, isPlainObject as _isObj, isArray as _isArr } from 'lodash-es';
-
-import { IConfig, IGitCommitData, TGitCustomField } from '@/interface';
-import { command, convert, console as cs, git } from '@/utils';
+import semver from 'semver';
+import { range as _range, clone as _clone, isUndefined as _isUn, isPlainObject as _isObj, isBoolean as _isBool, isArray as _isArr, isString as _isStr } from 'lodash-es';
+import { IConfig, IGitCommitData, IPackageJson, IPackageJsonData, TGitCustomField } from '@/interface';
+import { command, convert, console as cs, git, package as _package, version as V } from '@/utils';
 import menuState from '../_state';
 
 /**
@@ -18,6 +18,13 @@ class gitControl {
    * 私有属性：配置信息
    */
   private CONF: IConfig;
+
+  /**
+   * 私有属性：版本菜单状态
+   */
+  private VersionState: 'upgrade' | 'specify' | 'downgrade' | 'prerelease' | '..' = 'upgrade';
+
+  private PACK: IPackageJson;
 
   /**
    * 私有函数：返回
@@ -55,6 +62,14 @@ class gitControl {
    */
   public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[], commandPrint?: string) => Promise<void>): gitControl {
     return gitControl.instance ?? new gitControl(conf, addBack, cmd);
+  }
+
+  /**
+   * 停留时间
+   * @param {number} [ms = 10] 停留时间
+   */
+  private delay(ms: number = 10) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   /**
@@ -108,11 +123,30 @@ class gitControl {
   }
 
   /**
+   * 私有函数：git > 读取 package.json 数据
+   * @param {boolean} [focus = false] 是否强制读取
+   * @returns {boolean} 是否读取成功
+   */
+  private loadPackageJson(focus: boolean = false): boolean {
+    // 首先判断是否已经读取过 package.json 数据
+    let isExistsData = !_isBool(this.PACK?.data) && !_isStr(this.PACK?.data) && _isObj(this.PACK?.data);
+
+    // 如果没有读取过，或者需要强制读取，则读取 package.json 数据
+    if (!isExistsData || focus) {
+      this.PACK = _package.read();
+      isExistsData = !_isBool(this.PACK?.data) && !_isStr(this.PACK?.data) && _isObj(this.PACK?.data);
+    }
+
+    // 如果读取成功，则返回 true
+    return isExistsData;
+  }
+
+  /**
    * 私有函数：git > 选择
    * @returns {Promise<void>} 无返回值
    */
   public async select(): Promise<void> {
-    cs.clear.lastLine();
+    cs.clear.all();
 
     const choices = [
       {
@@ -130,7 +164,7 @@ class gitControl {
     this.addBack(choices);
 
     const select = await command.prompt.select({
-      message: this.CONF.i18n.git.select.message,
+      message: this.CONF.i18n.git.commit.select.message,
       choices
     });
 
@@ -143,8 +177,6 @@ class gitControl {
    * @returns {Promise<void>} 无返回值
    */
   private async run(key: string): Promise<void> {
-    cs.clear.lastLine();
-
     switch (key) {
       case 'commit':
         await this.commit();
@@ -155,16 +187,14 @@ class gitControl {
       default:
         break;
     }
+
+    console.log('\n\n\n');
   }
 
   /**
    * 私有函数：git > commit
    */
   private async commit(): Promise<void> {
-    cs.clear.lastLine();
-
-    console.log(this.CONF.i18n.git.commit.title);
-
     const datas: IGitCommitData = {
       type: '',
       scope: '',
@@ -195,7 +225,50 @@ class gitControl {
    * 私有函数：git > version
    */
   private async version(): Promise<void> {
-    cs.clear.lastLine();
+    let inx = 0;
+    do {
+      ++inx > 1 && cs.clear.lastLine();
+      this.loadPackageJson(true);
+
+      const choices = [
+        {
+          name: this.CONF.i18n.git.version.upgrade.message,
+          value: 'upgrade',
+          description: this.CONF.i18n.git.version.upgrade.description
+        },
+        {
+          name: this.CONF.i18n.git.version.specify.message,
+          value: 'specify',
+          description: this.CONF.i18n.git.version.specify.description
+        },
+        {
+          name: this.CONF.i18n.git.version.downgrade.message,
+          value: 'downgrade',
+          description: this.CONF.i18n.git.version.downgrade.description
+        }
+      ];
+
+      this.addBack(choices);
+
+      this.VersionState = await command.prompt.select({
+        message: this.CONF.i18n.git.version.select.message,
+        choices
+      });
+
+      switch (this.VersionState) {
+        case 'upgrade':
+          await this.versionUpgrade();
+          break;
+        case 'specify':
+          await this.versionSpecify();
+          break;
+        case 'downgrade':
+          await this.versionDowngrade();
+          break;
+      }
+    } while (this.VersionState !== '..');
+
+    menuState.set('git');
   }
 
   /**
@@ -525,11 +598,8 @@ class gitControl {
             ) {
               await this.parentCmd('git', git.push());
             }
-
-            console.log('\n\n\n');
           } catch (e) {
             console.log(pc.red(e.message));
-            console.log('\n\n\n');
           } finally {
             isCreate && (await g.deleteTempCommitMessageFile());
           }
@@ -540,6 +610,273 @@ class gitControl {
       console.log('\n\n\n');
     }
   }
+
+  /**
+   * 私有函数：git > version > 更新 package.json 中的版本号
+   * @param {string} newVersion 新版本号
+   * @returns {void} 无返回值
+   */
+  private async versionUpdatePackageJson(newVersion: string): Promise<void> {
+    if (
+      await command.prompt.select({
+        message: this.CONF.i18n.git.version.file.message,
+        choices: [
+          {
+            name: this.CONF.i18n.yes,
+            value: true
+          },
+          {
+            name: this.CONF.i18n.no,
+            value: false
+          }
+        ],
+        default: this.CONF.i18n.git.version.file.default
+      })
+    ) {
+      this.PACK.data['version'] = newVersion.replace(/^v/, '');
+      _package.write(this.PACK);
+    }
+  }
+
+  /**
+   * 私有函数：git > version > 版本是否存在
+   * @param {string} version 版本号
+   * @returns {Promise<boolean>} 是否存在
+   */
+  private async versionExistsTag(version: string): Promise<boolean> {
+    version = V.normalize(version);
+    const { stdout, stderr } = await command.execute('git tag -l');
+
+    if (!stderr && stdout) {
+      return stdout.includes(version);
+    }
+
+    return false;
+  }
+
+  /**
+   * 私有函数：git > version > 版本类型
+   * @returns {Promise<string>} 指定类型的版本号
+   */
+  private async versionType(): Promise<string> {
+    if (this.loadPackageJson()) {
+      const packageJson: IPackageJsonData = this.PACK.data as IPackageJsonData;
+      const currentVersion = packageJson.version ?? '0.0.0';
+      const nextMajorVersion = semver.inc(currentVersion, 'major');
+      const nextMinorVersion = semver.inc(currentVersion, 'minor');
+      const nextPatchVersion = semver.inc(currentVersion, 'patch');
+
+      const choices = [
+        {
+          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.major.message, pc.green(`v${currentVersion}`), pc.bold(pc.green(`v${nextMajorVersion}`))),
+          value: nextMajorVersion,
+          description: this.CONF.i18n.git.version.upgrade.type.major.description
+        },
+        {
+          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.minor.message, pc.green(`v${currentVersion}`), pc.bold(pc.green(`v${nextMinorVersion}`))),
+          value: nextMinorVersion,
+          description: this.CONF.i18n.git.version.upgrade.type.minor.description
+        },
+        {
+          name: convert.replacePlaceholders(this.CONF.i18n.git.version.upgrade.type.patch.message, pc.green(`v${currentVersion}`), pc.bold(pc.green(`v${nextPatchVersion}`))),
+          value: nextPatchVersion,
+          description: this.CONF.i18n.git.version.upgrade.type.patch.description
+        }
+      ];
+
+      this.addBack(choices);
+
+      return await command.prompt.select({
+        message: this.CONF.i18n.git.version.upgrade.type.message,
+        choices
+      });
+    }
+
+    return '';
+  }
+
+  /**
+   * 私有函数：git > version > 版本号标识符
+   * @param {string} versionType 指定类型的版本号
+   * @returns {Promise<string>} 版本号标识符
+   */
+  private async versionFlag(versionType: string): Promise<string> {
+    const isAdd = await command.prompt.select({
+      message: this.CONF.i18n.git.version.flag.message,
+      choices: [
+        {
+          name: this.CONF.i18n.yes,
+          value: true
+        },
+        {
+          name: this.CONF.i18n.no,
+          value: false
+        }
+      ]
+    });
+
+    if (isAdd && this.loadPackageJson()) {
+      const packageJson: IPackageJsonData = this.PACK.data as IPackageJsonData;
+      const currentVersion = packageJson.version;
+
+      let suffixId = 1;
+      let suffixIdNew = suffixId;
+      let suffixIdMessage = '';
+
+      // 选择预发布类型
+      const choices = _clone(this.CONF.i18n.git.version.flag.select.choices);
+
+      for (const val of choices) {
+        val.description = convert.replacePlaceholders(val.description, `${currentVersion}-${val.value}`);
+      }
+
+      this.addBack(choices);
+
+      const type = await command.prompt.select({
+        message: this.CONF.i18n.git.version.flag.select.message,
+        choices
+      });
+
+      if (type !== '..') {
+        suffixIdMessage = convert.replacePlaceholders(
+          this.CONF.i18n.git.version.flag.iterations.message.no,
+          pc.green(`v${currentVersion}`),
+          `${pc.dim(pc.green(`v${versionType}`))}-${pc.green(type)}.${pc.cyan(1)}`
+        );
+
+        // 如果当前版本号中已经包含了预发布类型
+        if (currentVersion.includes(`-${type}.`)) {
+          // 再获取当前预发布版本的的迭代号
+          const regex = new RegExp(`-${type}.(\\d+)$`);
+          const match = regex.exec(currentVersion);
+          if (match && match[1]) {
+            suffixId = Number(match[1]);
+            suffixIdNew = Number(match[1]) + 1;
+            suffixIdMessage = convert.replacePlaceholders(
+              this.CONF.i18n.git.version.flag.iterations.message.add,
+              pc.dim(pc.green(currentVersion)),
+              pc.green(`${type}.${suffixId}`),
+              pc.cyan(`${type}.${suffixIdNew}`)
+            );
+          }
+        }
+
+        // 获取迭代号
+        const suffixInputId = await command.prompt.input({
+          message: suffixIdMessage,
+          default: suffixIdNew,
+          validate: this.CONF.i18n.git.version.flag.iterations.vaidate
+        });
+
+        return `-${type}.${suffixInputId}`;
+      }
+    }
+
+    return '';
+  }
+
+  /**
+   * 私有函数：git > version > 升级
+   */
+  private async versionUpgrade(): Promise<void> {
+    let isExists = false;
+
+    do {
+      const versionType = await this.versionType();
+
+      if (versionType && versionType !== '..') {
+        const versionFlag = await this.versionFlag(versionType);
+        const newVersion = V.normalize(`${versionType}${versionFlag}`);
+        isExists = await this.versionExistsTag(newVersion);
+
+        if (isExists) {
+          console.log(pc.red(convert.replacePlaceholders(this.CONF.i18n.git.version.error.exists, pc.green(newVersion))));
+          await this.delay(1500);
+          cs.clear.lastLine(5);
+        } else {
+          let annotate = '';
+          let select = '';
+          let inx = 0;
+
+          do {
+            ++inx > 1 && cs.clear.lastLine();
+
+            select = await command.prompt.select({
+              message: this.CONF.i18n.git.version.flag.annotate.message,
+              choices: [
+                {
+                  name: this.CONF.i18n.git.version.flag.annotate.no,
+                  value: 'no'
+                },
+                {
+                  name: this.CONF.i18n.git.version.flag.annotate.short,
+                  value: 'short'
+                },
+                {
+                  name: this.CONF.i18n.git.version.flag.annotate.long,
+                  value: 'long'
+                }
+              ],
+              default: this.CONF.i18n.git.version.flag.annotate.default.toString().toLowerCase()
+            });
+
+            if (select === 'short') {
+              annotate = await command.prompt.input({ message: this.CONF.i18n.git.version.flag.annotate.short });
+            } else if (select === 'long') {
+              annotate = await command.prompt.editor({ message: this.CONF.i18n.git.version.flag.annotate.long });
+            }
+            annotate = annotate.trim();
+          } while (select !== 'no' && annotate === '');
+
+          // 如果版本号有效，则添加 tag
+          if (semver.valid(newVersion)) {
+            this.versionUpdatePackageJson(newVersion);
+
+            await this.parentCmd('git', git.add.current);
+
+            if (annotate.trim() === '') {
+              await this.parentCmd('git', ['tag', newVersion]);
+            } else {
+              await this.parentCmd('git', ['tag', '-a', `"${newVersion}"`, '-m', `"${annotate}"`]);
+            }
+
+            if (
+              await command.prompt.select({
+                message: this.CONF.i18n.git.version.push.message,
+                choices: [
+                  {
+                    name: this.CONF.i18n.yes,
+                    value: true
+                  },
+                  {
+                    name: this.CONF.i18n.no,
+                    value: false
+                  }
+                ],
+                default: this.CONF.i18n.git.version.push.default
+              })
+            ) {
+              await this.parentCmd('git', git.push(true));
+            }
+          }
+          console.log('\n\n\n');
+        }
+      } else {
+        cs.clear.lastLine();
+        break;
+      }
+    } while (isExists); // 如果版本号已经存在，则重新选择版本号
+  }
+
+  /**
+   * 私有函数：git > version > 指定
+   */
+  private async versionSpecify(): Promise<void> {}
+
+  /**
+   * 私有函数：git > version > 降级
+   */
+  private async versionDowngrade(): Promise<void> {}
 }
 
 export default gitControl;

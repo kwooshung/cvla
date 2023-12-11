@@ -190,13 +190,12 @@ module.exports = {
     git: {
       message: 'Git',
       description: 'Git版本控制',
-      select: {
-        message: '主菜单 > 版本控制'
-      },
       commit: {
         message: '提交代码',
         description: '提交代码到 Git 仓库',
-        title: '主菜单 > 版本控制 > 提交代码',
+        select: {
+          message: '主菜单 > 版本控制'
+        },
         type: {
           message: '选择提交类型'
         },
@@ -556,7 +555,11 @@ module.exports = {
           }
         },
         push: {
-          message: '是否需要推送到远程仓库？',
+          message: '是否推送到远程仓库？',
+          default: false // true：自动选择是，false：自动选择否，默认：false
+        },
+        tag: {
+          message: '是否需要打标签？',
           default: false // true：自动选择是，false：自动选择否，默认：false
         }
       },
@@ -564,29 +567,99 @@ module.exports = {
         message: '版本号',
         description: '版本号管理，可用于升级、撤销 版本号，自动升级和提交',
         select: {
-          message: '主菜单 > 版本控制 > 版本号'
+          message: '请选择操作'
         },
-        category: {
-          major: {
-            message: '主要更新',
-            description: '可能引入了不向后兼容的 API 更改或重大功能更改。'
-          },
-          minor: {
-            message: '次要更新',
-            description: '新的向后兼容功能，建议在确定新功能对项目有用时进行更新。'
-          },
-          patch: {
-            message: '补丁更新',
-            description: '通常用于小的错误修复和更新，不影响软件的主要功能和向后兼容性。'
-          },
-          prerelease: {
-            message: '预发布',
-            description: '预发布版本，可能包含新功能，也可能包含错误修复。'
-          },
-          nonsemver: {
-            message: '不符合语义化版本规范',
-            description: '表示包的版本号不符合语义化版本规范（SemVer），通常是版本号小于 1.0.0。这些版本可能不稳定，会引入较大的更改，因此需要谨慎使用。'
+        upgrade: {
+          message: '升级版本（自动）',
+          description: '选择 主版本号、次版本号 或 补丁版本号，自动根据 当前版本号，计算下个版本号',
+          type: {
+            message: '您打算升级哪个版本',
+            major: {
+              message: '主要 {0} > {1}',
+              description: '一般引入了不向后兼容的 API 更改或重大功能更改。'
+            },
+            minor: {
+              message: '次要 {0} > {1}',
+              description: '新的向后兼容功能，建议在确定新功能对项目有用时进行更新。'
+            },
+            patch: {
+              message: '补丁 {0} > {1}',
+              description: '通常用于小的错误修复和更新，不影响软件的主要功能和向后兼容性。'
+            }
           }
+        },
+        specify: {
+          message: '升级版本（指定）',
+          description: '指定版本号，例如：完全由您自定义，但是也得符合语义化版本规范（SemVer）'
+        },
+        downgrade: {
+          message: '降级版本（回退/撤销）',
+          description: '撤销指定版本号，可选择是否保留文件修改'
+        },
+        flag: {
+          message: '是否添加发布标识符？',
+          description: '可能是 稳定版本 或 预发布版本',
+          select: {
+            message: '选择发布标识符',
+            choices: [
+              {
+                name: '预览版 (alpha)',
+                value: 'alpha',
+                description: '{0}，预览版，主要用于内部测试，可能包含很多BUG，功能不全，存在很多错误'
+              },
+              {
+                name: '测试版 (beta)',
+                value: 'beta',
+                description: '{0}，该版本任然存在很多BUG，但是相对alpha版要稳定一些，会不断增加新功能'
+              },
+              {
+                name: '候选版本 (rc)',
+                value: 'rc',
+                description: '{0}，这个版本接近最终产品，主要目的是查找可能的遗漏的问题。如果没有发现重大问题，这个版本可能就会成为最终发布的版本。'
+              },
+              {
+                name: '正式版本 (stable)',
+                value: 'stable',
+                description: '{0}，正式版本，该版本相对稳定，基本不会再修改代码，除非发现BUG，或者出现新的需求'
+              }
+            ]
+          },
+          iterations: {
+            message: {
+              no: '当前版本号：{0}，不存在标记迭代号，是否使用 {1} 作为与发布版本的迭代号？',
+              add: '当前版本号：{0}，迭代号为：{1}，是否使用 {2} 作为发布版本新的迭代号？'
+            },
+            input: {
+              message: '请输入迭代版本号：',
+              validate: (val) => {
+                val = val.trim();
+                if (val.length <= 0) {
+                  return '迭代版本号不能为空';
+                } else if (!val.test(/([1-9]\d*)/)) {
+                  return '迭代版本号格式不正确';
+                }
+                return true;
+              }
+            }
+          },
+          annotate: {
+            message: '是否添加说明？',
+            no: '无说明',
+            short: '短说明',
+            long: '长说明（将使用文本编辑器打开）',
+            default: '' // 可选值：'short'、'long'，默认：'no'
+          }
+        },
+        file: {
+          message: '是否更新 package.json 中的版本号？',
+          default: true // true：自动选择是，false：自动选择否，默认：true
+        },
+        push: {
+          message: '是否推送 tags 到远程仓库？',
+          default: true // true：自动选择是，false：自动选择否，默认：false
+        },
+        error: {
+          exists: '当前版本号 {0} 已存在，请重新输入'
         }
       }
     },
