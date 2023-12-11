@@ -604,6 +604,33 @@ class gitControl {
   }
 
   /**
+   * 私有函数：git > version > 更新 package.json 中的版本号
+   * @param {string} newVersion 新版本号
+   * @returns {void} 无返回值
+   */
+  private async versionUpdatePackageJson(newVersion: string): Promise<void> {
+    if (
+      await command.prompt.select({
+        message: this.CONF.i18n.git.version.file.message,
+        choices: [
+          {
+            name: this.CONF.i18n.yes,
+            value: true
+          },
+          {
+            name: this.CONF.i18n.no,
+            value: false
+          }
+        ],
+        default: this.CONF.i18n.git.version.file.default
+      })
+    ) {
+      this.PACK.data['version'] = newVersion.replace(/^v/, '');
+      _package.write(this.PACK);
+    }
+  }
+
+  /**
    * 私有函数：git > version > 版本类型通用菜单
    * @returns {Promise<string>} 指定类型的版本号
    */
@@ -670,6 +697,7 @@ class gitControl {
         const currentVersion = packageJson.version;
 
         let suffixId = 1;
+        let suffixIdNew = suffixId;
         let suffixIdMessage = '';
 
         // 选择预发布类型
@@ -700,11 +728,12 @@ class gitControl {
             const match = regex.exec(currentVersion);
             if (match && match[1]) {
               suffixId = Number(match[1]);
+              suffixIdNew = Number(match[1]) + 1;
               suffixIdMessage = convert.replacePlaceholders(
                 this.CONF.i18n.git.version.flag.iterations.message.add,
                 pc.dim(pc.green(currentVersion)),
                 pc.green(`${type}.${suffixId}`),
-                pc.cyan(`${type}.${Number(match[1]) + 1}`)
+                pc.cyan(`${type}.${suffixIdNew}`)
               );
             }
           }
@@ -712,7 +741,7 @@ class gitControl {
           // 获取迭代号
           const suffixInputId = await command.prompt.input({
             message: suffixIdMessage,
-            default: suffixId,
+            default: suffixIdNew,
             validate: this.CONF.i18n.git.version.flag.iterations.vaidate
           });
 
@@ -722,33 +751,6 @@ class gitControl {
     }
 
     return '';
-  }
-
-  /**
-   * 私有函数：git > version > 更新 package.json 中的版本号
-   * @param {string} newVersion 新版本号
-   * @returns {void} 无返回值
-   */
-  private async versionUpdatePackageJson(newVersion: string): Promise<void> {
-    if (
-      await command.prompt.select({
-        message: this.CONF.i18n.git.version.file.message,
-        choices: [
-          {
-            name: this.CONF.i18n.yes,
-            value: true
-          },
-          {
-            name: this.CONF.i18n.no,
-            value: false
-          }
-        ],
-        default: this.CONF.i18n.git.version.file.default
-      })
-    ) {
-      this.PACK.data['version'] = newVersion;
-      _package.write(this.PACK);
-    }
   }
 
   /**
@@ -804,7 +806,7 @@ class gitControl {
         if (annotate.trim() === '') {
           await this.parentCmd('git', ['tag', newVersion]);
         } else {
-          await this.parentCmd('git', ['tag', '-a', `${newVersion}`, '-m', `${annotate}`]);
+          await this.parentCmd('git', ['tag', '-a', `"${newVersion}"`, '-m', `"${annotate}"`]);
         }
 
         if (
