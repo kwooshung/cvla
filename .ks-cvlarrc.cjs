@@ -657,6 +657,9 @@ module.exports = {
         push: {
           message: '是否推送 tags 到远程仓库？',
           default: true // true：自动选择是，false：自动选择否，默认：false
+        },
+        error: {
+          exists: '当前版本号 {0} 已存在，请重新输入'
         }
       }
     },
