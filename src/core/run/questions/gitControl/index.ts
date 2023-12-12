@@ -871,7 +871,54 @@ class gitControl {
   /**
    * 私有函数：git > version > 指定
    */
-  private async versionSpecify(): Promise<void> {}
+  private async versionSpecify(): Promise<void> {
+    const version = await command.prompt.input({
+      message: this.CONF.i18n.git.version.specify.message,
+      transformer(val: string) {
+        return V.normalize(val);
+      },
+      validate(val: string) {
+        if (semver.valid(val)) {
+          return true;
+        }
+        return this.CONF.i18n.git.version.error.format;
+      }
+    });
+
+    if (version) {
+      const isExists = await this.versionExistsTag(version);
+
+      if (isExists) {
+        console.log(pc.red(convert.replacePlaceholders(this.CONF.i18n.git.version.error.exists, pc.green(version))));
+        await this.delay(1500);
+        cs.clear.lastLine();
+      } else {
+        this.versionUpdatePackageJson(version);
+
+        await this.parentCmd('git', git.add.current);
+        await this.parentCmd('git', ['tag', version]);
+
+        if (
+          await command.prompt.select({
+            message: this.CONF.i18n.git.version.push.message,
+            choices: [
+              {
+                name: this.CONF.i18n.yes,
+                value: true
+              },
+              {
+                name: this.CONF.i18n.no,
+                value: false
+              }
+            ],
+            default: this.CONF.i18n.git.version.push.default
+          })
+        ) {
+          await this.parentCmd('git', git.push(true));
+        }
+      }
+    }
+  }
 
   /**
    * 私有函数：git > version > 降级

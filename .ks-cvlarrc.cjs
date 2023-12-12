@@ -659,7 +659,8 @@ module.exports = {
           default: true // true：自动选择是，false：自动选择否，默认：false
         },
         error: {
-          exists: '当前版本号 {0} 已存在，请重新输入'
+          exists: '当前版本号 {0} 已存在，请重新输入',
+          format: '版本号格式不符合Semver语义化标准，请重新输入，'
         }
       }
     },
