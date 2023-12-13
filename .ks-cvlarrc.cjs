@@ -575,26 +575,53 @@ module.exports = {
           type: {
             message: '您打算升级哪个版本',
             major: {
-              message: '主要 {0} > {1}',
+              message: '主要',
               description: '一般引入了不向后兼容的 API 更改或重大功能更改。'
             },
             minor: {
-              message: '次要 {0} > {1}',
+              message: '次要',
               description: '新的向后兼容功能，建议在确定新功能对项目有用时进行更新。'
             },
             patch: {
-              message: '补丁 {0} > {1}',
+              message: '补丁',
               description: '通常用于小的错误修复和更新，不影响软件的主要功能和向后兼容性。'
             }
           }
         },
         specify: {
           message: '升级版本（指定）',
-          description: '指定版本号，例如：完全由您自定义，但是也得符合语义化版本规范（SemVer）'
+          description: '完全由您自定义，但是也得符合语义化版本规范（SemVer）',
+          input: {
+            message: '请输入版本号：'
+          }
         },
         downgrade: {
           message: '降级版本（回退/撤销）',
-          description: '撤销指定版本号，可选择是否保留文件修改'
+          description: '撤销指定版本号，仅撤销版本，不会对文件产生修改',
+          select: {
+            message: '请选择要撤销的版本号',
+            confirm: {
+              message: '是否修改 package.json 中的版本号？',
+              default: true, // true：自动选择是，false：自动选择否，默认：true
+              remote: {
+                message: '是否删除远程仓库中的 tag？',
+                default: false // true：自动选择是，false：自动选择否，默认：false
+              },
+              change: {
+                message: '您想使用哪个版本号 package.json 中？',
+                descriptions: {
+                  auto: '自动计算前一个版本，但在以往的tags中，可能不存在这个版本号',
+                  prevtag: '将使用前一个tag作为版本号'
+                },
+                specify: {
+                  message: '指定版本号'
+                }
+              }
+            },
+            error: {
+              no: '没有可撤销的版本号，请重新选择'
+            }
+          }
         },
         flag: {
           message: '是否添加发布标识符？',
@@ -626,8 +653,8 @@ module.exports = {
           },
           iterations: {
             message: {
-              no: '当前版本号：{0}，不存在标记迭代号，是否使用 {1} 作为与发布版本的迭代号？',
-              add: '当前版本号：{0}，迭代号为：{1}，是否使用 {2} 作为发布版本新的迭代号？'
+              no: '当前版本号：{0}，不存在预发号，确认使用 {1} 作为预发版本号？',
+              add: '当前版本号：{0}，预发版本类型为{1}，迭代号为：{2}，是否使用 {3} 作为预发版本号？'
             },
             input: {
               message: '请输入迭代版本号：',
@@ -641,14 +668,14 @@ module.exports = {
                 return true;
               }
             }
-          },
-          annotate: {
-            message: '是否添加说明？',
-            no: '无说明',
-            short: '短说明',
-            long: '长说明（将使用文本编辑器打开）',
-            default: '' // 可选值：'short'、'long'，默认：'no'
           }
+        },
+        annotate: {
+          message: '是否添加说明？',
+          no: '无说明',
+          short: '短说明',
+          long: '长说明（将使用文本编辑器打开）',
+          default: '' // 可选值：'short'、'long'，默认：'no'
         },
         file: {
           message: '是否更新 package.json 中的版本号？',

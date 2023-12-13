@@ -8,7 +8,7 @@ const header = (isVersion: boolean = false) => {
   console.clear();
 
   const frameWidth = 55; // 框架的总宽度
-  const versionString = `version: v${version.get()}`;
+  const versionString = `version: ${version.get}`;
   const versionLength = versionString.length;
   const padding = (frameWidth - versionLength - 4) / 2; // 计算两边的空格数
   const leftPadding = ' '.repeat(Math.floor(padding)); // 左边的空格

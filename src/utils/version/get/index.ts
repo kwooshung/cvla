@@ -1,2 +1,1 @@
-const get = () => '0.0.1-alpha.4';
-export default get;
+export default '0.0.0';

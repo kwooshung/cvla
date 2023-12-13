@@ -248,7 +248,7 @@ class commit {
             result = true;
             console.log(pc.green(this.CONF.i18n.git.commit.translate.process.success));
           } else {
-            console.log(pc.red(this.CONF.i18n.git.commit.translate.process.fail));
+            console.log(pc.red(`x ${this.CONF.i18n.git.commit.translate.process.fail}`));
           }
         } catch (e) {
           errors.push(e);
@@ -258,7 +258,7 @@ class commit {
         spinner.stop();
       }
     } else {
-      console.log(pc.red(this.CONF.i18n.git.commit.translate.error.config));
+      console.log(pc.red(`x ${this.CONF.i18n.git.commit.translate.error.config}`));
     }
 
     return result;
