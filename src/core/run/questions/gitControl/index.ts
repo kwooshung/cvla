@@ -642,7 +642,8 @@ class gitControl {
     const { stdout, stderr } = await command.execute('git tag -l');
 
     if (!stderr && stdout) {
-      return stdout.includes(version);
+      const tags = stdout.split('\n');
+      return tags.includes(version);
     }
 
     return false;
@@ -668,7 +669,8 @@ class gitControl {
    * @returns {Promise<string>} 指定版本号
    */
   private async versionSpecifyInput(): Promise<string> {
-    return await command.prompt.input({
+    const errorMessage = this.CONF.i18n.git.version.error.format;
+    const result = await command.prompt.input({
       message: this.CONF.i18n.git.version.specify.input.message,
       transformer(val: string) {
         return V.normalize(val, true);
@@ -677,9 +679,11 @@ class gitControl {
         if (semver.valid(val)) {
           return true;
         }
-        return this.CONF.i18n.git.version.error.format;
+        return errorMessage;
       }
     });
+
+    return result;
   }
 
   /**
