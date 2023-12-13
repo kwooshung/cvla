@@ -839,7 +839,7 @@ class pm {
     // 对齐各列
     const groups: Record<string, string> = {};
     const alignedCurrentVersions = this.updateChoicesAlignStrings(currentVersions) as Record<string, Record<TPackageVersionType, string>>;
-    const arrow = pc.bold(`   ${pc.gray('>')}${pc.blue('>')}${pc.green('>')}   `);
+    const arrow = pc.bold(`   ${V.arrow}   `);
 
     // 使用对齐后的字符串构建 choicesCategory
     for (const info of updateInfos) {
@@ -1290,7 +1290,7 @@ class pm {
         console.log(pc.yellow(this.CONF.i18n.package.commands.search.result.error.empty));
       }
     } catch (error) {
-      console.log(pc.red(`${this.CONF.i18n.package.commands.search.result.error.abnormal}\n${error}`));
+      console.log(pc.red(`x ${this.CONF.i18n.package.commands.search.result.error.abnormal}\n${error}`));
     }
   }
 
