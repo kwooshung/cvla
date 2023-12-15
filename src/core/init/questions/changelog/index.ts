@@ -32,7 +32,6 @@ const changelog = async (configCommit: IResultConfigCommit): Promise<TConfigChan
     config = {
       file: {
         limit: 10,
-        history: './changelogs',
         save: './changelog'
       },
       translate: {
@@ -66,20 +65,13 @@ const changelog = async (configCommit: IResultConfigCommit): Promise<TConfigChan
     if (config.file) {
       config.file = {
         limit: 10,
-        history: './changelogs',
-        save: './changelog'
+        save: './changelogs'
       };
 
       // 记录多少个版本号的日志
       config.file.limit = await command.prompt.input({
         message: get('changelog.file.limit.message'),
         default: 10
-      });
-
-      // 历史日志存储的目录
-      config.file.history = await command.prompt.input({
-        message: get('changelog.file.history.message'),
-        default: './changelogs'
       });
 
       // 保存日志的文件名

@@ -100,15 +100,14 @@ type TConfigCommit =
 type TChangelogFileConfig =
   | {
       /**
-       * CHANGELOG 文件中记录的条数，0表示不限制，全部记录；默认 10 条，表示每个文件最多记录 10 条，且自动分页，超过 10 条则自动创建新的 CHANGELOG 文件，文件名为 md5(content).md，以此类推
+       * CHANGELOG 文件中记录的条数，0表示不限制，全部记录；默认 10 条，表示每个文件最多记录 10 条，且自动分页，超过 limit 条则自动创建新的 CHANGELOG 文件，文件名为 md5{content}.md，以此类推；
+       * 若是没有满足 limit 条数，则会将所有的日志都存放在这个目录中的 index.md 文件中；
+       * 当有不同翻译版本时，会依据语言代码自动创建对应目录，例如：zh-CN/index.md、en/index.md、等；
+       * 你可以在项目根目录下创建一个 CHANGELOG.md 文件，链接到这个目录中的 index.md 文件
        */
       limit?: number;
       /**
-       * 如果limit为0，那么此配置无效；如果limit不为0，那么此配置有效，表示历史记录存储的目录，默认 './changelogs'，如果不存在则自动创建
-       */
-      history?: string;
-      /**
-       * 如果limit为0，所有的日志都存放在这个文件中；当满足 limit 条数时，会将此文件重命名为 md5(content).md，并存在 history 目录下，然后创建新的 CHANGELOG 文件，文件名为此处配置的值；
+       * 日志存储的目录
        */
       save?: string;
     }
@@ -160,6 +159,42 @@ type TChangelogTemplateConfig =
     }
   | false
   | 'default';
+
+/**
+ * 类型：Git 提交信息
+ */
+type TGitMessage = {
+  /**
+   * 提交 ID
+   */
+  id: string;
+  /**
+   * 提交信息
+   */
+  message: string;
+};
+
+/**
+ * 类型：日志信息
+ */
+type TGitMessageToChangeLog = {
+  /**
+   * 名称，tag版本号
+   */
+  name: string;
+  /**
+   * 日期
+   */
+  date: string;
+  /**
+   * 时间
+   */
+  time: string;
+  /**
+   * 消息列表
+   */
+  list: TGitMessage[];
+};
 
 /**
  * 类型：包管理器命令
@@ -775,6 +810,8 @@ export {
   TChangelogFileConfig,
   TChangelogTranslateConfig,
   TChangelogTemplateConfig,
+  TGitMessage,
+  TGitMessageToChangeLog,
   TpackageManagerCommands,
   IPackageManagerConfig,
   TConfigPackage,

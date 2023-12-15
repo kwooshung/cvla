@@ -24,6 +24,9 @@ class gitControl {
    */
   private VersionState: 'upgrade' | 'specify' | 'downgrade' | 'prerelease' | '..' = 'upgrade';
 
+  /**
+   * 私有属性：package.json
+   */
   private PACK: IPackageJson;
 
   /**
@@ -634,22 +637,6 @@ class gitControl {
   }
 
   /**
-   * 私有函数：git > version > 版本是否存在
-   * @param {string} version 版本号
-   * @returns {Promise<boolean>} 是否存在
-   */
-  private async versionExistsTag(version: string): Promise<boolean> {
-    const { stdout, stderr } = await command.execute('git tag -l');
-
-    if (!stderr && stdout) {
-      const tags = stdout.split('\n');
-      return tags.includes(version);
-    }
-
-    return false;
-  }
-
-  /**
    * 私有函数：git > version > 获取前一个版本号
    * @param {string[]} tags 所有版本号
    * @param {string} value 当前版本号
@@ -911,7 +898,7 @@ class gitControl {
         const versionFlag = await this.versionFlag();
         if (versionFlag) {
           const newVersion = V.normalize(`${versionType}${versionFlag}`, true);
-          isExists = await this.versionExistsTag(newVersion);
+          isExists = await git.tag.exists(newVersion);
 
           if (isExists) {
             console.log(pc.red(`x ${convert.replacePlaceholders(this.CONF.i18n.git.version.error.exists, pc.green(newVersion))}`));
@@ -940,7 +927,7 @@ class gitControl {
 
     if (version) {
       version = V.normalize(version, true);
-      const isExists = await this.versionExistsTag(version);
+      const isExists = await git.tag.exists(version);
 
       if (isExists) {
         console.log(pc.red(`x ${convert.replacePlaceholders(this.CONF.i18n.git.version.error.exists, pc.green(version))}`));
@@ -959,139 +946,130 @@ class gitControl {
    */
   private async versionDowngrade(): Promise<void> {
     let error: boolean = true;
-    const { stdout, stderr } = await command.execute('git tag -l');
+    const tags = await git.tag.get.all();
 
-    if (!stderr && stdout) {
-      let tags = stdout.split('\n');
+    if (tags.length) {
+      error = false;
 
-      if (tags.length) {
-        tags = tags.filter((tag: string) => tag);
-        tags.sort(semver.rcompare);
+      let choices = [];
 
-        if (tags.length) {
-          error = false;
+      for (const val of tags) {
+        const select = {
+          name: val,
+          value: val
+        };
 
-          let choices = [];
+        choices.push(select);
+      }
 
-          for (const val of tags) {
-            const select = {
-              name: val,
-              value: val
-            };
+      // 添加返回上一级
+      this.addBack(choices);
 
-            choices.push(select);
-          }
+      // 列出所有版本号，表示git要撤回的版本号
+      const revokeVersion = await command.prompt.select({
+        message: this.CONF.i18n.git.version.downgrade.select.message,
+        choices
+      });
 
-          // 添加返回上一级
-          this.addBack(choices);
-
-          // 列出所有版本号，表示git要撤回的版本号
-          const revokeVersion = await command.prompt.select({
-            message: this.CONF.i18n.git.version.downgrade.select.message,
-            choices
+      if (revokeVersion) {
+        // 如果选择了版本号，则进行降级操作
+        if (revokeVersion === '..') {
+          cs.clear.lastLine();
+        } else {
+          // 询问是否修改 package.json 中的版本号
+          const changePackageJson = await command.prompt.select({
+            message: this.CONF.i18n.git.version.downgrade.select.confirm.message,
+            choices: [
+              {
+                name: this.CONF.i18n.yes,
+                value: true
+              },
+              {
+                name: this.CONF.i18n.no,
+                value: false
+              }
+            ],
+            default: this.CONF.i18n.git.version.downgrade.select.confirm.default
           });
 
-          if (revokeVersion) {
-            // 如果选择了版本号，则进行降级操作
-            if (revokeVersion === '..') {
-              cs.clear.lastLine();
-            } else {
-              // 询问是否修改 package.json 中的版本号
-              const changePackageJson = await command.prompt.select({
-                message: this.CONF.i18n.git.version.downgrade.select.confirm.message,
-                choices: [
-                  {
-                    name: this.CONF.i18n.yes,
-                    value: true
-                  },
-                  {
-                    name: this.CONF.i18n.no,
-                    value: false
-                  }
-                ],
-                default: this.CONF.i18n.git.version.downgrade.select.confirm.default
-              });
+          // 如果需要修改 package.json 中的版本号
+          if (changePackageJson) {
+            // 获取前一个Tag版本号
+            const prevTagVersion = this.versionGetPrevTag(tags, revokeVersion);
 
-              // 如果需要修改 package.json 中的版本号
-              if (changePackageJson) {
-                // 获取前一个Tag版本号
-                const prevTagVersion = this.versionGetPrevTag(tags, revokeVersion);
+            // 自动计算上一个版本的版本号
+            const autoVersion = V.decrement(revokeVersion);
 
-                // 自动计算上一个版本的版本号
-                const autoVersion = V.decrement(revokeVersion);
+            const choicePrev = `${V.normalize(revokeVersion)} ${V.arrow} ${pc.bold(pc.green(V.normalize(prevTagVersion)))}`;
+            const choiceAuto = `${V.normalize(revokeVersion)} ${V.arrow} ${pc.bold(pc.green(V.normalize(autoVersion)))}`;
 
-                const choicePrev = `${V.normalize(revokeVersion)} ${V.arrow} ${pc.bold(pc.green(V.normalize(prevTagVersion)))}`;
-                const choiceAuto = `${V.normalize(revokeVersion)} ${V.arrow} ${pc.bold(pc.green(V.normalize(autoVersion)))}`;
-
-                choices = [
-                  {
-                    name: choicePrev,
-                    value: prevTagVersion,
-                    description: this.CONF.i18n.git.version.downgrade.select.confirm.change.descriptions.prevtag
-                  }
-                ];
-
-                if (V.normalize(autoVersion, true) !== V.normalize(prevTagVersion, true)) {
-                  choices.push({
-                    name: choiceAuto,
-                    value: autoVersion,
-                    description: this.CONF.i18n.git.version.downgrade.select.confirm.change.descriptions.auto
-                  });
-                }
-
-                choices.push({
-                  name: this.CONF.i18n.git.version.downgrade.select.confirm.change.specify.message,
-                  value: 'specify',
-                  description: this.CONF.i18n.git.version.specify.description
-                });
-
-                // 添加返回上一级
-                this.addBack(choices);
-
-                // 获取选择的版本号
-                let packageJsonVersion = await command.prompt.select({
-                  message: this.CONF.i18n.git.version.downgrade.select.confirm.change.message,
-                  choices
-                });
-
-                if (packageJsonVersion === '..') {
-                  cs.clear.lastLine(3);
-                  await this.versionDowngrade();
-                } else if (packageJsonVersion === 'specify') {
-                  packageJsonVersion = await this.versionSpecifyInput();
-                }
-
-                this.PACK.data['version'] = V.normalize(packageJsonVersion, true);
-                _package.write(this.PACK);
+            choices = [
+              {
+                name: choicePrev,
+                value: prevTagVersion,
+                description: this.CONF.i18n.git.version.downgrade.select.confirm.change.descriptions.prevtag
               }
+            ];
 
-              // 开始撤销 git 版本号，首先是删除本地版本号
-              await this.parentCmd('git', ['tag', '-d', revokeVersion]);
-
-              // 询问是否删除远程版本号
-              const deleteRemote = await command.prompt.select({
-                message: this.CONF.i18n.git.version.downgrade.select.confirm.remote.message,
-                choices: [
-                  {
-                    name: this.CONF.i18n.yes,
-                    value: true
-                  },
-                  {
-                    name: this.CONF.i18n.no,
-                    value: false
-                  }
-                ],
-                default: this.CONF.i18n.git.version.downgrade.select.confirm.remote.default
+            if (V.normalize(autoVersion, true) !== V.normalize(prevTagVersion, true)) {
+              choices.push({
+                name: choiceAuto,
+                value: autoVersion,
+                description: this.CONF.i18n.git.version.downgrade.select.confirm.change.descriptions.auto
               });
-
-              if (deleteRemote) {
-                //await this.parentCmd('git', ['push', 'origin', '--delete', revokeVersion]);// git push origin --delete v1.0.0，但是这个命令，如果标签和分支重名的情况下，可能会误删分支，因此，还是使用下面的命令
-                await this.parentCmd('git', ['push', 'origin', `:refs/tags/${revokeVersion}`]);
-              }
-
-              console.log('\n\n\n');
             }
+
+            choices.push({
+              name: this.CONF.i18n.git.version.downgrade.select.confirm.change.specify.message,
+              value: 'specify',
+              description: this.CONF.i18n.git.version.specify.description
+            });
+
+            // 添加返回上一级
+            this.addBack(choices);
+
+            // 获取选择的版本号
+            let packageJsonVersion = await command.prompt.select({
+              message: this.CONF.i18n.git.version.downgrade.select.confirm.change.message,
+              choices
+            });
+
+            if (packageJsonVersion === '..') {
+              cs.clear.lastLine(3);
+              await this.versionDowngrade();
+            } else if (packageJsonVersion === 'specify') {
+              packageJsonVersion = await this.versionSpecifyInput();
+            }
+
+            this.PACK.data['version'] = V.normalize(packageJsonVersion, true);
+            _package.write(this.PACK);
           }
+
+          // 开始撤销 git 版本号，首先是删除本地版本号
+          await this.parentCmd('git', ['tag', '-d', revokeVersion]);
+
+          // 询问是否删除远程版本号
+          const deleteRemote = await command.prompt.select({
+            message: this.CONF.i18n.git.version.downgrade.select.confirm.remote.message,
+            choices: [
+              {
+                name: this.CONF.i18n.yes,
+                value: true
+              },
+              {
+                name: this.CONF.i18n.no,
+                value: false
+              }
+            ],
+            default: this.CONF.i18n.git.version.downgrade.select.confirm.remote.default
+          });
+
+          if (deleteRemote) {
+            //await this.parentCmd('git', ['push', 'origin', '--delete', revokeVersion]);// git push origin --delete v1.0.0，但是这个命令，如果标签和分支重名的情况下，可能会误删分支，因此，还是使用下面的命令
+            await this.parentCmd('git', ['push', 'origin', `:refs/tags/${revokeVersion}`]);
+          }
+
+          console.log('\n\n\n');
         }
       }
     }

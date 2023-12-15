@@ -89,28 +89,15 @@ const list = {
     '  表示每个文件最多记录 10 条，且自动分页',
     '  超过 10 条则自动创建新的 CHANGELOG 文件，文件名为 md5(content).md，以此类推',
     '',
+    '  若是没有满足 limit 条数，则会将所有的日志都存放在这个目录中的 index.md 文件中；',
+    '  当有不同翻译版本时，会依据语言代码自动创建对应目录，例如：zh-CN/index.md、en/index.md、等；',
+    '  你可以在项目根目录下创建一个 CHANGELOG.md 文件，链接到这个目录中的 index.md 文件；',
+    '',
     '  如果已应用此配置，并且生成了日志，它只会影响后续生成的日志',
     '  如果想要全部应用新的配置',
-    '    需要先删除 history 目录下的所有文件以及 save 中指定的文件'
+    '    使用 `日志管理` 功能，`重新生成日志` 或 `清理日志` 后，再 `重新生成`'
   ],
-  'changelog.history': [
-    "历史日志存储目录，字符串，如：'./changelogs'",
-    '  如果limit为0，那么此配置无效',
-    '  如果limit不为0，那么此配置有效',
-    "  表示历史日志存储的目录，默认 './changelogs'，如果不存在则自动创建"
-  ],
-  'changelog.save': [
-    '日志保存的文件名，不要带有扩展名，例如：',
-    "  'CHANGELOG.txt' => 'CHANGELOG.txt.md'",
-    "  'CHANGELOG.md' => 'CHANGELOG.md.md'",
-    "  'CHANGELOG' => 'CHANGELOG.md'",
-    '',
-    "如果 'limit' 为 0",
-    '  那么所有的日志都会保存到此文件中',
-    "如果 'limit' 为 10",
-    '  只会保存最新的10条日志到此文件中',
-    "  其余的日志会保存到 'history' 目录中, 以 md5(content).md 为文件名，且每条10个版本日志为一个文件"
-  ],
+  'changelog.save': '日志存储的目录',
   'changelog.translate': '日志翻译相关配置',
   'changelog.translate.origin': ["CHANGELOG 文件的原始语言，default 'zh-CN'", '  支持的语言列表：https://cloud.google.com/translate/docs/languages'],
   'changelog.translate.target': ["CHANGELOG 文件的目标语言，default 'en'，可以是数组，表示翻译成多种语言", '  支持的语言列表：https://cloud.google.com/translate/docs/languages'],

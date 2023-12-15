@@ -147,13 +147,9 @@ const lang = {
         message: '记录多少个版本号的日志？',
         description: '默认为 10，不是只能写10行日志，而是10个版本的记录'
       },
-      history: {
-        message: '历史日志存储的目录？',
-        description: '默认为 ./changelogs'
-      },
       save: {
-        message: '保存日志的文件名？',
-        description: '默认为 ./changelog'
+        message: '保存日志的目录？',
+        description: '默认为 ./changelogs'
       }
     },
     translate: {

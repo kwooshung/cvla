@@ -85,34 +85,21 @@ const list = {
   changelog: 'Changelog, automatically generates logs based on Git commit records',
   'changelog.file': 'Changelog file related configuration',
   'changelog.file.limit': [
-    'Number of version records in the CHANGELOG file',
-    '  0 means no limit, all records;',
-    '  Default is 10 versions of logs (not just 10 lines of logs, but logs of 10 versions)',
-    '  Means each file records up to 10 versions, and automatically paginates',
-    '  If it exceeds 10, it automatically creates a new CHANGELOG file, the filename is md5(content).md, and so on',
+    'The number of recorded versions in the CHANGELOG file',
+    '0 means no limit, all records; ',
+    'Default 10 logs with version numbers (not only 10 lines of logs can be written, but 10 versions of records)',
+    'Indicates that each file can record up to 10 records and automatically paginate',
+    'If there are more than 10 items, a new CHANGELOG file will be automatically created with the file name md5(content).md, and so on',
     '',
-    '  If this configuration has been applied and logs have been generated, it will only affect subsequent logs',
-    '  If you want to apply the new configuration to all',
-    '    You need to first delete all files in the history directory and the file specified in save'
-  ],
-  'changelog.history': [
-    "History log storage directory, string, e.g., './changelogs'",
-    '  If limit is 0, then this configuration is invalid',
-    '  If limit is not 0, then this configuration is valid',
-    "  Means the history log storage directory, default './changelogs', if it does not exist, it will be created automatically"
-  ],
-  'changelog.save': [
-    'Filename for saving the log, without extension, for example:',
-    "  'CHANGELOG.txt' => 'CHANGELOG.txt.md'",
-    "  'CHANGELOG.md' => 'CHANGELOG.md.md'",
-    "  'CHANGELOG' => 'CHANGELOG.md'",
+    'If the limit number is not met, all logs will be stored in the index.md file in this directory;',
+    'When there are different translation versions, corresponding directories will be automatically created based on the language code, such as: zh-CN/index.md, en/index.md, etc.;',
+    'You can create a CHANGELOG.md file in the project root directory and link to the index.md file in this directory;',
     '',
-    "If 'limit' is 0",
-    '  Then all logs will be saved in this file',
-    "If 'limit' is 10",
-    '  Only the latest 10 logs will be saved in this file',
-    "  The rest of the logs will be saved in the 'history' directory, with filenames as md5(content).md, and each file contains 10 versions of logs"
+    'If this configuration has been applied and logs are generated, it will only affect subsequently generated logs',
+    'If you want to apply the new configuration to all',
+    'Use the `log management` function, `regenerate the log` or `clean the log`, and then `regenerate`'
   ],
+  'changelog.save': 'Log storage directory',
   'changelog.translate': 'Changelog translation related configuration',
   'changelog.translate.origin': ["Original language of the CHANGELOG file, default 'zh-CN'", '  Supported languages list: https://cloud.google.com/translate/docs/languages'],
   'changelog.translate.target': [

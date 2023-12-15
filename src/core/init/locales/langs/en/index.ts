@@ -151,13 +151,9 @@ const lang = {
         message: 'How many version logs to record?',
         description: 'Default is 10, not 10 lines of logs, but 10 versions of logs'
       },
-      history: {
-        message: 'Directory for storing historical logs?',
-        description: 'Default is ./changelogs'
-      },
       save: {
-        message: 'Filename for saving the log?',
-        description: 'Default is ./changelog'
+        message: 'Directory to save logs?',
+        description: 'Default is ./changelogs'
       }
     },
     translate: {

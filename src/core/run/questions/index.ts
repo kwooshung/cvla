@@ -10,6 +10,7 @@ import menuState from './_state';
 import scripts from './scripts';
 import pm from './pm';
 import gitControl from './gitControl';
+import changelog from './changelog';
 import help from '@/core/help';
 
 /**
@@ -132,7 +133,7 @@ class questions {
           await pm.getInstance(this.CONF, this.addBack, this.cmd).select();
           break;
         case 'changelog':
-          await this.changelog();
+          await changelog.getInstance(this.CONF, this.addBack, this.cmd).select();
           break;
         default:
           await this.help();
@@ -201,12 +202,6 @@ class questions {
     });
     choices.push(command.prompt.separator(sep));
   }
-
-  /**
-   * 私有函数：changelog
-   * @returns {void} 无返回值
-   */
-  private async changelog(): Promise<void> {}
 }
 
 export default questions;

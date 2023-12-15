@@ -1,9 +1,12 @@
 import child_process from 'child_process';
-import util from 'util';
 import iconv from 'iconv-lite';
+import util from 'util';
 
 // 将 child_process.exec 转换为 Promise 形式
 const execPromise = util.promisify(child_process.exec);
+
+// 设置缓冲区大小为 1MB
+const maxBuffer = 1024 * 1024;
 
 /**
  * 执行命令
@@ -14,7 +17,7 @@ const execPromise = util.promisify(child_process.exec);
  */
 const execute = async (command: string, encoding: string = 'gbk'): Promise<{ stdout: string; stderr: string }> => {
   try {
-    const { stdout, stderr } = await execPromise(command, { encoding: 'buffer' });
+    const { stdout, stderr } = await execPromise(command, { encoding: 'buffer', maxBuffer });
 
     return {
       stdout: iconv.decode(stdout, encoding),
