@@ -151,11 +151,17 @@ class changelog {
       if (buildVersionList.length > 0) {
         const list: TGitMessageToChangeLog[] = await git.message.toChangeLog(buildVersionList);
 
-        // if (list.length > 0) {
-        //   const content: string = [];
+        if (list.length > 0) {
+          console.log(list);
+          console.log('\n\n\n');
+          console.log('\n\n\n');
+          console.log('\n\n\n');
+          console.log('\n\n\n');
+          console.log('\n\n\n');
+          //   const content: string = [];
 
-        //   for()
-        // }
+          //   for()
+        }
       }
     }
   }
