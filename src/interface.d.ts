@@ -149,6 +149,10 @@ type TChangelogTemplateConfig =
        */
       content: string;
       /**
+       * commit url
+       */
+      commiturl: string;
+      /**
        * 每个版本之间的分隔符
        */
       separator: string;
@@ -159,6 +163,36 @@ type TChangelogTemplateConfig =
     }
   | false
   | 'default';
+
+/**
+ * 类型：Git消息解析结构
+ */
+type TCommitCategory = {
+  /**
+   * 完整的类型
+   */
+  full: string;
+  /**
+   * 表情符号和类型
+   */
+  emojiOrType: string;
+  /**
+   * 表情符号，用于视觉标识
+   */
+  emoji: string;
+  /**
+   * 类型
+   */
+  type: string;
+  /**
+   * 范围
+   */
+  scope: string;
+  /**
+   * 信息
+   */
+  message: string;
+};
 
 /**
  * 类型：Git 提交信息
@@ -810,6 +844,7 @@ export {
   TChangelogFileConfig,
   TChangelogTranslateConfig,
   TChangelogTemplateConfig,
+  TCommitCategory,
   TGitMessage,
   TGitMessageToChangeLog,
   TpackageManagerCommands,

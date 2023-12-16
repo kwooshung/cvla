@@ -27,7 +27,7 @@ const init = async (conf: IConfigResult | false): Promise<void> => {
     const configVersion = await version();
 
     // 配置：changelog
-    const configChangelog = await changelog(configCommit);
+    const configChangelog = await changelog(configCommit, packjson.data);
 
     // 保存配置
     await save(configBase, configCommit, configPackage, configVersion, configChangelog, packjson.indentation, packjson.data, _isBool(conf) ? '' : conf.path);

@@ -188,6 +188,20 @@ const lang = {
       content: {
         message: 'Content template for each log entry (leave blank for default template)?'
       },
+      commiturl: {
+        message: 'Do you add commit url at the end of each log? ',
+        platforms: {
+          message: 'Your code hosting platform? ',
+          other: {
+            message: 'Other address? ',
+            input: {
+              message: 'Please enter the complete url template'
+            }
+          }
+        },
+        author: 'author',
+        project: 'project name'
+      },
       separator: {
         message: 'Separator between versions (leave blank for default separator: \\n\\n---\\n\\n)?',
         description: ''

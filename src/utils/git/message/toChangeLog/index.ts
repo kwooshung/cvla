@@ -26,8 +26,6 @@ const toChangeLog = async (tags: string[] = []): Promise<TGitMessageToChangeLog[
     // 执行 git log 命令获取特定范围的提交
     const cmd = `git --no-pager log ${tagRange} --pretty=format:"%h${sep}%ad${sep}%s" --date=format:"%Y-%m-%d %H:%M:%S"`;
 
-    console.log(`cmd: ${cmd}`);
-    console.log('==================================');
     const { stdout, stderr } = await command.execute(cmd, 'utf-8');
 
     if (!stderr && stdout) {
@@ -53,7 +51,7 @@ const toChangeLog = async (tags: string[] = []): Promise<TGitMessageToChangeLog[
     }
   }
 
-  return result;
+  return result.reverse();
 };
 
 export default toChangeLog;

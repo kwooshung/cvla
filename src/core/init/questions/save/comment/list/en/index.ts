@@ -118,11 +118,21 @@ const list = {
   'changelog.template': 'Changelog template related configuration',
   'changelog.template.before': 'Header template of the CHANGELOG file, supports md syntax',
   'changelog.template.content': [
-    'Content template of the CHANGELOG file, supports md syntax',
-    '  Default value:',
-    '    ## 🎉 {{tag}} `{{date}}`',
-    '    {{logs}}',
-    '  Logs will be categorized according to commit type order'
+    'Content template of CHANGELOG file, supports md syntax',
+    '  default value:',
+    ' ## 🎉 {{tag}} `{{date}}`',
+    '{{logs}}',
+    'Logs will be sorted in order of submission type',
+    'The currently supported variables are as follows:',
+    'tag:tag name',
+    'date: date, such as: 2023-12-15',
+    ' time: time, such as: 12:15:30',
+    'logs: log content'
+  ],
+  'changelog.template.commiturl': [
+    'In the CHANGELOG file, the submission id of the template of each log,',
+    'is used to jump to the link to the submission record details page,',
+    'if it is empty or left blank, no link will be generated '
   ],
   'changelog.template.separator': 'Separator between each version log in the CHANGELOG file, supports md syntax',
   'changelog.template.after': 'Footer template of the CHANGELOG file, supports md syntax',

@@ -112,7 +112,19 @@ const list = {
   ],
   'changelog.template': '日志模板相关配置',
   'changelog.template.before': 'CHANGELOG 文件的头部模板，支持 md 语法',
-  'changelog.template.content': ['CHANGELOG 文件的内容模板，支持 md 语法', '  默认值：', '    ## 🎉 {{tag}} `{{date}}`', '    {{logs}}', '  日志会按照提交类型顺序分类'],
+  'changelog.template.content': [
+    'CHANGELOG 文件的内容模板，支持 md 语法',
+    '  默认值：',
+    '    ## 🎉 {{tag}} `{{date}}`',
+    '    {{logs}}',
+    '  日志会按照提交类型顺序分类',
+    '  目前支持的变量如下：',
+    '    tag：tag名',
+    '    date：日期，如：2023-12-15',
+    '    time：时间，如：12:15:30',
+    '    logs：日志内容'
+  ],
+  'changelog.template.commiturl': ['CHANGELOG 文件中，每条日志的模板的提交id，', '用于跳转到提交记录详情页链接，', '为空或不填则不会生成链接'],
   'changelog.template.separator': 'CHANGELOG 文件中，每个版本日志之间的分隔符，支持 md 语法',
   'changelog.template.after': 'CHANGELOG 文件的尾部模板，支持 md 语法',
   'changelog.poweredby': [

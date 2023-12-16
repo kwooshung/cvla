@@ -184,6 +184,20 @@ const lang = {
       content: {
         message: '每条日志，内容模版（留空则使用默认模版）？'
       },
+      commiturl: {
+        message: '每条日志，是否都在尾部加入 commit url？',
+        plateforms: {
+          message: '你的代码托管平台？',
+          other: {
+            message: '其他地址？',
+            input: {
+              message: '请输入完整的 url 模版'
+            }
+          }
+        },
+        author: '作者名',
+        project: '项目名'
+      },
       separator: {
         message: '每个版本之间的分隔符（留空则使用默认分隔符：\\n\\n---\\n\\n）？',
         description: ''

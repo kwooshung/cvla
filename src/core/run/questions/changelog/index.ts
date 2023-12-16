@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import ora, { Ora } from 'ora';
-import semver from 'semver';
 import pc from 'picocolors';
 import { range as _range, clone as _clone, isUndefined as _isUn, isPlainObject as _isObj, isBoolean as _isBool, isArray as _isArr, isString as _isStr } from 'lodash-es';
-import { IConfig, IGitCommitData, IPackageJson, IPackageJsonData, TGitCustomField, TGitMessageToChangeLog } from '@/interface';
-import { command, convert, console as cs, git, package as _package, io, translate, version as V } from '@/utils';
+import { IConfig, IPackageJson, TGitMessageToChangeLog } from '@/interface';
+import { command, convert, console as cs, git, package as _package, io } from '@/utils';
 
 import menuState from '../_state';
 
@@ -149,18 +148,46 @@ class changelog {
       const buildVersionList = await this.readHistoryBuildList(spinner, save, tags);
 
       if (buildVersionList.length > 0) {
+        const emojis = [];
+        const types = [];
+
+        for (const val of this.CONF.commit['types']) {
+          emojis.push(val.emoji.trim());
+          types.push(val.type.trim());
+        }
+
         const list: TGitMessageToChangeLog[] = await git.message.toChangeLog(buildVersionList);
 
-        if (list.length > 0) {
-          console.log(list);
-          console.log('\n\n\n');
-          console.log('\n\n\n');
-          console.log('\n\n\n');
-          console.log('\n\n\n');
-          console.log('\n\n\n');
-          //   const content: string = [];
+        for (const val of list) {
+          const contents = [];
 
-          //   for()
+          const tag = val.name;
+          const date = val.date;
+          const time = val.time;
+          const logs = val.list;
+          const messages = [];
+          const messagesCategory = {};
+          const commiturlTemplate = this.CONF.changelog['template'].commiturl;
+
+          for (const log of logs) {
+            // 日志数组
+            const msgs = [`- ${log.message}`];
+            commiturlTemplate && msgs.push(` ([${log.id.substring(0, 8)}](${convert.replaceTemplate(commiturlTemplate, { id: log.id })}))`);
+
+            // 生成日志内容
+            const msg = msgs.join('');
+
+            // 解析日志内容
+            const { emojiOrType } = git.message.parse(log.message);
+
+            // 如果存在
+            if (emojiOrType) {
+              _isUn(messagesCategory[emojiOrType]) && (messagesCategory[emojiOrType] = []);
+              messagesCategory[emojiOrType].push(msg);
+            } else {
+              messages.push(msg);
+            }
+          }
         }
       }
     }
