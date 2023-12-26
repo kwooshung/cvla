@@ -903,7 +903,7 @@ module.exports = {
         }
       },
       rebuild: {
-        message: '重新生成所有日志',
+        message: '重新生成',
         description: '将会删除之前生成的所有日志文件，重新生成日志文件',
         confirm: {
           message: '此操作可能需要较长的时间，是否继续？',

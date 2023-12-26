@@ -517,6 +517,11 @@ class changelog {
         description: this.CONF.i18n.changelog.build.description
       },
       {
+        name: this.CONF.i18n.changelog.rebuild.message,
+        value: 'rebuild',
+        description: this.CONF.i18n.changelog.rebuild.description
+      },
+      {
         name: this.CONF.i18n.changelog.clean.message,
         value: 'clean',
         description: this.CONF.i18n.changelog.clean.description
@@ -546,8 +551,10 @@ class changelog {
         await this.build();
         break;
       case 'rebuild':
+        await this.rebuild();
         break;
       case 'clean':
+        await this.clean();
         break;
       default:
         break;
@@ -572,8 +579,6 @@ class changelog {
         await this.writeHistory(buildTags);
       }
     }
-
-    await this.delay(300000);
   }
 
   /**
@@ -808,6 +813,32 @@ class changelog {
     spinner.stop();
 
     return result;
+  }
+
+  /**
+   * 公开函数：changelog > 重新生成
+   */
+  public async rebuild(): Promise<void> {
+    if (
+      await command.prompt.select({
+        message: this.CONF.i18n.changelog.rebuild.confirm.message,
+        choices: [
+          {
+            name: this.CONF.i18n.yes,
+            value: true,
+            description: this.CONF.i18n.changelog.rebuild.confirm.description
+          },
+          {
+            name: this.CONF.i18n.no,
+            value: false
+          }
+        ],
+        default: false
+      })
+    ) {
+      await this.clean();
+      await this.build();
+    }
   }
 
   /**
