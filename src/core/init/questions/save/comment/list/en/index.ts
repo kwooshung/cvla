@@ -2,7 +2,11 @@ const list = {
   common: [
     "All configuration items below support this type of configuration. For example, to enable a configuration, just assign 'default', '{}' or 'No configuration item'. This will enable 'default configuration'.",
     "To disable a configuration, just assign 'false'.",
-    "It is recommended to use the command 'cvlar i' to initialize the configuration file."
+    "It is recommended to use the command 'cvlar i' to initialize the configuration file.",
+    '',
+    'Content below',
+    '  {x} is a placeholder',
+    '  {{xxx}} is a variable'
   ],
   commit: 'Git commit, convenient for selectively committing content from the menu',
   'commit.type': [
@@ -76,6 +80,7 @@ const list = {
     '    3. The new versions of npm/yarn/pnpm commands are all compatible with each other.',
     '       If there is any incompatibility, please modify the following commands or upgrade the package management tool'
   ],
+  version: 'Version management, can be used to upgrade, cancel version number, automatic upgrade and submission',
   'version.validate': [
     'Regular expression for validating version numbers, regex object',
     '  Regex explanation: https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string',
@@ -103,44 +108,66 @@ const list = {
   'changelog.translate': 'Changelog translation related configuration',
   'changelog.translate.origin': ["Original language of the CHANGELOG file, default 'zh-CN'", '  Supported languages list: https://cloud.google.com/translate/docs/languages'],
   'changelog.translate.target': [
-    "Target language for the CHANGELOG file, default 'en', can be an array, indicating translation into multiple languages",
-    '  Supported languages list: https://cloud.google.com/translate/docs/languages'
-  ],
-  'changelog.translate.statement': [
-    'Translation statement starting marker, default value: > 🚩',
-    "Supports 'md syntax'",
-    "  Only when 'translated by translation tool', this statement will be added at the beginning of the translation",
-    '  For example:',
-    '    The following content is automatically translated by Google Translate and may be inaccurate',
-    "    This statement will also be translated into different versions by the 'translation tool'",
-    '  Reference: https://github.com/kwooshung/cvlar/releases'
+    "The target language of the CHANGELOG file, default 'en', can be an array, indicating translation into multiple languages",
+    "If a translated version of the log already exists, it is only valid for the newly generated log. You can select 'Regenerate all logs'",
+    'Supported language list: https://cloud.google.com/translate/docs/languages'
   ],
   'changelog.template': 'Changelog template related configuration',
-  'changelog.template.before': 'Header template of the CHANGELOG file, supports md syntax',
   'changelog.template.content': [
     'Content template of CHANGELOG file, supports md syntax',
     '  default value:',
     ' ## 🎉 {{tag}} `{{date}}`',
     '{{logs}}',
     'Logs will be sorted in order of submission type',
+    '',
     'The currently supported variables are as follows:',
-    'tag:tag name',
-    'date: date, such as: 2023-12-15',
-    ' time: time, such as: 12:15:30',
-    'logs: log content'
+    '  tag:tag name',
+    '  date: date, e.g., 2023-12-17',
+    '  time: time, e.g., 04:59:39',
+    '  logs: log content'
   ],
-  'changelog.template.commiturl': [
-    'In the CHANGELOG file, the submission id of the template of each log,',
-    'is used to jump to the link to the submission record details page,',
-    'if it is empty or left blank, no link will be generated '
+  'changelog.template.logs': [
+    'Categorize according to type, specific log content',
+    'If a translated version of the log already exists,',
+    'it is only valid for the newly generated log.',
+    "You can choose 'Regenerate all logs'"
   ],
+  'changelog.template.logs.title': 'Title template',
+  'changelog.template.logs.title.standard': [
+    'The standard title template, that is, the template when the `submission type` exists',
+    '',
+    'Usable variables:',
+    '  emoji: emoji corresponding to the `submission type`',
+    '  type: `submission type`, the first letter of the variable is capitalized, the first letter of the content will also be capitalized',
+    '  scope: submission scope, the first letter of the variable is capitalized, the first letter of the content will also be capitalized',
+    '  date: date, e.g., 2023-12-17',
+    '  time: time, e.g., 04:59:39'
+  ],
+  'changelog.template.logs.title.other': 'Other title templates, that is, templates when `submission type` does not exist, titles that cannot be classified according to `submission type`',
+  'changelog.template.logs.item': [
+    'Template for each log message',
+    '',
+    'Available variables:',
+    '  message: log message, if the variable starts with a capital letter, the content will start with a capital letter',
+    '  commitlink: link to the commit details page',
+    '  date: date, e.g., 2023-12-17',
+    '  time: time, e.g., 04:59:39'
+  ],
+  'changelog.template.logs.commitlink': ['In the CHANGELOG file, each log entry has a specific commit details page', 'Used to link to the commit record details page'],
+  'changelog.template.logs.commitlink.text': [
+    'Link Text',
+    '  id: Represents the commit ID',
+    '   [substr:n,l]:',
+    '   n (required parameter): Indicates the starting character for substring extraction. If l is not present, this parameter represents extracting from 0 to n characters',
+    '   l (optional parameter): Indicates the number of characters to extract'
+  ],
+  'changelog.template.logs.commitlink.url': ['Link address', '', 'Available variables:', 'id: represents the full commit id, usually 40 characters long'],
   'changelog.template.separator': 'Separator between each version log in the CHANGELOG file, supports md syntax',
-  'changelog.template.after': 'Footer template of the CHANGELOG file, supports md syntax',
   'changelog.poweredby': [
     'Boolean type, default: true',
     "Whether to add the following markdown code at the end of each 'Release' in 'Github Release':",
-    '  This [Changelog](/{0}), Powered by @kwooshung / [cvlar](https://github.com/kwooshung/cvlar/)',
-    "  Here, `{0}` represents the relative path to the 'Changelog' entry file in your repository.",
+    '  This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)',
+    "  Here, `CHANGELOG.md` represents the relative path to the 'Changelog' entry file in your repository.",
     '  Reference: https://github.com/kwooshung/cvlar/releases'
   ],
   i18n: ['Used for the internationalization of this tool’s prompt messages', 'Can be customized in any language, translate the following content into the desired language as needed']

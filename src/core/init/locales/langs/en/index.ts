@@ -170,44 +170,39 @@ const lang = {
       target: {
         message: `Target language?`,
         description: 'Default is English'
-      },
-      statement: {
-        message: 'Translation statement?',
-        description:
-          '    Note: A different translation statement will be displayed for different languages, stating: “The following content is automatically translated by Google Translate and may not be accurate.”\n  Preview: > 🚩 The following content is automatically translated by Google Translate and may not be accurate.',
-        content: {
-          message: 'Statement starting content?'
-        }
       }
     },
     template: {
       message: 'Configure template?',
-      before: {
-        message: 'Header content template for each log file (leave blank for no header)?'
-      },
       content: {
         message: 'Content template for each log entry (leave blank for default template)?'
       },
-      commiturl: {
-        message: 'Do you add commit url at the end of each log? ',
-        platforms: {
-          message: 'Your code hosting platform? ',
+      logs: {
+        title: {
+          standard: {
+            message: 'Standard log title template, supports `type`, `scope`, `date`, `time` variables (default template applies if left blank)'
+          },
           other: {
-            message: 'Other address? ',
-            input: {
-              message: 'Please enter the complete url template'
-            }
+            message: "Alternate log title template, used when logs can't be categorized by `commit type`"
           }
         },
-        author: 'author',
-        project: 'project name'
-      },
-      separator: {
-        message: 'Separator between versions (leave blank for default separator: \\n\\n---\\n\\n)?',
-        description: ''
-      },
-      after: {
-        message: 'Footer content template for each log file (leave blank for no footer)?'
+        item: {
+          message: 'Each log entry, content template, can use the variables `message`, `date`, `time`, `commitlink` (if left blank, the default template will be used).'
+        },
+        commitlink: {
+          message: 'Do you add commit link at the end of each log? ',
+          platforms: {
+            message: 'Your code hosting platform? ',
+            other: {
+              message: 'Other address? ',
+              input: {
+                message: 'Please enter the complete url template'
+              }
+            }
+          },
+          author: 'Author',
+          repository: 'Pepository name, supports `author`, `repository`, `id` variables'
+        }
       }
     },
     poweredby: {

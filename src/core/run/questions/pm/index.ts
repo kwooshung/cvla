@@ -351,7 +351,7 @@ class pm {
         color = pc.magenta;
         break;
       default:
-        color = pc.blue;
+        color = pc.gray;
         break;
     }
     return color;
@@ -826,7 +826,7 @@ class pm {
           nonsemver: undefined
         });
 
-      packageNames[info.package][info.type] = this.createNpmLink(pc.bold(pc.cyan(info.package)), `package/${info.package}`);
+      packageNames[info.package][info.type] = this.createNpmLink(pc.bold(pc.blue(info.package)), `package/${info.package}`);
       if (info.devDep) {
         devOrProds[info.package][info.type] = pc.yellow(this.CONF.i18n.package.commands.update.dev);
       } else {
@@ -894,7 +894,7 @@ class pm {
       if (Object.prototype.hasOwnProperty.call(choicesTable, key)) {
         const item = choicesTable[key];
 
-        choicesItems.push(command.prompt.separator(groups[key]));
+        choicesItems.push(command.prompt.separator(groups[key], false));
         versionTypes.forEach((type: TPackageVersionType) => {
           if (!_isUn(item[type])) {
             _isUn(choicesTypeTips[type]) && (choicesTypeTips[type] = this.updateSelectSeparator(type, 'all', 'table'));

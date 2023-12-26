@@ -127,39 +127,63 @@ type TChangelogTranslateConfig =
        * 目标语言，可以是一个字符串或字符串数组
        */
       target: string | string[];
-      /**
-       * 说明文字，如果为 false，则不显示翻译声明
-       */
-      statement?: string | false | 'default';
     }
   | false
   | 'default';
 
 /**
+ * 类型：日志模板标题
+ */
+type TChangelogTemplateLogConfigTitle = {
+  /**
+   * 标准标题
+   */
+  standard: string;
+  /**
+   * 其他标题，无法根据 提交类型 分类的标题
+   */
+  other: string;
+};
+
+/**
+ * 类型：日志详情链接
+ */
+type TChangelogTemplateLogCommitLinkConfig = {
+  /**
+   * 链接文本
+   */
+  text: string;
+  /**
+   * 链接地址
+   */
+  url: string;
+};
+
+/**
+ * 类型：日志模板
+ */
+type TChangelogTemplateLogConfig = {
+  // 标题模板
+  title: TChangelogTemplateLogConfigTitle;
+  // 每条日志消息的模板
+  item: string;
+  // CHANGELOG 文件中，每条日志的模板的提交id，用于跳转到提交记录详情页链接，不填则不会生成链接
+  commitlink: TChangelogTemplateLogCommitLinkConfig;
+};
+
+/**
  * 类型：变更日志模板配置
  */
-type TChangelogTemplateConfig =
+type TChangelogTemplate =
   | {
-      /**
-       * 每个模版前的内容
-       */
-      before: string;
       /**
        * 每个模版的内容
        */
       content: string;
       /**
-       * commit url
+       * 日志模板
        */
-      commiturl: string;
-      /**
-       * 每个版本之间的分隔符
-       */
-      separator: string;
-      /**
-       * 每个模版后的内容
-       */
-      after: string;
+      logs: TChangelogTemplateLogConfig;
     }
   | false
   | 'default';
@@ -203,6 +227,14 @@ type TGitMessage = {
    */
   id: string;
   /**
+   * 日期
+   */
+  date: string;
+  /**
+   * 时间
+   */
+  time: string;
+  /**
    * 提交信息
    */
   message: string;
@@ -215,7 +247,7 @@ type TGitMessageToChangeLog = {
   /**
    * 名称，tag版本号
    */
-  name: string;
+  tag: string;
   /**
    * 日期
    */
@@ -231,6 +263,43 @@ type TGitMessageToChangeLog = {
 };
 
 /**
+ * 类型：日志信息 > message > 不带有翻译版本
+ */
+type TChangeLogList = Record<string, string[]>;
+
+/**
+ * 类型：日志信息 > message > 带有翻译版本
+ */
+type TChangeLogLangList = Record<string, TChangeLogList>;
+
+/**
+ * 类型：日志信息
+ */
+type TChangeLog = {
+  /**
+   * 名称，tag版本号
+   */
+  tag: string;
+  /**
+   * 日期
+   */
+  date: string;
+  /**
+   * 时间
+   */
+  time: string;
+  /**
+   * 消息列表
+   */
+  list: TChangeLogList | TChangeLogLangList;
+};
+
+/**
+ * 类型：处理后的日志信息
+ */
+type TChangeLogResult = string | Record<string, string>;
+
+/**
  * 类型：包管理器命令
  */
 type TpackageManagerCommands = Record<string, string> | false | 'default';
@@ -243,6 +312,9 @@ interface IPackageManagerConfig {
    * 管理器类型
    */
   type?: string;
+  /**
+   * 数据源
+   */
   registry?: string;
   /**
    * 包管理器命令
@@ -285,7 +357,7 @@ type TConfigChangelog =
   | {
       file?: TChangelogFileConfig;
       translate?: TChangelogTranslateConfig;
-      template?: TChangelogTemplateConfig;
+      template?: TChangelogTemplate;
       poweredby?: boolean;
     }
   | false
@@ -713,36 +785,6 @@ interface IPackageVersionSemverStandard {
  */
 interface IPackagesVersions {
   /**
-   * 补丁更新
-   */
-  patch: IPackageVersionSemverStandard;
-  /**
-   * 次要更新
-   */
-  minor: IPackageVersionSemverStandard;
-  /**
-   * 主要更新
-   */
-  major: IPackageVersionSemverStandard;
-  /**
-   * 最新预发布版本
-   */
-  prerelease: IPackageVersionSemverStandard;
-  /**
-   * 缺失
-   */
-  missing: boolean;
-  /**
-   * 无更新
-   */
-  no: boolean;
-}
-
-/**
- * 接口：包版本号信息
- */
-interface IPackagesVersions {
-  /**
    * 当前版本
    */
   current: IPackageVersionSemverStandard;
@@ -758,6 +800,10 @@ interface IPackagesVersions {
    * 补丁更新
    */
   patch: IPackageVersionSemverStandard;
+  /**
+   * 预发布版本
+   */
+  prerelease: IPackageVersionSemverStandard;
   /**
    * 缺失
    */
@@ -843,10 +889,17 @@ export {
   TConfigCommit,
   TChangelogFileConfig,
   TChangelogTranslateConfig,
-  TChangelogTemplateConfig,
+  TChangelogTemplateLogConfigTitle,
+  TChangelogTemplateLogCommitLinkConfig,
+  TChangelogTemplateLogConfig,
+  TChangelogTemplate,
   TCommitCategory,
   TGitMessage,
   TGitMessageToChangeLog,
+  TChangeLogList,
+  TChangeLogLangList,
+  TChangeLog,
+  TChangeLogResult,
   TpackageManagerCommands,
   IPackageManagerConfig,
   TConfigPackage,
@@ -867,8 +920,8 @@ export {
   IEditorOptions,
   IResultConfigBase,
   IResultConfigCommit,
-  TGitIssue,
   TGitCustomField,
+  TGitIssue,
   IGitCommitData,
   IPackageVersionSemverStandard,
   IPackagesVersions,

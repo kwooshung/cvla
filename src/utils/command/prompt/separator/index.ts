@@ -1,6 +1,12 @@
 import pc from 'picocolors';
 import { Separator } from '@inquirer/prompts';
 
-const separator = (str: string = '────────────────────────────'): Separator => new Separator(pc.dim(str));
+/**
+ * 函数：分隔符
+ * @param {string} [str = '────────────────────────────'] 分隔符
+ * @param {boolean} [descriptionDim = true] 描述是否变暗
+ * @returns {Separator} 分隔符
+ */
+const separator = (str: string = '────────────────────────────', descriptionDim: boolean = true): Separator => new Separator(descriptionDim ? pc.dim(str) : str);
 
 export default separator;

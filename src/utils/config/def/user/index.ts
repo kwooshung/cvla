@@ -150,7 +150,7 @@ const user: IConfig = {
        */
       content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
       // CHANGELOG 文件中，每个版本日志之间的分隔符，支持 md 语法
-      separator: '\n\n---\n\n',
+      separator: '\n\n------------------------------\n\n',
       // CHANGELOG 文件的尾部模板，支持 md 语法
       after: ''
     },

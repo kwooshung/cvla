@@ -16,15 +16,12 @@ const toChangeLog = async (tags: string[] = []): Promise<TGitMessageToChangeLog[
   for (let i = 0, j = filteredTags.length; i < j; i++) {
     const currentTag = filteredTags[i];
     const previousTag = i < j ? allTags[allTags.indexOf(currentTag) + 1] : '';
-    console.log(`allTags: ${allTags}`);
-    console.log(`previousTag: ${previousTag}`);
-    console.log(`currentTag: ${currentTag}`);
 
     // 定义标签范围
     const tagRange = previousTag ? `${previousTag}..${currentTag}` : `${currentTag}`;
 
     // 执行 git log 命令获取特定范围的提交
-    const cmd = `git --no-pager log ${tagRange} --pretty=format:"%h${sep}%ad${sep}%s" --date=format:"%Y-%m-%d %H:%M:%S"`;
+    const cmd = `git --no-pager log ${tagRange} --pretty=format:"%H${sep}%ad${sep}%s" --date=format:"%Y-%m-%d %H:%M:%S"`;
 
     const { stdout, stderr } = await command.execute(cmd, 'utf-8');
 
@@ -42,7 +39,7 @@ const toChangeLog = async (tags: string[] = []): Promise<TGitMessageToChangeLog[
       // 添加到结果数组
       if (gitMessages.length > 0) {
         result.push({
-          name: currentTag,
+          tag: currentTag,
           date: gitMessages[0].date,
           time: gitMessages[0].time,
           list: gitMessages

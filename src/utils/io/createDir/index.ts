@@ -4,7 +4,7 @@ import exists from '../exists';
 
 /**
  * 创建指定路径的文件夹，支持创建多级文件夹。
- * @param {string} dir 要创建的文件夹路径。
+ * @param {string} dir 要创建的文件夹路径，如果是文件路径，则取其所在目录。
  * @returns {Promise<boolean>} 如果创建成功，则返回 true；否则返回 false。
  */
 const createDir = async (dir: string): Promise<boolean> => {

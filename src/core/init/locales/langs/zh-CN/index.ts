@@ -178,32 +178,35 @@ const lang = {
     },
     template: {
       message: '是否配置模板？',
-      before: {
-        message: '每个日志文件，页眉内容模版（留空则无页眉）？'
-      },
       content: {
         message: '每条日志，内容模版（留空则使用默认模版）？'
       },
-      commiturl: {
-        message: '每条日志，是否都在尾部加入 commit url？',
-        plateforms: {
-          message: '你的代码托管平台？',
+      logs: {
+        title: {
+          standard: {
+            message: '标准日志标题模板，支持 `type`、`scope`、`date`, `time` 变量（默认模板适用于空白）'
+          },
           other: {
-            message: '其他地址？',
-            input: {
-              message: '请输入完整的 url 模版'
-            }
+            message: '非标准日志标题模板，适用于无法通过`提交类型`分类的日志'
           }
         },
-        author: '作者名',
-        project: '项目名'
-      },
-      separator: {
-        message: '每个版本之间的分隔符（留空则使用默认分隔符：\\n\\n---\\n\\n）？',
-        description: ''
-      },
-      after: {
-        message: '每个日志文件，页脚内容模版（留空则无页脚）？'
+        item: {
+          message: '每条日志，内容模版，可用 `message`、`date`, `time`、`commitlink` 变量（留空则使用默认模版）？'
+        },
+        commitlink: {
+          message: '每条日志，是否都在尾部加入 commit link？',
+          plateforms: {
+            message: '你的代码托管平台？',
+            other: {
+              message: '其他地址？',
+              input: {
+                message: '请输入完整的 url 模版'
+              }
+            }
+          },
+          author: '作者名',
+          repository: '仓库名，支持 `author`、`repository`、`id` 变量'
+        }
       }
     },
     poweredby: {

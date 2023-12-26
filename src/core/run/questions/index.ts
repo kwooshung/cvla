@@ -133,7 +133,7 @@ class questions {
           await pm.getInstance(this.CONF, this.addBack, this.cmd).select();
           break;
         case 'changelog':
-          await changelog.getInstance(this.CONF, this.addBack, this.cmd).select();
+          await changelog.getInstanceMenu(this.CONF, this.addBack, this.cmd).select();
           break;
         default:
           await this.help();

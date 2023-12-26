@@ -2,7 +2,11 @@ const list = {
   common: [
     "以下所有配置项，均支持此种配置，如：开启配置：只赋值 'default'、'{}' 或 '无此项配置' 即可，这将启用 '默认配置'; ",
     "关闭配置：只需要赋值 'false' 即可;",
-    "推荐使用命令 'cvlar i' 初始化配置文件"
+    "推荐使用命令 'cvlar i' 初始化配置文件",
+    '',
+    '下方内容中',
+    '  {x} 则为占位符',
+    '  {{xxx}} 则为变量'
   ],
   commit: 'Git提交，方便在菜单中选择性提交内容',
   'commit.type': [
@@ -100,38 +104,61 @@ const list = {
   'changelog.save': '日志存储的目录',
   'changelog.translate': '日志翻译相关配置',
   'changelog.translate.origin': ["CHANGELOG 文件的原始语言，default 'zh-CN'", '  支持的语言列表：https://cloud.google.com/translate/docs/languages'],
-  'changelog.translate.target': ["CHANGELOG 文件的目标语言，default 'en'，可以是数组，表示翻译成多种语言", '  支持的语言列表：https://cloud.google.com/translate/docs/languages'],
-  'changelog.translate.statement': [
-    '翻译声明开头标记，默认值：> 🚩',
-    "支持 'md语法'",
-    "  仅在 '通过翻译工具翻译时'，才会在译文开头添加此声明",
-    '  例如：',
-    '    以下内容由 Google翻译 自动翻译，可能存在不准确之处',
-    "    此声明文案，也会被 '翻译工具' 翻译成不同版本",
-    '  参考：https://github.com/kwooshung/cvlar/releases'
+  'changelog.translate.target': [
+    "CHANGELOG 文件的目标语言，default 'en'，可以是数组，表示翻译成多种语言",
+    "若已存在翻译版本的日志，仅对新生成的日志有效，你可选择 '重新生成所有日志'",
+    '  支持的语言列表：https://cloud.google.com/translate/docs/languages'
   ],
   'changelog.template': '日志模板相关配置',
-  'changelog.template.before': 'CHANGELOG 文件的头部模板，支持 md 语法',
   'changelog.template.content': [
     'CHANGELOG 文件的内容模板，支持 md 语法',
     '  默认值：',
     '    ## 🎉 {{tag}} `{{date}}`',
     '    {{logs}}',
-    '  日志会按照提交类型顺序分类',
-    '  目前支持的变量如下：',
-    '    tag：tag名',
-    '    date：日期，如：2023-12-15',
-    '    time：时间，如：12:15:30',
-    '    logs：日志内容'
+    '',
+    '日志会按照提交类型顺序分类',
+    '目前支持的变量如下：',
+    '  tag：tag名',
+    '  date：日期，如：2023-12-17',
+    '  time：时间，如：04:59:39',
+    '  logs：日志内容，对应下面的 logs 配置项'
   ],
-  'changelog.template.commiturl': ['CHANGELOG 文件中，每条日志的模板的提交id，', '用于跳转到提交记录详情页链接，', '为空或不填则不会生成链接'],
-  'changelog.template.separator': 'CHANGELOG 文件中，每个版本日志之间的分隔符，支持 md 语法',
-  'changelog.template.after': 'CHANGELOG 文件的尾部模板，支持 md 语法',
+  'changelog.template.logs': ['根据type分类，具体的日志内容', '若已存在翻译版本的日志，仅对新生成的日志有效，', "你可选择 '重新生成所有日志'"],
+  'changelog.template.logs.title': '标题模板',
+  'changelog.template.logs.title.standard': [
+    '标准的标题模板，也就是`提交类型`存在时的模板',
+    '',
+    '可使用的变量：',
+    '  emoji:`提交类型`对应的 emoji',
+    '  type：`提交类型`，变量首字母大写，则内容首字母也会大写',
+    '  scope：提交范围，变量首字母大写，则内容首字母也会大写',
+    '  date: 日期，如：2023-12-17',
+    '  time: 时间，如：04:59:39'
+  ],
+  'changelog.template.logs.title.other': '其他标题模板，也就是`提交类型`不存在时的模板，无法根据`提交类型`分类的标题',
+  'changelog.template.logs.item': [
+    '每条日志消息的模板',
+    '',
+    '可使用的变量：',
+    '  message：日志消息，变量首字母大写，则内容首字母也会大写',
+    '  commitlink：提交记录详情页链接',
+    '  date: 日期，如：2023-12-17',
+    '  time: 时间，如：04:59:39'
+  ],
+  'changelog.template.logs.commitlink': ['CHANGELOG 文件中，每条日志均有具体的提交详情页', '用于跳转到提交记录详情页链接'],
+  'changelog.template.logs.commitlink.text': [
+    '链接文本',
+    '  id：表示提交的ID',
+    '   [substr:n,l]：',
+    '   n（必要参数）：表示从第几个字符开始截取，若l不存在，此参数就表示从 0 截取到 n 个字符',
+    '   l（可选参数）：表示截取多少个字符'
+  ],
+  'changelog.template.logs.commitlink.url': ['链接地址', '', '可使用的变量：', 'id：表示提交id，完整的ID一般为40位'],
   'changelog.poweredby': [
     '布尔类型，默认：true',
     "是否在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：",
-    '  This [Changelog](/{0}), Powered by @kwooshung / [cvlar](https://github.com/kwooshung/cvlar/)',
-    "  其中，{0} 表示当前 您仓库中 'Changelog' 入口文件的相对路径",
+    '  This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)',
+    "  其中，`CHANGELOG.md` 表示当前 您仓库中 'Changelog' 入口文件的相对路径",
     '  参考：https://github.com/kwooshung/cvlar/releases'
   ],
   i18n: ['用于此工具提示信息的国际化配置', '可自定义任何语言，以下内容根据内容自行翻译需要的语言即可']

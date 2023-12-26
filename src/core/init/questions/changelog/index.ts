@@ -1,4 +1,4 @@
-import { IResultConfigCommit, TConfigChangelog } from '@/interface';
+import { IResultConfigCommit, TConfigChangelog, TPackageJsonData } from '@/interface';
 import { command, convert, translate } from '@/utils';
 import { get, choices } from '../../locales';
 
@@ -37,15 +37,21 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
       },
       translate: {
         origin: 'zh-CN',
-        target: 'en',
-        statement: '> 🚩 '
+        target: 'en'
       },
       template: {
-        before: '',
-        content: '',
-        commiturl: '',
-        separator: '',
-        after: ''
+        content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}\n\n----\n\n',
+        logs: {
+          title: {
+            standard: '',
+            other: '### Other'
+          },
+          item: '- {{message}} ({{commitlink}})',
+          commitlink: {
+            text: '#{{id-7}}',
+            url: 'https://github.com/kwooshung/cvlar/commit/{{id}}'
+          }
+        }
       }
     };
 
@@ -66,17 +72,16 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
 
     if (config.file) {
       config.file = {
-        limit: 10,
         save: './changelogs'
       };
 
       // 记录多少个版本号的日志
-      config.file.limit = await command.prompt.input({
-        message: get('changelog.file.limit.message'),
-        default: 10
-      });
+      // config.file.limit = await command.prompt.input({
+      //   message: get('changelog.file.limit.message'),
+      //   default: 10
+      // });
 
-      // 保存日志的文件名
+      // 保存日志的目录
       config.file.save = await command.prompt.input({
         message: get('changelog.file.save.message'),
         default: './changelog'
@@ -101,8 +106,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
     if (config.translate) {
       config.translate = {
         origin: 'zh-CN',
-        target: 'en',
-        statement: '> 🚩 '
+        target: 'en'
       };
 
       // 原始语言，如果启用了 自动翻译 commit 信息到英文，则默认语言就使用英文
@@ -126,28 +130,8 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
         config.translate.target = await choices.checkbox('changelog.translate.target.message', translate.lang.english.code, config.translate.origin);
       }
 
-      // 声明
-      if (
-        await command.prompt.select({
-          message: get('changelog.translate.statement.message'),
-          choices: [
-            {
-              name: get('yes'),
-              value: true,
-              description: get('changelog.translate.statement.description')
-            },
-            {
-              name: get('no'),
-              value: false
-            }
-          ]
-        })
-      ) {
-        config.translate.statement = await command.prompt.input({
-          message: get('changelog.translate.statement.content.message'),
-          default: '> 🚩 '
-        });
-      }
+      // 如果只有一个目标语言，那么就不是数组，而是字符串
+      config.translate.target.length === 1 && (config.translate.target = config.translate.target[0]);
     }
 
     // 是否配置模板
@@ -167,27 +151,47 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
 
     if (config.template) {
       config.template = {
-        before: '',
-        content: '',
-        commiturl: '',
-        separator: '',
-        after: ''
+        content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}\n\n----\n\n',
+        logs: {
+          title: {
+            standard: '### {{emoji}} {{Type}}',
+            other: '### Other'
+          },
+          item: '- {{message}} ({{commiturl}})',
+          commitlink: {
+            text: '#{{id[substr:7]}}',
+            url: 'https://github.com/kwooshung/cvlar/commit/{{id}}'
+          }
+        }
       };
-
-      // 每个日志文件，页眉内容模版
-      config.template.before = await command.prompt.input({
-        message: get('changelog.template.before.message')
-      });
 
       // 每条日志，内容模版
       config.template.content = await command.prompt.input({
         message: get('changelog.template.content.message'),
-        default: '## 🎉 {{tag}} `{{date}}`\n{{logs}}'
+        default: '## 🎉 {{tag}} `{{date}}`\n{{logs}}\n\n----\n\n'
+      });
+
+      // 每条日志，标题模版：标准的标题模版，也就是 提交类型存在时的模版
+      config.template.logs.title.standard = await command.prompt.input({
+        message: get('changelog.template.logs.title.standard.message'),
+        default: '### {{emoji}} {{Type}}'
+      });
+
+      // 每条日志，标题模版：其他标题模版，也就是 提交类型不存在时的模版
+      config.template.logs.title.other = await command.prompt.input({
+        message: get('changelog.template.logs.title.other.message'),
+        default: '### Other'
+      });
+
+      // 每条日志，内容模版
+      config.template.logs.item = await command.prompt.input({
+        message: get('changelog.template.logs.item.message'),
+        default: '- {{message}} ({{commiturl}})'
       });
 
       // 每条日志，是否都在尾部加入 commit url
       const isCommitUrl = await command.prompt.select({
-        message: get('changelog.template.commiturl.message'),
+        message: get('changelog.template.logs.commitlink.message'),
         choices: [
           {
             name: get('yes'),
@@ -203,7 +207,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
       // 如果是，则询问代码托管平台
       if (isCommitUrl) {
         const plateforms = await command.prompt.select({
-          message: get('changelog.template.commiturl.plateforms.message'),
+          message: get('changelog.template.logs.commitlink.plateforms.message'),
           choices: [
             {
               name: 'github.com',
@@ -226,63 +230,51 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
               description: `https://bitbucket.org/author/project-name/commits/id`
             },
             {
-              name: get('changelog.template.commiturl.other.message'),
+              name: get('changelog.template.logs.commitlink.other.message'),
               value: 'other'
             }
           ]
         });
 
         if (plateforms === 'other') {
-          config.template.commiturl = await command.prompt.input({
-            message: get('changelog.template.commiturl.other.input.message'),
-            default: `https://example.com/{{author}}/{{project}}/commit/{{id}}`
+          config.template.logs.commitlink.url = await command.prompt.input({
+            message: get('changelog.template.logs.commitlink.other.input.message'),
+            default: `https://example.com/{{author}}/{{repository}}/commit/{{id}}`
           });
         } else {
           switch (plateforms) {
             case 'gitee.com':
-              config.template.commiturl = `https://gitee.com/{{author}}/{{project}}/commit/{{id}}`;
+              config.template.logs.commitlink.url = `https://gitee.com/{{author}}/{{project}}/commit/{{id}}`;
               break;
             case 'gitlab.com':
-              config.template.commiturl = `https://gitlab.com/{{author}}/{{project}}/commit/{{id}}`;
+              config.template.logs.commitlink.url = `https://gitlab.com/{{author}}/{{project}}/commit/{{id}}`;
               break;
             case 'bitbucket.org':
-              config.template.commiturl = `https://bitbucket.org/{{author}}/{{project}}/commits/{{id}}`;
+              config.template.logs.commitlink.url = `https://bitbucket.org/{{author}}/{{project}}/commits/{{id}}`;
               break;
             default:
-              config.template.commiturl = `https://github.com/{{author}}/{{project}}/commit/{{id}}`;
+              config.template.logs.commitlink.url = `https://github.com/{{author}}/{{project}}/commit/{{id}}`;
               break;
           }
         }
 
         // 作者名
         const author = await command.prompt.input({
-          message: get('changelog.template.commiturl.author'),
-          default: packjson?.author ?? ''
+          message: get('changelog.template.logs.commitlink.author'),
+          default: packjson['author'] ?? ''
         });
 
-        // 项目名
-        const project = await command.prompt.input({
-          message: get('changelog.template.commiturl.project'),
-          default: packjson?.name ?? ''
+        // 仓库名
+        const repository = await command.prompt.input({
+          message: get('changelog.template.logs.commitlink.repository'),
+          default: packjson['name'] ?? ''
         });
 
-        config.template.commiturl = convert.replaceTemplate(config.template.commiturl, {
+        config.template.logs.commitlink.url = convert.replaceTemplate(config.template.logs.commitlink.url, {
           author,
-          project
+          repository
         });
       }
-
-      // 每个版本之间的分隔符
-      config.template.separator = await command.prompt.input({
-        message: get('changelog.template.separator.message'),
-        default: '\n\n---\n\n'
-      });
-
-      // 每个日志文件，页脚内容模版
-      config.template.after = await command.prompt.input({
-        message: get('changelog.template.after.message'),
-        default: ''
-      });
     }
 
     // 通过 Github Acitons 自动发布后，将在最后显示项目链接，同时连接到所有 日志

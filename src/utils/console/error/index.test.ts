@@ -18,7 +18,7 @@ describe('@/utils/console/error/index.ts', () => {
 
     error(cn, en);
 
-    expect(logSpy).toHaveBeenCalledWith(pc.red(`x ${cn}`));
-    expect(logSpy).toHaveBeenCalledWith(pc.red(`x ${en}`));
+    expect(logSpy).toHaveBeenCalledWith(pc.red(`✖ ${cn}`));
+    expect(logSpy).toHaveBeenCalledWith(pc.red(`✖ ${en}`));
   });
 });
