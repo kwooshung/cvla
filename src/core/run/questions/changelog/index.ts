@@ -1,6 +1,6 @@
+import pc from 'picocolors';
 import ora, { Ora } from 'ora';
 import progress from 'cli-progress';
-import pc from 'picocolors';
 import { isUndefined as _isUn, concat as _concat, slice as _slice, isPlainObject as _isObj, isArray as _isArr, isString as _isStr } from 'lodash-es';
 import { IConfig, IPackageJson, TChangeLog, TGitMessageToChangeLog, ILanguage, TChangeLogResult } from '@/interface';
 import { command, convert, console as cs, git, io, translate } from '@/utils';
@@ -112,24 +112,14 @@ class changelog {
   }
 
   /**
-   * 提供一个静态方法用于获取类的实例，用于菜单
+   * 提供一个静态方法用于获取类的实例，
    * @param {IConfig} conf 配置信息
    * @param {Function} addBack 添加返回菜单
    * @param {Function} cmd 命令
    * @returns {changelog} 包管理器
    */
-  public static getInstanceMenu(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>): changelog {
+  public static getInstance(conf: IConfig, addBack: (choices: any[], sep?: string) => void, cmd: (type: string, args: string[]) => Promise<void>): changelog {
     return changelog.instance ?? new changelog(conf, addBack, cmd);
-  }
-
-  /**
-   * 提供一个静态方法用于获取类的实例，用于直接执行内部函数
-   * @param {IConfig} conf 配置信息
-   * @param {Function} cmd 命令
-   * @returns {changelog} 包管理器
-   */
-  public static getInstance(conf: IConfig, cmd: (type: string, args: string[]) => Promise<void>): changelog {
-    return changelog.instance ?? new changelog(conf, null, cmd);
   }
 
   /**
@@ -362,7 +352,8 @@ class changelog {
     let list: string[] = [];
 
     if (historyList.length > 0) {
-      list = tags.filter((tag: string) => !historyList.includes(tag.trim()));
+      const historySet = new Set(historyList);
+      list = tags.filter((tag: string) => !historySet.has(tag.trim()));
       spinner.succeed(pc.bold(list.length > 0 ? pc.green(this.CONF.i18n.changelog.loading.history.done.success.build) : pc.cyan(this.CONF.i18n.changelog.loading.history.done.success.no)));
       spinner.stop();
     } else {
@@ -393,7 +384,7 @@ class changelog {
   }
 
   /**
-   * 私有函数：changelog > history > 读取提交信息列表
+   * 私有函数：changelog > git > 读取提交信息列表
    * @param {Ora} spinner 加载动画
    * @param {string[]} tags 标签列表
    * @returns {Promise<TGitMessageToChangeLog[]>} 提交信息列表
@@ -585,7 +576,7 @@ class changelog {
    * 公开函数：changelog > 读取
    * @param {Ora} spinner 加载动画
    * @param {string[]} tags 需要生成日志的版本标签列表
-   * @returns {Promise<TChangeLogResult>} 无返回值
+   * @returns {Promise<TChangeLogResult[]>} 无返回值
    */
   public async readMessages(spinner: Ora, tags: string[]): Promise<TChangeLogResult[]> {
     let result: TChangeLogResult[] = [];
@@ -713,7 +704,7 @@ class changelog {
   /**
    * 私有函数：changelog > 生成 > 数据
    * @param {TChangeLog[]} changelogs 日志列表
-   * @returns {Promise<string>} 日志内容
+   * @returns {Promise<TChangeLogResult[]>} 日志内容
    */
   private async buildData(changelogs: TChangeLog[]): Promise<TChangeLogResult[]> {
     const result: TChangeLogResult[] = [];
@@ -746,6 +737,7 @@ class changelog {
    * 私有函数：changelog > 生成 > 内容
    * @param {TChangeLog} changelog 日志
    * @param {string} [lang=''] 语言，如果为空，那么就是没有翻译
+   * @returns {Promise<string>} 日志内容
    */
   private async buildContentItems(changelog: TChangeLog, lang: string = ''): Promise<string> {
     const contentTemplate = this.CONF.changelog['template']?.content;

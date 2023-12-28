@@ -163,10 +163,11 @@ const list = {
   ],
   'changelog.template.logs.commitlink.url': ['Link address', '', 'Available variables:', 'id: represents the full commit id, usually 40 characters long'],
   'changelog.template.separator': 'Separator between each version log in the CHANGELOG file, supports md syntax',
-  'changelog.poweredby': [
+  'release.subject': ['Release page, tag version title template', '', 'Available variables:', '  tag: tag name', '  date: date, e.g., 2023-12-17', '  time: time, e.g., 04:59:39'],
+  'release.poweredby': [
     'Boolean type, default: true',
     "Whether to add the following markdown code at the end of each 'Release' in 'Github Release':",
-    '  This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)',
+    '  > This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)',
     "  Here, `CHANGELOG.md` represents the relative path to the 'Changelog' entry file in your repository.",
     '  Reference: https://github.com/kwooshung/cvlar/releases'
   ],

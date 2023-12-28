@@ -300,6 +300,21 @@ type TChangeLog = {
 type TChangeLogResult = string | Record<string, string>;
 
 /**
+ * 类型：Release 处理后的日志信息
+ */
+type TReleaseResult = string | Record<string, string>;
+
+/**
+ * 类型：Release
+ */
+type TRelease = {
+  tag: string;
+  date: string;
+  time: string;
+  logs: TReleaseResult;
+};
+
+/**
  * 类型：包管理器命令
  */
 type TpackageManagerCommands = Record<string, string> | false | 'default';
@@ -358,6 +373,22 @@ type TConfigChangelog =
       file?: TChangelogFileConfig;
       translate?: TChangelogTranslateConfig;
       template?: TChangelogTemplate;
+    }
+  | false
+  | 'default';
+
+/**
+ * 类型：配置 > release
+ */
+type TConfigRelease =
+  | {
+      /**
+       * 标题
+       */
+      subject?: string;
+      /**
+       * 是否显示 powered by
+       */
       poweredby?: boolean;
     }
   | false
@@ -371,6 +402,7 @@ interface IConfig {
   package?: TConfigPackage;
   version?: TConfigVersion;
   changelog?: TConfigChangelog;
+  release?: TConfigRelease;
   i18n?: any;
 }
 
@@ -900,11 +932,14 @@ export {
   TChangeLogLangList,
   TChangeLog,
   TChangeLogResult,
+  TReleaseResult,
+  TRelease,
   TpackageManagerCommands,
   IPackageManagerConfig,
   TConfigPackage,
   TConfigVersion,
   TConfigChangelog,
+  TConfigRelease,
   IConfig,
   IConfigResult,
   TConfigResult,

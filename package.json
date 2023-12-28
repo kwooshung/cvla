@@ -75,6 +75,7 @@
   "dependencies": {
     "@inquirer/editor": "^1.2.13",
     "@inquirer/prompts": "^3.3.0",
+    "@octokit/rest": "^20.0.2",
     "@translate-tools/core": "^1.0.0",
     "better-sqlite3": "^9.2.2",
     "boxen": "^7.1.1",

@@ -1,7 +1,7 @@
 import path from 'path';
 import pc from 'picocolors';
 import { isBoolean as _isBool, isString as _isString, isArray as _isArray, isPlainObject as _isObj } from 'lodash-es';
-import { IConfig, IResultConfigBase, IResultConfigCommit, TConfigChangelog, TConfigPackage, TConfigVersion, TPackageJsonData } from '@/interface';
+import { IConfig, IResultConfigBase, IResultConfigCommit, TConfigChangelog, TConfigPackage, TConfigRelease, TConfigVersion, TPackageJsonData } from '@/interface';
 import { command, io } from '@/utils';
 import { filenames } from '@/utils/config/load';
 import { get } from '../../locales';
@@ -62,6 +62,7 @@ const build = async (
   pack: TConfigPackage,
   version: TConfigVersion,
   changelog: TConfigChangelog,
+  release: TConfigRelease,
   indentation: string
 ): Promise<string> => {
   // 计算相对路径
@@ -108,6 +109,7 @@ const build = async (
     package: pack,
     version,
     changelog,
+    release,
     i18n: i18nConfig[base.lang.code]
   };
 
@@ -147,6 +149,7 @@ const save = async (
   pack: TConfigPackage,
   version: TConfigVersion,
   changelog: TConfigChangelog,
+  release: TConfigRelease,
   indentation: string,
   packjson: TPackageJsonData,
   saveDir: string
@@ -179,7 +182,7 @@ const save = async (
   formatDirs.push(path.posix.normalize(saveDir).replace(/\\/g, '/'));
 
   // 生成配置内容
-  const content = (await build(saveDir, base, commit, pack, version, changelog, indentation)).replace(/['"]?\$T(.*?)T\$['"]?/g, '$1');
+  const content = (await build(saveDir, base, commit, pack, version, changelog, release, indentation)).replace(/['"]?\$T(.*?)T\$['"]?/g, '$1');
 
   // 保存失败次数
   let failCount = 0;

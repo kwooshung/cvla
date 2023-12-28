@@ -2,7 +2,7 @@ import { isBoolean as _isBool } from 'lodash-es';
 
 import { IConfigResult } from '@/interface';
 import { package as packdata } from '@/utils';
-import { basic, commit, package as _package, version, changelog, save } from './questions';
+import { basic, commit, package as _package, version, changelog, release, save } from './questions';
 
 /**
  * 初始化
@@ -29,8 +29,11 @@ const init = async (conf: IConfigResult | false): Promise<void> => {
     // 配置：changelog
     const configChangelog = await changelog(configCommit, packjson.data);
 
+    // 配置：release
+    const configRelease = await release();
+
     // 保存配置
-    await save(configBase, configCommit, configPackage, configVersion, configChangelog, packjson.indentation, packjson.data, _isBool(conf) ? '' : conf.path);
+    await save(configBase, configCommit, configPackage, configVersion, configChangelog, configRelease, packjson.indentation, packjson.data, _isBool(conf) ? '' : conf.path);
   }
 };
 

@@ -204,11 +204,16 @@ const lang = {
           repository: 'Pepository name, supports `author`, `repository`, `id` variables'
         }
       }
+    }
+  },
+  release: {
+    title: {
+      message: 'Release page, tag version title template'
     },
     poweredby: {
       message: `After automatic publishing via ${pc.green('Github Actions')}, a link to ${pc.green('View all logs')} will be inserted at the end?`,
       description:
-        "At the end of each 'Release' in 'Github Release', add the following markdown code:\n    This [Changelog](/{0}), Powered by @kwooshung / [cvlar](https://github.com/kwooshung/cvlar/)\n    Here, `{0}` represents the relative path to the 'Changelog' entry file in your repository.\n    Reference: https://github.com/kwooshung/cvlar/releases"
+        "At the end of each 'Release' in 'Github Release', add the following markdown code:\n    This [Changelog](/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)\n    Here, `CHANGELOG.md` represents the relative path to the 'Changelog' entry file in your repository.\n    Reference: https://github.com/kwooshung/cvlar/releases"
     }
   },
   save: {

@@ -154,10 +154,11 @@ const list = {
     '   l（可选参数）：表示截取多少个字符'
   ],
   'changelog.template.logs.commitlink.url': ['链接地址', '', '可使用的变量：', 'id：表示提交id，完整的ID一般为40位'],
-  'changelog.poweredby': [
+  'release.subject': ['发布页面，tag版本标题模板', '', '可使用的变量：', '  tag：tag名', '  date: 日期，如：2023-12-17', '  time: 时间，如：04:59:39'],
+  'release.poweredby': [
     '布尔类型，默认：true',
     "是否在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：",
-    '  This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)',
+    '  > This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)',
     "  其中，`CHANGELOG.md` 表示当前 您仓库中 'Changelog' 入口文件的相对路径",
     '  参考：https://github.com/kwooshung/cvlar/releases'
   ],

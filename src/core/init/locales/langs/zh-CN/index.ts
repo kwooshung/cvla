@@ -208,11 +208,19 @@ const lang = {
           repository: '仓库名，支持 `author`、`repository`、`id` 变量'
         }
       }
+    }
+  },
+  release: {
+    title: 'Github 发布版本',
+    message: '通过 Github Acitons 自动发布？',
+    description: '启用 Github 发布版本 功能，可通过 Github Acitons 自动发布版本，需要Changelog 功能开启有效',
+    subject: {
+      message: '发布页面，tag版本标题模板'
     },
     poweredby: {
       message: `通过 ${pc.green('Github Acitons')} 自动发布后，将在最后插入 ${pc.green('查看所有日志')} 的链接？`,
       description:
-        "在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：\n    ------------------------------------------------------------------------------------------------------------------------\n    - This [Changelog](/{0}), Powered by @kwooshung / [cvlar](https://github.com/kwooshung/cvlar/)\n    ------------------------------------------------------------------------------------------------------------------------\n    其中，{0} 表示当前 您仓库中 'Changelog' 入口文件的相对路径\n    参考：https://github.com/kwooshung/cvlar/releases"
+        "在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：\n    ------------------------------------------------------------------------------------------------------------------------\n    - This [Changelog](/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)\n    ------------------------------------------------------------------------------------------------------------------------\n    其中，CHANGELOG.md 表示当前 您仓库中 'Changelog' 入口文件的相对路径\n    参考：https://github.com/kwooshung/cvlar/releases"
     }
   },
   save: {

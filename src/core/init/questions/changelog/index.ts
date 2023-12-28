@@ -40,7 +40,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
         target: 'en'
       },
       template: {
-        content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}\n\n----\n\n',
+        content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
         logs: {
           title: {
             standard: '',
@@ -151,7 +151,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
 
     if (config.template) {
       config.template = {
-        content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}\n\n----\n\n',
+        content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
         logs: {
           title: {
             standard: '### {{emoji}} {{Type}}',
@@ -168,7 +168,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
       // 每条日志，内容模版
       config.template.content = await command.prompt.input({
         message: get('changelog.template.content.message'),
-        default: '## 🎉 {{tag}} `{{date}}`\n{{logs}}\n\n----\n\n'
+        default: '## 🎉 {{tag}} `{{date}}`\n{{logs}}'
       });
 
       // 每条日志，标题模版：标准的标题模版，也就是 提交类型存在时的模版
@@ -276,22 +276,6 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
         });
       }
     }
-
-    // 通过 Github Acitons 自动发布后，将在最后显示项目链接，同时连接到所有 日志
-    config.poweredby = await command.prompt.select({
-      message: get('changelog.poweredby.message'),
-      choices: [
-        {
-          name: get('yes'),
-          value: true,
-          description: get('changelog.poweredby.description', `${`${(config.file && config.file['save']) ?? 'changelog'}`.replace(/\.md$/, '').replace(/^(\.|)\//, '')}.md`)
-        },
-        {
-          name: get('no'),
-          value: false
-        }
-      ]
-    });
   }
 
   return config;

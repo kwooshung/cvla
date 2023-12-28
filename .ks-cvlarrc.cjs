@@ -104,22 +104,6 @@ module.exports = {
   changelog: {
     // 日志文件相关配置
     file: {
-      /**
-       * CHANGELOG 文件中记录版本的条数
-       *   0表示不限制，全部记录;
-       *   默认 10 条版本号的日志（不是只能写10行日志，而是10个版本的记录）
-       *   表示每个文件最多记录 10 条，且自动分页
-       *   超过 10 条则自动创建新的 CHANGELOG 文件，文件名为 md5(content).md，以此类推
-       *
-       *   若是没有满足 limit 条数，则会将所有的日志都存放在这个目录中的 index.md 文件中；
-       *   当有不同翻译版本时，会依据语言代码自动创建对应目录，例如：zh-CN/index.md、en/index.md、等；
-       *   你可以在项目根目录下创建一个 CHANGELOG.md 文件，链接到这个目录中的 index.md 或 多个 xxx/index.md 文件；
-       *
-       *   如果已应用此配置，并且生成了日志，它只会影响后续生成的日志
-       *   如果想要全部应用新的配置
-       *     使用 `日志管理` 功能，`重新生成日志` 或 `清理日志` 后，再 `重新生成`'
-       */
-      limit: '10',
       // 日志存储的目录
       save: './changelogs'
     },
@@ -152,7 +136,7 @@ module.exports = {
        *   time：时间，如：12:15:30,
        *   logs：日志内容，对应下面的 logs 配置项
        */
-      content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}\n\n----\n\n',
+      content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
       /**
        * 根据type分类，具体的日志内容
        * 若已存在翻译版本的日志，仅对新生成的日志有效，你可选择 '重新生成所有日志'
@@ -205,7 +189,18 @@ module.exports = {
           url: 'https://github.com/kwooshung/cvlar/commit/{{id}}'
         }
       }
-    },
+    }
+  },
+  release: {
+    /**
+     * 发布页面，tag版本标题模板
+     *
+     * 可使用的变量：
+     *  tag：tag名
+     *  date: 日期，如：2023-12-17
+     *  time: 时间，如：04:59:39
+     */
+    subject: '🎉 {{tag}}',
     /**
      * 布尔类型，默认：true
      * 是否在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：

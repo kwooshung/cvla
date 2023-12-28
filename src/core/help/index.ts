@@ -11,6 +11,7 @@ const help = () => {
     ${pc.green('-v, --version')}             ${pc.gray('output the version number')}
     ${pc.green('-i, --init')}                ${pc.gray('init config file')}
     ${pc.green('-h, --help')}                ${pc.gray('output usage information')}
+    ${pc.green('-r, --release')}             ${pc.gray('release via github actions')}
 
   ${pc.cyan(pc.bold('Example:'))}
     ${pc.green('clvar')}                     ${pc.gray('run clvar')}
@@ -18,6 +19,7 @@ const help = () => {
     ${pc.green('clvar -v')}                  ${pc.gray('show version')}
     ${pc.green('clvar -i')}                  ${pc.gray('init config file')}
     ${pc.green('clvar -h')}                  ${pc.gray('show help')}
+    ${pc.green('clvar -r')}                  ${pc.gray('please execute in github actions')}
   `;
 
   console.log(code);

@@ -11,6 +11,7 @@ import scripts from './scripts';
 import pm from './pm';
 import gitControl from './gitControl';
 import changelog from './changelog';
+import release from './release';
 import help from '@/core/help';
 
 /**
@@ -46,8 +47,12 @@ class questions {
    * 公开函数：初始化
    * @returns {Promise<void>} 无返回值
    */
-  public async init(): Promise<void> {
-    await this.menu();
+  public async init(_release: boolean = false): Promise<void> {
+    if (_release) {
+      await release.getInstance(this.CONF).release();
+    } else {
+      await this.menu();
+    }
   }
 
   /**
@@ -133,7 +138,7 @@ class questions {
           await pm.getInstance(this.CONF, this.addBack, this.cmd).select();
           break;
         case 'changelog':
-          await changelog.getInstanceMenu(this.CONF, this.addBack, this.cmd).select();
+          await changelog.getInstance(this.CONF, this.addBack, this.cmd).select();
           break;
         default:
           await this.help();
