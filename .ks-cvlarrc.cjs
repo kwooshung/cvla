@@ -830,7 +830,7 @@ module.exports = {
               popularity: '欢迎：',
               maintenance: '维护：',
               process: {
-                // symbol: ['-', '.'],
+                symbol: '▇',
                 length: 50,
                 activeBold: false
               }
