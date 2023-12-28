@@ -162,7 +162,53 @@ const list = {
     "  其中，`CHANGELOG.md` 表示当前 您仓库中 'Changelog' 入口文件的相对路径",
     '  参考：https://github.com/kwooshung/cvlar/releases'
   ],
-  i18n: ['用于此工具提示信息的国际化配置', '可自定义任何语言，以下内容根据内容自行翻译需要的语言即可']
+  i18n: ['用于此工具提示信息的国际化配置', '可自定义任何语言，以下内容根据内容自行翻译需要的语言即可'],
+  'i18n.yes': '是，主要用于菜单中的单选，表示选中',
+  'i18n.no': '否，主要用于菜单中的单选，表示未选中',
+  'i18n.choicesLimit': ['最多可选数量，主要用于菜单中的选项，', '表示最少展示多少个选项，多余的将需要滚动查看'],
+  'i18n.checkbox': '多选，只能用于菜单中的多选中的菜单相关配置',
+  'i18n.checkbox.instructions': '在多选菜单展示时，默认提示，表示按键操作',
+  'i18n.select': '一级菜单的标题',
+  'i18n.scripts': 'package.json 中的 scripts，用于菜单中的运行脚本',
+  'i18n.scripts.message': '菜单中的运行脚本的标题',
+  'i18n.git': 'git相关',
+  'i18n.git.commit': 'git 提交相关',
+  'i18n.git.commit.subject': [
+    'git提交信息，短说明，',
+    '',
+    '   其中',
+    '     transformer：可选，表示对值处理函数',
+    '     validate：可选，表示验证函数',
+    '',
+    '   两个函数均可自定义，具体请参考：https://github.com/SBoudrias/Inquirer.js/tree/master/packages/input'
+  ],
+  'i18n.git.commit.body': '长说明，同样支持 `transformer` 和 `validate`',
+  'i18n.git.commit.body.required': '是否必填项，布尔类型，默认：false',
+  'i18n.git.commit.body.requiredMessage': '必填项的提示信息',
+  'i18n.git.commit.breaking': '破坏性变更，不向下兼容, 同样支持 `transformer` 和 `validate`',
+  'i18n.git.commit.custom': [
+    '自定义字段，支持三种类型：`input`、`select`、`checkbox`，参考本项目仓库根目录下的 `.ks-cvlarrc.cjs` 文件',
+    '在仓库说明中，也有此配置的详细说明',
+    '若不需要，可删除 `custom` 字段 或 将 `custom` 字段赋值为 `false`'
+  ],
+  'i18n.git.commit.issues': 'issues相关',
+  'i18n.git.commit.issues.close.choices': 'issues相关，可自定义关键字，默认：`fixes`、`resolves` 和 `closes`',
+  'i18n.git.commit.issues.number.message': 'issues ID 号',
+  'i18n.git.commit.complate': [
+    '生成提交信息后，触发此函数，可自行处理提交信息的格式',
+    '返回值，是一个对象，包含两个属性，fail、val：',
+    '   fail：true时，则不会继续执行提交操作，',
+    '   val：提交信息',
+    '也可用于自定义提示信息'
+  ],
+  'i18n.git.commit.push.default': 'true：自动选择是，false：自动选择否，默认：false',
+  'i18n.git.commit.tag.default': 'true：自动选择是，false：自动选择否，默认：false',
+  'i18n.git.version': '升/降级版本号相关',
+  'i18n.package': '包管理相关',
+  'i18n.changelog': '日志相关，也与 `cvlar -r` 相关，若没有启用日志，则 `cvlar -r` 也无法使用',
+  'i18n.help': '帮助相关',
+  'i18n.back': '返回上级菜单',
+  'i18n.exit': '推出'
 };
 
 export default list;

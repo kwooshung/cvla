@@ -624,6 +624,7 @@ const list = {
     }
   },
   changelog: {
+    message: '日志管理',
     title: '主菜单 > 日志管理',
     build: {
       message: '生成日志',

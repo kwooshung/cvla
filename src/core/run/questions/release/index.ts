@@ -1,3 +1,4 @@
+import pc from 'picocolors';
 import { Octokit } from '@octokit/rest';
 import { isUndefined as _isUn, isPlainObject as _isObj, isArray as _isArr, isString as _isStr, isBoolean as _isBool } from 'lodash-es';
 import { IConfig, TChangeLog, TGitMessageToChangeLog, ILanguage, TReleaseResult, TRelease } from '@/interface';
@@ -166,7 +167,19 @@ class release {
    */
   public async release(): Promise<void> {
     // 如果启用了 release 和 changelog，才能发布
-    if (this.CONF['release'] && this.CONF['changelog'] && this.CONF['changelog']['template']) {
+    if (
+      this.CONF['release'] &&
+      this.CONF['changelog'] &&
+      this.CONF['changelog']['template'] &&
+      this.CONF['changelog']['template']['logs'] &&
+      this.CONF['changelog']['template']['logs']['title'] &&
+      this.CONF['changelog']['template']['logs']['title']['standard'] &&
+      this.CONF['changelog']['template']['logs']['title']['other'] &&
+      this.CONF['changelog']['template']['logs']['item'] &&
+      this.CONF['changelog']['template']['logs']['commitlink'] &&
+      this.CONF['changelog']['template']['logs']['commitlink']['text'] &&
+      this.CONF['changelog']['template']['logs']['commitlink']['url']
+    ) {
       // 标题模板
       const subjectTemplate = this.CONF.release['subject'];
       // 获取仓库拥有者
@@ -220,6 +233,18 @@ class release {
           }
         }
       }
+    } else {
+      const list = [];
+      list.push(pc.bold(pc.red('✖ Clvar：')));
+      list.push(pc.red('  zh-CN：您还未开启 `release`功能，或没有开启 `日志功能` 相关功能，特别是日志模板相关配置，如下参数必须存在。'));
+      list.push(pc.red('  en: The release feature or log functionality, particularly log template configurations, have not been activated. The following parameters are required.'));
+      list.push(pc.dim('=================================================='));
+      list.push(pc.cyan('  changelog.template.logs.title.standard'));
+      list.push(pc.cyan('  changelog.template.logs.title.other'));
+      list.push(pc.cyan('  changelog.template.logs.item'));
+      list.push(pc.cyan('  changelog.template.logs.commitlink.text'));
+      list.push(pc.cyan('  changelog.template.logs.commitlink.url'));
+      console.log(list.join('\n'));
     }
   }
 

@@ -616,6 +616,7 @@ const list = {
     }
   },
   changelog: {
+    message: 'Log Management',
     title: 'Main Menu > Log Management',
     build: {
       message: 'Generate Log',

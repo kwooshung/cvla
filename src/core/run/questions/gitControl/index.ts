@@ -536,7 +536,12 @@ class gitControl {
       translateStatus = await g.translate();
     }
     const message = await g.generate();
-    const { fail, val } = this.CONF.i18n.git.commit.complate(message);
+    const complateFn =
+      this.CONF.i18n?.git?.commit?.complate ||
+      function (val: string) {
+        return { fail: false, val };
+      };
+    const { fail, val } = complateFn(message);
 
     const line = _range(0, 80)
       .map(() => '=')

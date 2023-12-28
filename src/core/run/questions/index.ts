@@ -1,5 +1,5 @@
-import { spawn } from 'child_process';
 import pc from 'picocolors';
+import { spawn } from 'child_process';
 
 import { isBoolean as _isBool, isPlainObject as _isObj } from 'lodash-es';
 import { IConfig, IConfigResult, IPackageJson, TMenuType } from '@/interface';

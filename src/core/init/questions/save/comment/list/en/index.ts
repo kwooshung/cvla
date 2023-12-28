@@ -171,7 +171,53 @@ const list = {
     "  Here, `CHANGELOG.md` represents the relative path to the 'Changelog' entry file in your repository.",
     '  Reference: https://github.com/kwooshung/cvlar/releases'
   ],
-  i18n: ['Used for the internationalization of this tool’s prompt messages', 'Can be customized in any language, translate the following content into the desired language as needed']
+  i18n: ['Used for the internationalization of this tool’s prompt messages', 'Can be customized in any language, translate the following content into the desired language as needed'],
+  'i18n.yes': 'Yes, mainly used for single selection in menus, indicating selected',
+  'i18n.no': 'No, mainly used for single selection in menus, indicating not selected',
+  'i18n.choicesLimit': ['Maximum selectable amount, mainly used in menu options, ', 'indicates the minimum number of options to display, extras require scrolling to view'],
+  'i18n.checkbox': 'Multiple selection, can only be used for multiple choice related menu configurations',
+  'i18n.checkbox.instructions': 'Default prompt when displaying multiple-choice menu, indicates key operations',
+  'i18n.select': 'Title of the primary menu',
+  'i18n.scripts': 'scripts in package.json, used for running scripts in menus',
+  'i18n.scripts.message': 'Title for running scripts in the menu',
+  'i18n.git': 'Git related',
+  'i18n.git.commit': 'Git commit related',
+  'i18n.git.commit.subject': [
+    'Git commit message, short description, ',
+    '',
+    '   Includes',
+    '     transformer: Optional, represents a value processing function',
+    '     validate: Optional, represents a validation function',
+    '',
+    '   Both functions can be customized, for more details see: https://github.com/SBoudrias/Inquirer.js/tree/master/packages/input'
+  ],
+  'i18n.git.commit.body': 'Long description, also supports `transformer` and `validate`',
+  'i18n.git.commit.body.required': 'Whether a required field, boolean type, default: false',
+  'i18n.git.commit.body.requiredMessage': 'Prompt message for required fields',
+  'i18n.git.commit.breaking': 'Breaking changes, not backwards compatible, also supports `transformer` and `validate`',
+  'i18n.git.commit.custom': [
+    'Custom fields, supports three types: `input`, `select`, `checkbox`, refer to the `.ks-cvlarrc.cjs` file in the root directory of this repository',
+    'Detailed explanations of this configuration are also available in the repository description',
+    'If not needed, the `custom` field can be deleted or set to `false`'
+  ],
+  'i18n.git.commit.issues': 'Issues related',
+  'i18n.git.commit.issues.close.choices': 'Issues related, customizable keywords, default: `fixes`, `resolves`, and `closes`',
+  'i18n.git.commit.issues.number.message': 'Issue ID numbers',
+  'i18n.git.commit.complate': [
+    'Upon generating the commit message, this function is triggered, allowing custom handling of the commit message format',
+    'The return value is an object, containing two properties, fail and val:',
+    '   fail: when true, the commit operation will not continue,',
+    '   val: the commit message',
+    'Can also be used for custom prompt messages'
+  ],
+  'i18n.git.commit.push.default': 'true: automatically select yes, false: automatically select no, default: false',
+  'i18n.git.commit.tag.default': 'true: automatically select yes, false: automatically select no, default: false',
+  'i18n.git.version': 'Version upgrade/downgrade related',
+  'i18n.package': 'Package management related',
+  'i18n.changelog': 'Log related, also related to `cvlar -r`, if logging is not enabled, `cvlar -r` is also not available',
+  'i18n.help': 'Help related',
+  'i18n.back': 'Return to previous menu',
+  'i18n.exit': 'Exit'
 };
 
 export default list;
