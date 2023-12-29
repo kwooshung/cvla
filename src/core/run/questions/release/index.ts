@@ -131,9 +131,11 @@ class release {
       const repo = this.getRepoName();
       const allReleasedTags: string[] = [];
       let releases: any;
-
+      console.log(owner);
+      console.log(repo);
       do {
         releases = await this.OCTOKIT.repos.listReleases({ owner, repo, per_page: 100, page });
+        console.log(releases);
         allReleasedTags.push(...releases.data.map((release: { tag_name: string }) => release.tag_name));
         page++;
       } while (releases.data.length === 100); // 如果一页满载（100个条目），则可能还有更多页面
@@ -183,14 +185,11 @@ class release {
     ) {
       // 标题模板
       const subjectTemplate = this.CONF.release['subject'];
-      // 获取仓库拥有者
-      const owner = this.getRepoOwner();
-      // 获取仓库名
-      const repo = this.getRepoName();
       /**
        * 获得仓库的所有标签，按照版本号从小到大排序，也就是最新的版本在最后
        */
       const tags = await git.tag.get.all(true);
+      console.log(tags);
       // 获得仓库的所有发布标签
       const releasedTags = await this.getReleasedTags();
       // 将 releasedTags 数组转换为 Set 以提高查找效率
@@ -198,9 +197,12 @@ class release {
       // 使用 filter 方法过滤出 tags 数组中不在 releasedTagsSet 中的元素
       const unreleasedTags = tags.filter((tag) => !releasedTagsSet.has(tag.trim()));
 
-      console.log(unreleasedTags);
-
       if (unreleasedTags.length > 0) {
+        // 获取仓库拥有者
+        const owner = this.getRepoOwner();
+        // 获取仓库名
+        const repo = this.getRepoName();
+        // 读取日志内容
         const contents: TRelease[] = await this.readMessages(unreleasedTags);
 
         if (contents.length > 0) {
