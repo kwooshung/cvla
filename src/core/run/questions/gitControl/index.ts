@@ -32,6 +32,11 @@ class gitControl {
   private PACK: IPackageJson;
 
   /**
+   * 私有属性：提交对象
+   */
+  private COMMIT;
+
+  /**
    * 私有函数：返回
    * @param {any[]} choices 选项
    * @param {string} [sep = ''] 分隔符
@@ -476,6 +481,9 @@ class gitControl {
         // 重新创建标签
         await this.parentCmd(code, args);
 
+        // 删除临时的提交信息文件
+        await this.COMMIT.deleteTempCommitMessageFile();
+
         // 推送本地仓库到远程仓库
         await this.parentCmd('git', git.push());
 
@@ -664,14 +672,15 @@ class gitControl {
 
   /**
    * 私有函数：git > commit > 提交确认
+   * @param {IGitCommitData} datas 数据
    */
   private async commitConfirm(datas: IGitCommitData): Promise<void> {
-    const g = new git.commit(datas, this.CONF);
+    this.COMMIT = new git.commit(datas, this.CONF);
     let translateStatus = true;
     if (!_isUn(this.CONF.commit['submit']) && _isObj(this.CONF.commit['submit'])) {
-      translateStatus = await g.translate();
+      translateStatus = await this.COMMIT.translate();
     }
-    const message = await g.generate();
+    const message = await this.COMMIT.generate();
     const complateFn =
       this.CONF.i18n?.git?.commit?.complate ||
       function (val: string) {
@@ -720,8 +729,8 @@ class gitControl {
         let isCreate = false;
         try {
           await this.parentCmd('git', git.add.current);
-          isCreate = await g.saveTempCommitMessageFile(code);
-          await this.parentCmd('git', ['commit', '-F', `${await g.getTempCommitMessageFile()}`], `git commit -m "${code}"`);
+          isCreate = await this.COMMIT.saveTempCommitMessageFile(code);
+          await this.parentCmd('git', ['commit', '-F', `${await this.COMMIT.getTempCommitMessageFile()}`], `git commit -m "${code}"`);
 
           if (
             await command.prompt.select({
@@ -744,7 +753,7 @@ class gitControl {
         } catch (e) {
           console.log(pc.red(`x ${e.message}`));
         } finally {
-          isCreate && (await g.deleteTempCommitMessageFile());
+          isCreate && (await this.COMMIT.deleteTempCommitMessageFile());
         }
       }
     }
