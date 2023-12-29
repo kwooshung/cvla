@@ -1,3 +1,12 @@
+## 🎉 0.1.0-rc.6 `2023-12-30`
+### 🔄 Workflow
+- Workflow, automatic release version update ([#31f65ac](https://github.com/kwooshung/cvlar/commit/31f65acb40672453afd2981f9d007f162a27313e))
+### 🐛 Fix
+- Fix the script process to avoid the node version of the version too low, resulting in PNPM cannot be used ([#db09ca2](https://github.com/kwooshung/cvlar/commit/db09ca227c3c5f401f0e1c76f77afa2990dae4a2))
+- Avoid tags from submitting, and ask again if you submit it, causing duplicate questions ([#7a4fda6](https://github.com/kwooshung/cvlar/commit/7a4fda6bb499c62bfbe003b700eab602c7e750b9))
+### ⚰ ️ remove
+- Delete the temporary file of the git, and check whether it is successfully deleted again ([#90249e9](https://github.com/kwooshung/cvlar/commit/90249e92a37909adcc6155fed42e5a6825ae609a))
+
 ## 🎉 0.1.0-rc.5 `2023-12-30`
 ### 🐛 Fix
 - Modify and add a code version number ([#b6cf54c](https://github.com/kwooshung/cvlar/commit/b6cf54ccbcae5723c162854334a264dd6da7142b))
