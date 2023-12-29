@@ -3,9 +3,16 @@ import { TCommitCategory } from '@/interface';
 /**
  * 清除字符串中的空格
  * @param {string} str 字符串
+ * @param {boolean} trim 是否清除两端空格，默认：true
  * @returns {string} 清除空格后的字符串
  */
-const cleanString = (str: string): string => str.trim().replace(/^[\s\uFEFF\xA0]+/g, '');
+const cleanString = (str: string, trim: boolean = true): string => {
+  let result = str;
+  if (trim) {
+    result = result.trim();
+  }
+  return result.replace(/^[\s\uFEFF\xA0]+/g, '');
+};
 
 /**
  * 解析 git commit message
