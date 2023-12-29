@@ -221,7 +221,8 @@ class release {
             }
 
             if (body.length > 0) {
-              this.CONF['release']['poweredby'] && body.push(`This [Changelog](../../blob/${this.getRepoBranch()}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
+              this.CONF['release']['poweredby'] &&
+                body.push(`> This [Changelog](../../blob/${this.getRepoBranch()}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
 
               await this.OCTOKIT.repos.createRelease({
                 owner,

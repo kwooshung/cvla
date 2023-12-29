@@ -161,7 +161,7 @@ module.exports = {
          *   date: 日期，如：2023-12-17
          *   time: 时间，如：04:59:39
          */
-        item: '- {{message}} ({{commiturl}})',
+        item: '- {{message}} ({{commitlink}})',
         /**
          * CHANGELOG 文件中，每条日志均有具体的提交详情页
          * 用于跳转到提交记录详情页链接

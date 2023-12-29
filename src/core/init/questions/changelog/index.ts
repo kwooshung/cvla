@@ -157,7 +157,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
             standard: '\n### {{emoji}} {{Type}}',
             other: '\n### Other'
           },
-          item: '- {{message}} ({{commiturl}})',
+          item: '- {{message}} ({{commitlink}})',
           commitlink: {
             text: '#{{id[substr:7]}}',
             url: 'https://github.com/kwooshung/cvlar/commit/{{id}}'
@@ -186,7 +186,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
       // 每条日志，内容模版
       config.template.logs.item = await command.prompt.input({
         message: get('changelog.template.logs.item.message'),
-        default: '- {{message}} ({{commiturl}})'
+        default: '- {{message}} ({{commitlink}})'
       });
 
       // 每条日志，是否都在尾部加入 commit url

@@ -25,7 +25,7 @@ const text = async (text: string, to: string | ILanguage = Languages.english, fr
   if (!text) return text;
 
   const _to = typeof to === 'string' ? to : to.code;
-  const _from = typeof from === 'string' ? from : from.code;
+  const _from = typeof from === 'string' ? (from === 'auto' ? '' : from) : from.code;
   return _from === _to ? text : await google.translate(text, _from, _to);
 };
 

@@ -73,6 +73,11 @@ class changelog {
   private translateLangs: string[] = [];
 
   /**
+   * 私有属性：翻译总数
+   */
+  private translateTotal: number = 0;
+
+  /**
    * 私有函数：返回
    * @param {any[]} choices 选项
    * @param {string} [sep = ''] 分隔符
@@ -257,9 +262,8 @@ class changelog {
    */
   private async readLog(langcode: string = ''): Promise<string> {
     langcode = langcode.toLowerCase().trim();
-    langcode ? `.${langcode}` : '';
     const save = this.CONF.changelog['file'].save ?? '';
-    const filename = `${save}/CHANGELOG${langcode}.md`;
+    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
 
     if (await io.exists(filename)) {
       const content = await io.read(filename);
@@ -276,20 +280,20 @@ class changelog {
    * 私有函数：changelog > IO > 写入翻译
    * @param {string} content 日志内容
    * @param {string} [langcode = ''] 语言代码
-   * @param {boolean} [append = true] 是否追加
+   * @param {boolean} [prepend = true] 是否追加
    * @returns {Promise<boolean>} 是否成功
    */
-  private async writeLog(content: string, langcode: string = '', append: boolean = true): Promise<boolean> {
+  private async writeLog(content: string, langcode: string = '', prepend: boolean = true): Promise<boolean> {
     langcode = langcode.toLowerCase().trim();
-    langcode = langcode ? `.${langcode}` : '';
     const save = this.CONF.changelog['file'].save ?? '';
-    const filename = `${save}/CHANGELOG${langcode}.md`;
+    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
 
     let result = false;
     let retry = false;
 
     do {
-      result = await io.write(filename, content.trimStart(), append);
+      prepend && (content = `${content.trimStart()}\n\n${await this.readLog(langcode)}`);
+      result = await io.write(filename, content, false, true);
 
       if (result) {
         retry = false;
@@ -462,6 +466,7 @@ class changelog {
       translatedContent = translatedContent.replace(this.TranslatePlaceholder, placeholder);
     });
 
+    // 延迟，避免翻译过快，如果超过200条待翻译的文本，那么就延迟 333 毫秒，否则就延迟 10 毫秒
     await this.delay(10);
 
     return translatedContent;
@@ -482,7 +487,7 @@ class changelog {
         const contentTranslated = await this.translateAndReplace(content, from, to);
 
         // 如果翻译后的内容不为空，并且翻译后的内容与原始内容不一致，那么就返回翻译后的内容
-        if (contentTranslated !== '' && contentTranslated !== content) {
+        if (contentTranslated !== '') {
           return contentTranslated;
         }
       } while (
@@ -598,13 +603,13 @@ class changelog {
     const commitlinkTextTemplate = this.CONF.changelog['template']?.logs?.commitlink?.text;
     const commitlinkUrlTemplate = this.CONF.changelog['template']?.logs?.commitlink?.url;
 
-    let total = 0;
+    this.translateTotal = 0;
 
     const list: TGitMessageToChangeLog[] = await this.readGitMessage(spinner, tags);
 
     // 计算，消息总数
     for (const val of list) {
-      total += val.list.length;
+      this.translateTotal += val.list.length;
     }
 
     // 首先使用默认 进度条提示
@@ -613,7 +618,7 @@ class changelog {
     // 如果是翻译，那么就乘以翻译语言的数量
     if (this.IsTranslate) {
       processMsgI18n = this.CONF.i18n.changelog.loading.translate.process;
-      total *= this.translateLangs.length;
+      this.translateTotal *= this.translateLangs.length;
 
       if (!(await this.checkTranslateConnect())) {
         cs.clear.lastLine(2);
@@ -630,7 +635,7 @@ class changelog {
       progress.Presets.shades_classic
     );
 
-    processBar.start(total, 0);
+    processBar.start(this.translateTotal, 0);
 
     const changelogs: TChangeLog[] = [];
 
@@ -799,22 +804,23 @@ class changelog {
         for (const lang in content as Record<string, string>) {
           if (Object.prototype.hasOwnProperty.call(content, lang)) {
             const contentTranslated = content[lang];
-
-            result = await this.writeLog(contentTranslated, lang);
+            result = await this.writeLog(contentTranslated, lang, true);
           }
         }
       } else {
-        result = await this.writeLog(content as string);
+        result = await this.writeLog(content as string, '', true);
       }
     }
 
-    if (result) {
-      spinner.succeed(pc.bold(pc.green(this.CONF.i18n.changelog.loading.write.success)));
-    } else {
-      spinner.fail(pc.bold(pc.red(this.CONF.i18n.changelog.loading.write.fail)));
-    }
+    // if (result) {
+    //   spinner.succeed(pc.bold(pc.green(this.CONF.i18n.changelog.loading.write.success)));
+    // } else {
+    //   spinner.fail(pc.bold(pc.red(this.CONF.i18n.changelog.loading.write.fail)));
+    // }
 
     spinner.stop();
+
+    await this.delay(3000000000000);
 
     return result;
   }

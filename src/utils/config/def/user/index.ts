@@ -42,7 +42,7 @@ const user: IConfig = {
           standard: '### {{emoji}} {{Type}}',
           other: '### Other'
         },
-        item: '- {{message}} ({{commiturl}})',
+        item: '- {{message}} ({{commitlink}})',
         commitlink: {
           text: '#{{id[substr:7]}}',
           url: 'https://github.com/kwooshung/cvlar/commit/{{id}}'
