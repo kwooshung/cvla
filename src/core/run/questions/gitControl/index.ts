@@ -3,6 +3,7 @@ import semver from 'semver';
 import { range as _range, clone as _clone, isUndefined as _isUn, isPlainObject as _isObj, isBoolean as _isBool, isArray as _isArr, isString as _isStr } from 'lodash-es';
 import { IConfig, IGitCommitData, IPackageJson, IPackageJsonData, TGitCustomField } from '@/interface';
 import { command, convert, console as cs, git, package as _package, version as V } from '@/utils';
+import changelog from '../changelog';
 import menuState from '../_state';
 
 /**
@@ -45,6 +46,11 @@ class gitControl {
   private parentCmd: (code: string, args: string[], commandPrint?: string) => Promise<void>;
 
   /**
+   * 日志对象
+   */
+  private changeLog: changelog;
+
+  /**
    * 构造函数
    * @param {IConfig} conf 配置信息
    * @param {Function} addBack 添加返回菜单
@@ -54,6 +60,7 @@ class gitControl {
     this.CONF = conf;
     this.addBack = addBack;
     this.parentCmd = cmd;
+    this.changeLog = changelog.getInstance(this.CONF, this.addBack, this.parentCmd);
   }
 
   /**
@@ -725,8 +732,10 @@ class gitControl {
 
       if (annotate.trim() === '') {
         await this.parentCmd('git', ['tag', version]);
+        await this.changeLog.build();
       } else {
         await this.parentCmd('git', ['tag', '-a', `"${version}"`, '-m', `"${annotate}"`]);
+        await this.changeLog.build();
       }
 
       if (
@@ -1054,6 +1063,8 @@ class gitControl {
 
           // 开始撤销 git 版本号，首先是删除本地版本号
           await this.parentCmd('git', ['tag', '-d', revokeVersion]);
+          await this.changeLog.deleteHistory(revokeVersion);
+          await this.changeLog.build();
 
           // 询问是否删除远程版本号
           const deleteRemote = await command.prompt.select({

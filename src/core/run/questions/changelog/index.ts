@@ -239,6 +239,18 @@ class changelog {
   }
 
   /**
+   * 私有函数：changelog > 删除某个版本的历史
+   * @param {string} tag 标签
+   * @returns {Promise<boolean>} 是否成功
+   */
+  public async deleteHistory(tag: string): Promise<boolean> {
+    const historyList = await this.readHistory();
+    const index = historyList.indexOf(tag);
+    const historyUpdated = this.removeRange(historyList, index, index + 1);
+    return await this.writeHistory(historyUpdated);
+  }
+
+  /**
    * 私有函数：changelog > IO > 读取翻译
    * @param {string} langcode 语言代码
    * @returns {Promise<string>} 日志内容
