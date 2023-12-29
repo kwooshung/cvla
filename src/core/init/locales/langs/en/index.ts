@@ -207,13 +207,16 @@ const lang = {
     }
   },
   release: {
-    title: {
+    title: 'GitHub Release Version',
+    message: 'Automate release through GitHub Actions?',
+    description: 'Enable GitHub Release feature for automatic version releases through GitHub Actions, requires Changelog functionality to be effective',
+    subject: {
       message: 'Release page, tag version title template'
     },
     poweredby: {
-      message: `After automatic publishing via ${pc.green('Github Actions')}, a link to ${pc.green('View all logs')} will be inserted at the end?`,
+      message: `After automated release via ${pc.green('GitHub Actions')}, insert a link to ${pc.green('View All Logs')} at the end?`,
       description:
-        "At the end of each 'Release' in 'Github Release', add the following markdown code:\n    This [Changelog](/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)\n    Here, `CHANGELOG.md` represents the relative path to the 'Changelog' entry file in your repository.\n    Reference: https://github.com/kwooshung/cvlar/releases"
+        "In the content of 'GitHub Release', at the end of each 'Release', add the following Markdown code:\n    ------------------------------------------------------------------------------------------------------------------------\n    - This [Changelog](/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)\n    ------------------------------------------------------------------------------------------------------------------------\n    Here, CHANGELOG.md refers to the relative path of the 'Changelog' entry file in your repository\n    Reference: https://github.com/kwooshung/cvlar/releases"
     }
   },
   save: {

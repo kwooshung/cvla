@@ -33,7 +33,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
     config = {
       file: {
         limit: 10,
-        save: './changelog'
+        save: './changelogs'
       },
       translate: {
         origin: 'zh-CN',
@@ -43,8 +43,8 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
         content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
         logs: {
           title: {
-            standard: '',
-            other: '### Other'
+            standard: '\n### {{emoji}} {{Type}}',
+            other: '\n### Other'
           },
           item: '- {{message}} ({{commitlink}})',
           commitlink: {
@@ -84,7 +84,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
       // 保存日志的目录
       config.file.save = await command.prompt.input({
         message: get('changelog.file.save.message'),
-        default: './changelog'
+        default: './changelogs'
       });
     }
 
@@ -154,8 +154,8 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
         content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
         logs: {
           title: {
-            standard: '### {{emoji}} {{Type}}',
-            other: '### Other'
+            standard: '\n### {{emoji}} {{Type}}',
+            other: '\n### Other'
           },
           item: '- {{message}} ({{commiturl}})',
           commitlink: {
@@ -230,7 +230,7 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
               description: `https://bitbucket.org/author/project-name/commits/id`
             },
             {
-              name: get('changelog.template.logs.commitlink.other.message'),
+              name: get('changelog.template.logs.commitlink.plateforms.other.message'),
               value: 'other'
             }
           ]
@@ -238,8 +238,8 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
 
         if (plateforms === 'other') {
           config.template.logs.commitlink.url = await command.prompt.input({
-            message: get('changelog.template.logs.commitlink.other.input.message'),
-            default: `https://example.com/{{author}}/{{repository}}/commit/{{id}}`
+            message: get('changelog.template.logs.commitlink.plateforms.other.input.message'),
+            default: `https://example.com/{{author}}/{{project}}/commit/{{id}}`
           });
         } else {
           switch (plateforms) {
@@ -265,14 +265,14 @@ const changelog = async (configCommit: IResultConfigCommit, packjson: TPackageJs
         });
 
         // 仓库名
-        const repository = await command.prompt.input({
+        const project = await command.prompt.input({
           message: get('changelog.template.logs.commitlink.repository'),
           default: packjson['name'] ?? ''
         });
 
         config.template.logs.commitlink.url = convert.replaceTemplate(config.template.logs.commitlink.url, {
           author,
-          repository
+          project
         });
       }
     }

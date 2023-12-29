@@ -31,15 +31,7 @@ const list = {
       subject: {
         message: '短说明',
         description: '不建议超过72个字符',
-        validate: (val) => {
-          val = val.trim();
-          if (val.length <= 0) {
-            return '短说明不能为空';
-          } else if (val.length > 72) {
-            return '短说明不能超过72个字符';
-          }
-          return true;
-        }
+        validate: "(val){val = val.trim();if (val.length <= 0) {return '短说明不能为空';} else if (val.length > 72) {return '短说明不能超过72个字符';}return true;}"
       },
       body: {
         message: '长说明',
@@ -53,243 +45,7 @@ const list = {
         required: false,
         requiredMessage: '长说明不能为空'
       },
-      custom: [
-        {
-          field: 'test1',
-          type: 'input',
-          message: '这是一个输入演示，随便输入点儿内容，并按下英文逗号试试',
-          transformer: (val, { isFinal }) => {
-            if (isFinal) {
-              return val.split(' - ').join(', ');
-            } else {
-              return val.split(',').join(' - ');
-            }
-          },
-          validate: (val) => {
-            if (val.length <= 0) {
-              return '输入不能为空';
-            }
-            return true;
-          }
-        },
-        {
-          field: 'test2: ',
-          type: 'select',
-          message: '这是一个单选演示',
-          choices: [
-            {
-              name: '选项1',
-              value: 'a',
-              description: '说明1'
-            },
-            {
-              name: '选项2',
-              value: 'b'
-            },
-            {
-              name: '选项3',
-              value: 'c',
-              description: '说明3'
-            },
-            {
-              name: '选项4',
-              value: 'd',
-              description: '说明4'
-            },
-            {
-              name: '选项5',
-              value: 'e',
-              description: '说明5'
-            },
-            {
-              name: '选项6',
-              value: 'f',
-              description: '说明6'
-            },
-            {
-              name: '选项7',
-              value: 'g',
-              description: '说明7'
-            },
-            {
-              name: '选项8',
-              value: 'h',
-              description: '说明8'
-            },
-            {
-              name: '选项9',
-              value: 'i',
-              description: '说明9'
-            },
-            {
-              name: '选项10',
-              value: 'j',
-              description: '说明10'
-            },
-            {
-              name: '选项11',
-              value: 'k',
-              description: '说明11'
-            },
-            {
-              name: '选项12',
-              value: 'l',
-              description: '说明12'
-            },
-            {
-              name: '选项13',
-              value: 'm',
-              description: '说明13'
-            },
-            {
-              name: '选项14',
-              value: 'n',
-              description: '说明14'
-            },
-            {
-              name: '选项15',
-              value: 'o',
-              description: '说明15'
-            },
-            {
-              name: '选项16',
-              value: 'p',
-              description: '说明16'
-            },
-            {
-              name: '选项17',
-              value: 'q',
-              description: '说明17'
-            },
-            {
-              name: '选项18',
-              value: 'r',
-              description: '说明18'
-            },
-            {
-              name: '选项19',
-              value: 's',
-              description: '说明19'
-            },
-            {
-              name: '选项20',
-              value: 't',
-              description: '说明20'
-            }
-          ],
-          choicesLimit: 5,
-          loop: false,
-          default: 'b'
-        },
-        {
-          field: false,
-          type: 'checkbox',
-          message: '这是一个多选演示',
-          choices: [
-            {
-              name: '选项1',
-              value: 'm-a'
-            },
-            {
-              name: '选项2',
-              value: 'm-b',
-              description: '说明2',
-              checked: true
-            },
-            {
-              name: '选项3',
-              value: 'm-c',
-              description: '说明3'
-            },
-            {
-              name: '选项4',
-              value: 'm-d',
-              description: '说明4'
-            },
-            {
-              name: '选项5',
-              value: 'm-e',
-              description: '说明5'
-            },
-            {
-              name: '选项6',
-              value: 'm-f',
-              description: '说明6'
-            },
-            {
-              name: '选项7',
-              value: 'm-g',
-              description: '说明7'
-            },
-            {
-              name: '选项8',
-              value: 'm-h',
-              description: '说明8'
-            },
-            {
-              name: '选项9',
-              value: 'm-i',
-              description: '说明9'
-            },
-            {
-              name: '选项10',
-              value: 'm-j',
-              description: '说明10'
-            },
-            {
-              name: '选项11',
-              value: 'm-k',
-              description: '说明11'
-            },
-            {
-              name: '选项12',
-              value: 'm-l',
-              description: '说明12'
-            },
-            {
-              name: '选项13',
-              value: 'm-m',
-              description: '说明13'
-            },
-            {
-              name: '选项14',
-              value: 'm-n',
-              description: '说明14'
-            },
-            {
-              name: '选项15',
-              value: 'm-o',
-              description: '说明15'
-            },
-            {
-              name: '选项16',
-              value: 'm-p',
-              description: '说明16'
-            },
-            {
-              name: '选项17',
-              value: 'm-q',
-              description: '说明17'
-            },
-            {
-              name: '选项18',
-              value: 'm-r',
-              description: '说明18'
-            },
-            {
-              name: '选项19',
-              value: 'm-s',
-              description: '说明19'
-            },
-            {
-              name: '选项20',
-              value: 'm-t',
-              description: '说明20'
-            }
-          ],
-          loop: true
-        }
-      ],
+      custom: false,
       issues: {
         message: '是否需要关闭 issue？',
         default: false,
@@ -332,9 +88,7 @@ const list = {
           config: 'commit.submit 配置项错误'
         }
       },
-      complate(val: string) {
-        return { fail: false, val };
-      },
+      complate: '(val) {return { fail: false, val };}',
       confirm: {
         message: '请确认最终信息正确？',
         yes: '正确，直接提交',
@@ -447,15 +201,7 @@ const list = {
           },
           input: {
             message: '请输入迭代版本号：',
-            validate: (val: any) => {
-              val = val.trim();
-              if (val.length <= 0) {
-                return '迭代版本号不能为空';
-              } else if (!val.test(/([1-9]\d*)/)) {
-                return '迭代版本号格式不正确';
-              }
-              return true;
-            }
+            validate: "(val){val = val.trim();if (val.length <= 0) {return '迭代版本号不能为空';} else if (!val.test(/([1-9]d*)/)) {return '迭代版本号格式不正确';}return true;}"
           }
         }
       },

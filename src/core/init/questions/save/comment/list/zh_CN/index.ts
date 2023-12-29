@@ -197,8 +197,8 @@ const list = {
   'i18n.git.commit.complate': [
     '生成提交信息后，触发此函数，可自行处理提交信息的格式',
     '返回值，是一个对象，包含两个属性，fail、val：',
-    '   fail：true时，则不会继续执行提交操作，',
-    '   val：提交信息',
+    '  fail：true时，则不会继续执行提交操作，',
+    '  val：提交信息',
     '也可用于自定义提示信息'
   ],
   'i18n.git.commit.push.default': 'true：自动选择是，false：自动选择否，默认：false',

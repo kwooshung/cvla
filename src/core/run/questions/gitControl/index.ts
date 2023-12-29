@@ -477,52 +477,54 @@ class gitControl {
 
     const customs = this.CONF.i18n.git.commit['custom'];
 
-    for (const [inx, val] of customs.entries()) {
-      const custom: TGitCustomField = {
-        type: val.type,
-        field: val.field,
-        value: ''
-      };
+    if (customs) {
+      for (const [inx, val] of customs.entries()) {
+        const custom: TGitCustomField = {
+          type: val.type,
+          field: val.field,
+          value: ''
+        };
 
-      if (val.type === 'input') {
-        custom.value = await command.prompt.input({
-          message: val.message,
-          transformer: this.transformer(`custom.${inx}`),
-          validate: this.validate(`custom.${inx}`),
-          default: val.default ?? ''
-        });
-      } else {
-        const message = val.message;
-        const choices = val.choices;
-        const pageSize = this.CONF.i18n.git.commit.custom[inx]?.choicesLimit ?? this.CONF.i18n.choicesLimit ?? 15;
-        const loop = _isUn(this.CONF.i18n.git.commit.custom[inx]?.loop) ? true : this.CONF.i18n.git.commit.custom[inx]?.loop;
-
-        // 如果是循环选择，则添加分隔符
-        loop && choices.push(command.prompt.separator());
-
-        if (val.type === 'select') {
-          custom.value = await command.prompt.select({
-            message,
-            choices,
-            pageSize,
-            loop,
-            default: val.default ?? val.choices[0].value
-          });
-        } else if (val.type === 'checkbox') {
-          custom.value = await command.prompt.checkbox({
-            message,
-            choices,
-            instructions: this.CONF.i18n.checkbox.instructions,
-            pageSize,
-            loop
+        if (val.type === 'input') {
+          custom.value = await command.prompt.input({
+            message: val.message,
+            transformer: this.transformer(`custom.${inx}`),
+            validate: this.validate(`custom.${inx}`),
+            default: val.default ?? ''
           });
         } else {
-          cs.error(`未知的自定义字段类型：${val.type}`, `Unknown custom field type: ${val.type}`);
-          break;
-        }
-      }
+          const message = val.message;
+          const choices = val.choices;
+          const pageSize = this.CONF.i18n.git.commit.custom[inx]?.choicesLimit ?? this.CONF.i18n.choicesLimit ?? 15;
+          const loop = _isUn(this.CONF.i18n.git.commit.custom[inx]?.loop) ? true : this.CONF.i18n.git.commit.custom[inx]?.loop;
 
-      datas.custom.push(custom);
+          // 如果是循环选择，则添加分隔符
+          loop && choices.push(command.prompt.separator());
+
+          if (val.type === 'select') {
+            custom.value = await command.prompt.select({
+              message,
+              choices,
+              pageSize,
+              loop,
+              default: val.default ?? val.choices[0].value
+            });
+          } else if (val.type === 'checkbox') {
+            custom.value = await command.prompt.checkbox({
+              message,
+              choices,
+              instructions: this.CONF.i18n.checkbox.instructions,
+              pageSize,
+              loop
+            });
+          } else {
+            cs.error(`未知的自定义字段类型：${val.type}`, `Unknown custom field type: ${val.type}`);
+            break;
+          }
+        }
+
+        datas.custom.push(custom);
+      }
     }
   }
 

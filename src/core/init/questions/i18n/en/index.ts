@@ -31,15 +31,8 @@ const list = {
       subject: {
         message: 'Short Description',
         description: 'Advised to keep under 72 characters',
-        validate: (val) => {
-          val = val.trim();
-          if (val.length <= 0) {
-            return 'Short description cannot be empty';
-          } else if (val.length > 72) {
-            return 'Short description must not exceed 72 characters';
-          }
-          return true;
-        }
+        validate:
+          "(val){val = val.trim();if (val.length <= 0) {return 'Short description cannot be empty';} else if (val.length > 72) {return 'Short description must not exceed 72 characters';}return true;}"
       },
       body: {
         message: 'Long Description',
@@ -53,239 +46,7 @@ const list = {
         required: false,
         requiredMessage: 'Long description cannot be empty'
       },
-      custom: [
-        {
-          field: 'test1',
-          type: 'input',
-          message: 'This is an input demo, type anything and press comma',
-          transformer: (val, { isFinal }) => {
-            return isFinal ? val.split(' - ').join(', ') : val.split(',').join(' - ');
-          },
-          validate: (val) => {
-            if (val.length <= 0) {
-              return 'Input cannot be empty';
-            }
-            return true;
-          }
-        },
-        {
-          field: 'test2: ',
-          type: 'select',
-          message: 'This is a single-choice demo',
-          choices: [
-            {
-              name: 'Option1',
-              value: 'a',
-              description: 'Description 1'
-            },
-            {
-              name: 'Option2',
-              value: 'b'
-            },
-            {
-              name: 'Option3',
-              value: 'c',
-              description: 'Description 3'
-            },
-            {
-              name: 'Option4',
-              value: 'd',
-              description: 'Description 4'
-            },
-            {
-              name: 'Option5',
-              value: 'e',
-              description: 'Description 5'
-            },
-            {
-              name: 'Option6',
-              value: 'f',
-              description: 'Description 6'
-            },
-            {
-              name: 'Option7',
-              value: 'g',
-              description: 'Description 7'
-            },
-            {
-              name: 'Option8',
-              value: 'h',
-              description: 'Description 8'
-            },
-            {
-              name: 'Option9',
-              value: 'i',
-              description: 'Description 9'
-            },
-            {
-              name: 'Option10',
-              value: 'j',
-              description: 'Description 10'
-            },
-            {
-              name: 'Option11',
-              value: 'k',
-              description: 'Description 11'
-            },
-            {
-              name: 'Option12',
-              value: 'l',
-              description: 'Description 12'
-            },
-            {
-              name: 'Option13',
-              value: 'm',
-              description: 'Description 13'
-            },
-            {
-              name: 'Option14',
-              value: 'n',
-              description: 'Description 14'
-            },
-            {
-              name: 'Option15',
-              value: 'o',
-              description: 'Description 15'
-            },
-            {
-              name: 'Option16',
-              value: 'p',
-              description: 'Description 16'
-            },
-            {
-              name: 'Option17',
-              value: 'q',
-              description: 'Description 17'
-            },
-            {
-              name: 'Option18',
-              value: 'r',
-              description: 'Description 18'
-            },
-            {
-              name: 'Option19',
-              value: 's',
-              description: 'Description 19'
-            },
-            {
-              name: 'Option20',
-              value: 't',
-              description: 'Description 20'
-            }
-          ],
-          choicesLimit: 5,
-          loop: false,
-          default: 'b'
-        },
-        {
-          field: false,
-          type: 'checkbox',
-          message: 'This is a multiple-choice demo',
-          choices: [
-            {
-              name: 'Option1',
-              value: 'm-a'
-            },
-            {
-              name: 'Option2',
-              value: 'm-b',
-              description: 'Description 2',
-              checked: true
-            },
-            {
-              name: 'Option3',
-              value: 'm-c',
-              description: 'Description 3'
-            },
-            {
-              name: 'Option4',
-              value: 'm-d',
-              description: 'Description 4'
-            },
-            {
-              name: 'Option5',
-              value: 'm-e',
-              description: 'Description 5'
-            },
-            {
-              name: 'Option6',
-              value: 'm-f',
-              description: 'Description 6'
-            },
-            {
-              name: 'Option7',
-              value: 'm-g',
-              description: 'Description 7'
-            },
-            {
-              name: 'Option8',
-              value: 'm-h',
-              description: 'Description 8'
-            },
-            {
-              name: 'Option9',
-              value: 'm-i',
-              description: 'Description 9'
-            },
-            {
-              name: 'Option10',
-              value: 'm-j',
-              description: 'Description 10'
-            },
-            {
-              name: 'Option11',
-              value: 'm-k',
-              description: 'Description 11'
-            },
-            {
-              name: 'Option12',
-              value: 'm-l',
-              description: 'Description 12'
-            },
-            {
-              name: 'Option13',
-              value: 'm-m',
-              description: 'Description 13'
-            },
-            {
-              name: 'Option14',
-              value: 'm-n',
-              description: 'Description 14'
-            },
-            {
-              name: 'Option15',
-              value: 'm-o',
-              description: 'Description 15'
-            },
-            {
-              name: 'Option16',
-              value: 'm-p',
-              description: 'Description 16'
-            },
-            {
-              name: 'Option17',
-              value: 'm-q',
-              description: 'Description 17'
-            },
-            {
-              name: 'Option18',
-              value: 'm-r',
-              description: 'Description 18'
-            },
-            {
-              name: 'Option19',
-              value: 'm-s',
-              description: 'Description 19'
-            },
-            {
-              name: 'Option20',
-              value: 'm-t',
-              description: 'Description 20'
-            }
-          ],
-          loop: true
-        }
-      ],
+      custom: false,
       issues: {
         message: 'Do you need to close any issues?',
         default: false,
@@ -316,9 +77,7 @@ const list = {
           config: 'Error in commit.submit configuration'
         }
       },
-      complate(val: string) {
-        return { fail: false, val };
-      },
+      complate: '(val) {return { fail: false, val };}',
       confirm: {
         message: 'Please confirm if the final information is correct?',
         yes: 'Correct, submit directly',
@@ -337,130 +96,123 @@ const list = {
       }
     },
     version: {
-      message: '版本号',
-      description: '版本号管理，可用于升级、撤销 版本号，自动升级和提交',
+      message: 'Version Number',
+      description: 'Manage version numbers for upgrades, rollbacks, auto-updates, and commits',
       select: {
-        message: '请选择操作'
+        message: 'Please select an action'
       },
       upgrade: {
-        message: '升级版本（自动）',
-        description: '选择 主版本号、次版本号 或 补丁版本号，自动根据 当前版本号，计算下个版本号',
+        message: 'Upgrade Version (Automatic)',
+        description: 'Choose major, minor, or patch version to automatically calculate the next version number based on the current one',
         type: {
-          message: '您打算升级哪个版本',
+          message: 'Which version do you intend to upgrade',
           major: {
-            message: '主要',
-            description: '一般引入了不向后兼容的 API 更改或重大功能更改。'
+            message: 'Major',
+            description: 'Generally introduces backward-incompatible API changes or significant feature changes.'
           },
           minor: {
-            message: '次要',
-            description: '新的向后兼容功能，建议在确定新功能对项目有用时进行更新。'
+            message: 'Minor',
+            description: 'New backward-compatible features, recommended for updates when new features are beneficial to the project.'
           },
           patch: {
-            message: '补丁',
-            description: '通常用于小的错误修复和更新，不影响软件的主要功能和向后兼容性。'
+            message: 'Patch',
+            description: 'Usually for minor bug fixes and updates, without affecting major functions and backward compatibility.'
           }
         }
       },
       specify: {
-        message: '升级版本（指定）',
-        description: '完全由您自定义，但是也得符合语义化版本规范（SemVer）',
+        message: 'Upgrade Version (Specified)',
+        description: 'Fully customizable, but must comply with Semantic Versioning (SemVer)',
         input: {
-          message: '请输入版本号：'
+          message: 'Please enter the version number:'
         }
       },
       downgrade: {
-        message: '降级版本（回退/撤销）',
-        description: '撤销指定版本号，仅撤销版本，不会对文件产生修改',
+        message: 'Downgrade Version (Rollback/Revoke)',
+        description: 'Revoke a specified version number, only revoking the version without modifying files',
         select: {
-          message: '请选择要撤销的版本号',
+          message: 'Please select the version number to revoke',
           confirm: {
-            message: '是否修改 package.json 中的版本号？',
+            message: 'Do you want to modify the version number in package.json?',
             default: true,
             remote: {
-              message: '是否删除远程仓库中的 tag？',
+              message: 'Do you want to delete the tag from the remote repository?',
               default: false
             },
             change: {
-              message: '您想使用哪个版本号 package.json 中？',
+              message: 'Which version number do you want to use in package.json?',
               descriptions: {
-                auto: '自动计算前一个版本，但在以往的tags中，可能不存在这个版本号',
-                prevtag: '将使用前一个tag作为版本号'
+                auto: 'Automatically calculate the previous version, which might not exist in past tags',
+                prevtag: 'Use the previous tag as the version number'
               },
               specify: {
-                message: '指定版本号'
+                message: 'Specify the version number'
               }
             }
           },
           error: {
-            no: '没有可撤销的版本号，请重新选择'
+            no: 'No version numbers available to revoke, please reselect'
           }
         }
       },
       flag: {
-        message: '是否添加发布标识符？',
-        description: '可能是 稳定版本 或 预发布版本',
+        message: 'Do you want to add a release identifier?',
+        description: 'Could be a stable or pre-release version',
         select: {
-          message: '选择发布标识符',
+          message: 'Select a release identifier',
           choices: [
             {
-              name: '预览版 (alpha)',
+              name: 'Alpha Version',
               value: 'alpha',
-              description: '{0}，预览版，主要用于内部测试，可能包含很多BUG，功能不全，存在很多错误'
+              description: '{0}, Alpha version, mainly for internal testing, may contain many bugs, incomplete features, and numerous errors'
             },
             {
-              name: '测试版 (beta)',
+              name: 'Beta Version',
               value: 'beta',
-              description: '{0}，该版本任然存在很多BUG，但是相对alpha版要稳定一些，会不断增加新功能'
+              description: '{0}, Beta version, still contains many bugs but is relatively more stable than alpha, and will continuously add new features'
             },
             {
-              name: '候选版本 (rc)',
+              name: 'Release Candidate (rc)',
               value: 'rc',
-              description: '{0}，这个版本接近最终产品，主要目的是查找可能的遗漏的问题。如果没有发现重大问题，这个版本可能就会成为最终发布的版本。'
+              description: '{0}, Release candidate, close to the final product, mainly to find potential missing issues. If no major problems are found, this version may become the final release.'
             },
             {
-              name: '正式版本 (stable)',
+              name: 'Stable Version',
               value: 'stable',
-              description: '{0}，正式版本，该版本相对稳定，基本不会再修改代码，除非发现BUG，或者出现新的需求'
+              description: '{0}, Stable version, relatively stable, and will not modify the code unless bugs are found or new requirements emerge'
             }
           ]
         },
         iterations: {
           message: {
-            no: '当前版本号：{0}，不存在预发号，确认使用 {1} 作为预发版本号？',
-            add: '当前版本号：{0}，预发版本类型为{1}，迭代号为：{2}，是否使用 {3} 作为预发版本号？'
+            no: 'Current version number: {0}, no pre-release number, confirm to use {1} as the pre-release version number?',
+            add: 'Current version number: {0}, pre-release type {1}, iteration number: {2}, use {3} as the pre-release version number?'
           },
           input: {
-            message: '请输入迭代版本号：',
-            validate: (val: any) => {
-              val = val.trim();
-              if (val.length <= 0) {
-                return '迭代版本号不能为空';
-              } else if (!val.test(/([1-9]\d*)/)) {
-                return '迭代版本号格式不正确';
-              }
-              return true;
-            }
+            message: 'Please enter the iteration version number:',
+            validate:
+              "(val){val = val.trim();if (val.length <= 0) {return 'Iteration version number cannot be empty';} else if (!val.test(/([1-9]d*)/)) {return 'Iteration version number format is incorrect';}return true;}"
           }
         }
       },
       annotate: {
-        message: '是否添加说明？',
-        no: '无说明',
-        short: '短说明',
-        long: '长说明（将使用文本编辑器打开）',
+        message: 'Do you want to add a description?',
+        no: 'No Description',
+        short: 'Short Description',
+        long: 'Long Description (will open in text editor)',
         default: ''
       },
       file: {
-        message: '是否更新 package.json 中的版本号？',
+        message: 'Do you want to update the version number in package.json?',
         default: true
       },
       push: {
-        message: '是否推送 tags 到远程仓库？',
+        message: 'Do you want to push tags to the remote repository?',
         default: true
       },
       error: {
-        exists: '当前版本号 {0} 已存在，请重新输入',
-        format: '版本号格式不符合 Semver语义化标准，请重新输入'
+        exists: 'Current version number {0} already exists, please re-enter',
+        format: 'Version number format does not comply with Semver standards, please re-enter'
       }
     }
   },

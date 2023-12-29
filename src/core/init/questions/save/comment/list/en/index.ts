@@ -206,8 +206,8 @@ const list = {
   'i18n.git.commit.complate': [
     'Upon generating the commit message, this function is triggered, allowing custom handling of the commit message format',
     'The return value is an object, containing two properties, fail and val:',
-    '   fail: when true, the commit operation will not continue,',
-    '   val: the commit message',
+    '  fail: when true, the commit operation will not continue,',
+    '  val: the commit message',
     'Can also be used for custom prompt messages'
   ],
   'i18n.git.commit.push.default': 'true: automatically select yes, false: automatically select no, default: false',

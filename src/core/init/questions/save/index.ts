@@ -71,6 +71,9 @@ const build = async (
   // 配置代码
   const code = [];
 
+  // export type
+  let exportType = '';
+
   // 如果是独立模式
   if (commit.standalone) {
     commit.saveDir = commit.saveDir.replace('.\\', '');
@@ -82,12 +85,14 @@ const build = async (
 
     // 如果规范是默认值 或是 标准规范（ESM 规范）
     if ((_isString(base.standard) && base.standard === 'default') || (_isBool(base.standard) && base.standard)) {
+      exportType = 'export default ';
       code.push(`import cvlarTypes from '${`${fileRelativePath}ks-cvlar.types.${base.extension}`}';\n`);
 
       _isObj(commit.config) && _isArray(commit.config['scopes']) && code.push(`import cvlarScopes from '${`${fileRelativePath}ks-cvlar.scopes.${base.extension}`}';\n`);
     }
     // 否则就不是通用规范，即 CommonJS(CJS) 规范
     else {
+      exportType = 'module.exports = ';
       const ext = base.extension === 'cjs' ? '.cjs' : '';
       code.push(`const cvlarTypes = require('${`${fileRelativePath}ks-cvlar.types${ext}`}');\n`);
 
@@ -123,7 +128,7 @@ const build = async (
   code.push(` */\n`);
 
   // 导出配置
-  code.push('export default ');
+  code.push(exportType);
 
   // 序列化配置，增加注释说明
   code.push(serialize(config, comments, indentation));
@@ -182,7 +187,11 @@ const save = async (
   formatDirs.push(path.posix.normalize(saveDir).replace(/\\/g, '/'));
 
   // 生成配置内容
-  const content = (await build(saveDir, base, commit, pack, version, changelog, release, indentation)).replace(/['"]?\$T(.*?)T\$['"]?/g, '$1');
+  const content = (await build(saveDir, base, commit, pack, version, changelog, release, indentation))
+    .replace(/['"]?\$T(.*?)T\$['"]?/g, '$1')
+    .replace(/:[\s\n]*(['"`])\((.*?)\}\1/g, (match, quote, fnBody) => {
+      return `(${fnBody}}`;
+    });
 
   // 保存失败次数
   let failCount = 0;
@@ -194,7 +203,7 @@ const save = async (
   // 保存配置文件
   // eslint-disable-next-line no-constant-condition
   while (true) {
-    saveSuccess = await io.write(saveDir, content, true);
+    saveSuccess = await io.write(saveDir, content, false, true);
 
     if (!saveSuccess && failCount < failCountMax) {
       if (
