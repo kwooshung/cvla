@@ -183,6 +183,7 @@ class release {
       this.CONF['changelog']['template']['logs']['commitlink']['text'] &&
       this.CONF['changelog']['template']['logs']['commitlink']['url']
     ) {
+      console.log(process.env);
       // 标题模板
       const subjectTemplate = this.CONF.release['subject'];
       /**
