@@ -15,13 +15,6 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@main
-        
-      # 设置 node
-      - name: Sync to Npm.js
-        uses: actions/setup-node@main
-        with:
-          node-version: '14.0.0'
-          registry-url: https://registry.npmjs.org/
 
       # 全局安装 pnpm
       - name: install pnpm
