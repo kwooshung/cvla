@@ -1,3 +1,8 @@
+## 🎉 0.1.0-rc.5 `2023-12-30`
+### 🐛 Fix
+- 修改並添加代碼版本號 ([#b6cf54c](https://github.com/kwooshung/cvlar/commit/b6cf54ccbcae5723c162854334a264dd6da7142b))
+- 修復特殊空白的結果的問題。 ([#524fa19](https://github.com/kwooshung/cvlar/commit/524fa194008adf7b6aba2ac37846ddd281213615))
+
 ## 🎉 0.1.0-rc.4 `2023-12-30`
 ### 📦 ️release
 - 新版本0.1.0-rc.4 ([#765be56](https://github.com/kwooshung/cvlar/commit/765be5696bdb21121022c95c0ed5bd713a27054e))
