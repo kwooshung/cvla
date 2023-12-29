@@ -1,3 +1,12 @@
+## 🎉 0.1.0-rc.6 `2023-12-30`
+### 🔄 Workflow
+- 工作流程，自动发布版本更新 ([#31f65ac](https://github.com/kwooshung/cvlar/commit/31f65acb40672453afd2981f9d007f162a27313e))
+### 🐛 Fix
+- 修复脚本过程以避免版本的节点版本太低，因此无法使用PNPM ([#db09ca2](https://github.com/kwooshung/cvlar/commit/db09ca227c3c5f401f0e1c76f77afa2990dae4a2))
+- 避免标签提交，然后再次询问是否提交，引起重复的问题 ([#7a4fda6](https://github.com/kwooshung/cvlar/commit/7a4fda6bb499c62bfbe003b700eab602c7e750b9))
+### ⚰ ️ remove
+- 删除git的临时文件，并检查是否再次删除它 ([#90249e9](https://github.com/kwooshung/cvlar/commit/90249e92a37909adcc6155fed42e5a6825ae609a))
+
 ## 🎉 0.1.0-rc.5 `2023-12-30`
 ### 🐛 Fix
 - 修改并添加代码版本号 ([#b6cf54c](https://github.com/kwooshung/cvlar/commit/b6cf54ccbcae5723c162854334a264dd6da7142b))
