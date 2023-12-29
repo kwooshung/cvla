@@ -437,7 +437,7 @@ class gitControl {
     const scope = _isArr(scopes) ? scopes.find((scope) => scope.name.toLowerCase() === pushTagMessage.scope.toLowerCase()) : '';
     const subjectTemplate = pushTagMessage.subject as string;
     let subject = convert.replaceTemplate(subjectTemplate, { tag });
-    isTranslate && (subject = await translate.text(subject, this.CONF.commit['submit']['origin'], this.CONF.commit['submit']['target']));
+    isTranslate && (subject = await translate.text(subject, this.CONF.commit['submit']['target'], this.CONF.commit['submit']['origin']));
     const message = `${type.emoji}${type.name}${scope ? `(${scope.name})` : ''}: ${subject}`;
     return message;
   }
@@ -859,7 +859,7 @@ class gitControl {
     // 如果版本号有效，则添加 tag
     if (semver.valid(version)) {
       let result = false;
-      this.versionUpdatePackageJson(version);
+      await this.versionUpdatePackageJson(version);
 
       if (annotate.trim() === '') {
         result = await this.pushTagWithLogUpdates(version, 'git', ['tag', version]);
