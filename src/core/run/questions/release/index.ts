@@ -233,6 +233,8 @@ class release {
               });
             }
           }
+
+          console.log(pc.green('✔ SUCCESS !!!'));
         }
       }
     } else {
