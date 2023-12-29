@@ -438,7 +438,7 @@ class gitControl {
     const subjectTemplate = pushTagMessage.subject as string;
     let subject = convert.replaceTemplate(subjectTemplate, { tag });
     isTranslate && (subject = await translate.text(subject, this.CONF.commit['submit']['target'], this.CONF.commit['submit']['origin']));
-    const message = `${type.emoji}${type.name}${scope ? `(${scope.name})` : ''}: ${subject}`;
+    const message = `${type.emoji}${type.name.trim()}${scope ? `(${scope.name})` : ''}: ${subject.toLowerCase()}`;
     return message;
   }
 

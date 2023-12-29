@@ -239,8 +239,8 @@ class changelog {
    */
   private async writeHistory(historyUpdated: string[]): Promise<boolean> {
     const filename = this.getHistoryFilename();
-    const content = historyUpdated.join('\n');
-    return io.write(filename, content, true);
+    const content = [await this.readHistory(), historyUpdated].flat().join('\n');
+    return io.write(filename, content, false, true);
   }
 
   /**
