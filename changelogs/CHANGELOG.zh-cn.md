@@ -1,3 +1,8 @@
+## 🎉 0.1.0-rc.3 `2023-12-30`
+### 🐛 Fix
+- 更新文件编写，准备测试GITHUB发布会自动发布 ([#0739de0](https://github.com/kwooshung/cvlar/commit/0739de005bb58f84d0fec91dec6907f89d3df65e))
+- 可以在文件中的标签中遵循日志，日志是完美的！ ([#af0b6a3](https://github.com/kwooshung/cvlar/commit/af0b6a31e0653d94d3a8c6af190549e9fb525a01))
+
 ## 🎉 0.1.0-rc.2 `2023-12-29`
 ### 🐛 Fix
 - 日志翻译和软件包。 ([#0b5f906](https://github.com/kwooshung/cvlar/commit/0b5f90694c5cd27bae1906c33756cb86729b5ca1))

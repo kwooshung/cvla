@@ -1,3 +1,8 @@
+## 🎉 0.1.0-rc.3 `2023-12-30`
+### 🐛 Fix
+- Update the file writing, prepare for testing GitHub Release automatically release ([#0739de0](https://github.com/kwooshung/cvlar/commit/0739de005bb58f84d0fec91dec6907f89d3df65e))
+- The log can be followed in the tag in the file, and the log is perfect! ([#af0b6a3](https://github.com/kwooshung/cvlar/commit/af0b6a31e0653d94d3a8c6af190549e9fb525a01))
+
 ## 🎉 0.1.0-rc.2 `2023-12-29`
 ### 🐛 Fix
 - Log translation and Package.json repair ([#0b5f906](https://github.com/kwooshung/cvlar/commit/0b5f90694c5cd27bae1906c33756cb86729b5ca1))
