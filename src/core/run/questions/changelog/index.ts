@@ -651,7 +651,6 @@ class changelog {
         for (const log of val.list) {
           // 解析日志内容
           const { emojiOrType, emoji, type, scope, message } = git.message.parse(log.message);
-
           let key = '';
           // 如果存在，下方的key，是为了让其能够按照type分类
           if (emojiOrType) {

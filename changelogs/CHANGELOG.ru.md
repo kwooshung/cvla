@@ -1,9 +1,11 @@
 ## 🎉 0.1.0-rc.4 `2023-12-30`
+### 📦 ️release
+- Новая версия 0.1.0-RC.4 ([#765be56](https://github.com/kwooshung/cvlar/commit/765be5696bdb21121022c95c0ed5bd713a27054e))
 ### 🆕 Add
 - Журнал был сгенерирован в формате ([#562c519](https://github.com/kwooshung/cvlar/commit/562c519ed9b32d5d62f4bb38861b019378dcc550))
 
 ## 🎉 0.1.0-rc.3 `2023-12-30`
-### 📦 ️ release
+### 📦 ️release
 - Новая версия 0.1.0-RC.3 ([#18a89fb](https://github.com/kwooshung/cvlar/commit/18a89fb156cff3b702bb58bec820c768c745242e))
 - Новая версия 0.1.0-RC.3 ([#a23539a](https://github.com/kwooshung/cvlar/commit/a23539a0557190eb2e31c257c61cbe3cb916ed22))
 ### 🐛 Fix
@@ -15,7 +17,7 @@
 - Перевод и Package.json. ([#0b5f906](https://github.com/kwooshung/cvlar/commit/0b5f90694c5cd27bae1906c33756cb86729b5ca1))
 
 ## 🎉 0.1.0-rc.1 `2023-12-29`
-### 📦 ️ release
+### 📦 ️release
 - 新 版本 0,1,0-RC.1 ([#840e82d](https://github.com/kwooshung/cvlar/commit/840e82d90709dedcd2423d993d90867a89b622cd))
 ### 🐛 Fix
 - Исправить автоматическую аннотацию интерактивного опыта и конфигурации ([#feb129e](https://github.com/kwooshung/cvlar/commit/feb129e81d2bc1e2e03a6473f0d69a7dc483c2c9))
