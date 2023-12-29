@@ -482,7 +482,7 @@ class gitControl {
         await this.parentCmd(code, args);
 
         // 删除临时的提交信息文件
-        await this.COMMIT.deleteTempCommitMessageFile();
+        this.COMMIT && (await this.COMMIT.deleteTempCommitMessageFile());
 
         // 推送本地仓库到远程仓库
         await this.parentCmd('git', git.push());
