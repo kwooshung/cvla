@@ -1,3 +1,7 @@
+## 🎉 0.1.0-rc.4 `2023-12-30`
+### 🆕 Add
+- 該日誌已以格式生成 ([#562c519](https://github.com/kwooshung/cvlar/commit/562c519ed9b32d5d62f4bb38861b019378dcc550))
+
 ## 🎉 0.1.0-rc.3 `2023-12-30`
 ### 📦 ️ release
 - 新版本0.1.0-rc.3 ([#18a89fb](https://github.com/kwooshung/cvlar/commit/18a89fb156cff3b702bb58bec820c768c745242e))
