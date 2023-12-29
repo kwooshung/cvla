@@ -147,13 +147,9 @@ const lang = {
         message: '记录多少个版本号的日志？',
         description: '默认为 10，不是只能写10行日志，而是10个版本的记录'
       },
-      history: {
-        message: '历史日志存储的目录？',
-        description: '默认为 ./changelogs'
-      },
       save: {
-        message: '保存日志的文件名？',
-        description: '默认为 ./changelog'
+        message: '保存日志的目录？',
+        description: '默认为 ./changelogs'
       }
     },
     translate: {
@@ -182,24 +178,66 @@ const lang = {
     },
     template: {
       message: '是否配置模板？',
-      before: {
-        message: '每个日志文件，页眉内容模版（留空则无页眉）？'
-      },
       content: {
         message: '每条日志，内容模版（留空则使用默认模版）？'
       },
-      separator: {
-        message: '每个版本之间的分隔符（留空则使用默认分隔符：\\n\\n---\\n\\n）？',
-        description: ''
+      logs: {
+        title: {
+          standard: {
+            message: '标准日志标题模板，支持 `type`、`scope`、`date`, `time` 变量（默认模板适用于空白）'
+          },
+          other: {
+            message: '非标准日志标题模板，适用于无法通过`提交类型`分类的日志'
+          }
+        },
+        item: {
+          message: '每条日志，内容模版，可用 `message`、`date`, `time`、`commitlink` 变量（留空则使用默认模版）？'
+        },
+        commitlink: {
+          message: '每条日志，是否都在尾部加入 commit link？',
+          plateforms: {
+            message: '你的代码托管平台？',
+            other: {
+              message: '其他地址？',
+              input: {
+                message: '请输入完整的 url 模版'
+              }
+            }
+          },
+          author: '作者名',
+          repository: '仓库名，支持 `author`、`repository`、`id` 变量'
+        }
+      }
+    }
+  },
+  release: {
+    title: 'Github 发布版本',
+    message: '通过 Github Acitons 自动发布？',
+    description: '启用 Github 发布版本 功能，可通过 Github Acitons 自动发布版本，需要Changelog 功能开启有效',
+    subject: {
+      message: '发布页面，tag版本标题模板'
+    },
+    pushTagMessage: {
+      message: '给仓库创建tag时，会自动生成日志，此时tag是不会包含新的日志的，因此需要提交这些变化的文件到仓库。是否设置对应配置项？',
+      description: {
+        yes: '将分别设置 `type`、`scope`、`subject` 配置项',
+        no: '将使用默认配置项'
       },
-      after: {
-        message: '每个日志文件，页脚内容模版（留空则无页脚）？'
+      type: {
+        message: '选择提交类型'
+      },
+      scope: {
+        message: '选择提交范围'
+      },
+      subject: {
+        message: '输入提交标题，可用 `tag` 变量',
+        description: '例如：新版本 {{tag}}，则表示：新版本 1.0.0'
       }
     },
     poweredby: {
       message: `通过 ${pc.green('Github Acitons')} 自动发布后，将在最后插入 ${pc.green('查看所有日志')} 的链接？`,
       description:
-        "在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：\n    ------------------------------------------------------------------------------------------------------------------------\n    - This [Changelog](/{0}), Powered by @kwooshung / [cvlar](https://github.com/kwooshung/cvlar/)\n    ------------------------------------------------------------------------------------------------------------------------\n    其中，{0} 表示当前 您仓库中 'Changelog' 入口文件的相对路径\n    参考：https://github.com/kwooshung/cvlar/releases"
+        "在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：\n    ------------------------------------------------------------------------------------------------------------------------\n    - This [Changelog](/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)\n    ------------------------------------------------------------------------------------------------------------------------\n    其中，CHANGELOG.md 表示当前 您仓库中 'Changelog' 入口文件的相对路径\n    参考：https://github.com/kwooshung/cvlar/releases"
     }
   },
   save: {

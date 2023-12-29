@@ -30,7 +30,13 @@ const main = async (): Promise<void> => {
     else if (param.exists(['i', 'init'])) {
       header();
       init(await config.load());
-    } else {
+    }
+    // 如果是 -r 或 -release 参数，则执行菜单
+    else if (param.exists(['r', 'release'])) {
+      run(await config.load(), true);
+    }
+    // 否则，执行菜单
+    else {
       cs.clear.all();
       // 如果没有参数 或者 存在 -c 或 -config 参数，则加载配置并执行
       if (process.argv.length === 2 || param.exists(['c', 'config'])) {

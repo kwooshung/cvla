@@ -6,8 +6,8 @@ import pc from 'picocolors';
  * @param {string} en 英文错误信息
  */
 const error = (cn: string, en: string) => {
-  console.log(pc.red(`x ${cn}`));
-  console.log(pc.red(`x ${en}`));
+  console.log(pc.red(`✖ ${cn}`));
+  console.log(pc.red(`✖ ${en}`));
 };
 
 export default error;

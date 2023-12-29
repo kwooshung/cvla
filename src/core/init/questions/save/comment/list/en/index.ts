@@ -2,7 +2,11 @@ const list = {
   common: [
     "All configuration items below support this type of configuration. For example, to enable a configuration, just assign 'default', '{}' or 'No configuration item'. This will enable 'default configuration'.",
     "To disable a configuration, just assign 'false'.",
-    "It is recommended to use the command 'cvlar i' to initialize the configuration file."
+    "It is recommended to use the command 'cvlar i' to initialize the configuration file.",
+    '',
+    'Content below',
+    '  {x} is a placeholder',
+    '  {{xxx}} is a variable'
   ],
   commit: 'Git commit, convenient for selectively committing content from the menu',
   'commit.type': [
@@ -76,6 +80,7 @@ const list = {
     '    3. The new versions of npm/yarn/pnpm commands are all compatible with each other.',
     '       If there is any incompatibility, please modify the following commands or upgrade the package management tool'
   ],
+  version: 'Version management, can be used to upgrade, cancel version number, automatic upgrade and submission',
   'version.validate': [
     'Regular expression for validating version numbers, regex object',
     '  Regex explanation: https://semver.org/#is-there-a-suggested-regular-expression-regex-to-check-a-semver-string',
@@ -85,68 +90,198 @@ const list = {
   changelog: 'Changelog, automatically generates logs based on Git commit records',
   'changelog.file': 'Changelog file related configuration',
   'changelog.file.limit': [
-    'Number of version records in the CHANGELOG file',
-    '  0 means no limit, all records;',
-    '  Default is 10 versions of logs (not just 10 lines of logs, but logs of 10 versions)',
-    '  Means each file records up to 10 versions, and automatically paginates',
-    '  If it exceeds 10, it automatically creates a new CHANGELOG file, the filename is md5(content).md, and so on',
+    'The number of recorded versions in the CHANGELOG file',
+    '0 means no limit, all records; ',
+    'Default 10 logs with version numbers (not only 10 lines of logs can be written, but 10 versions of records)',
+    'Indicates that each file can record up to 10 records and automatically paginate',
+    'If there are more than 10 items, a new CHANGELOG file will be automatically created with the file name md5(content).md, and so on',
     '',
-    '  If this configuration has been applied and logs have been generated, it will only affect subsequent logs',
-    '  If you want to apply the new configuration to all',
-    '    You need to first delete all files in the history directory and the file specified in save'
-  ],
-  'changelog.history': [
-    "History log storage directory, string, e.g., './changelogs'",
-    '  If limit is 0, then this configuration is invalid',
-    '  If limit is not 0, then this configuration is valid',
-    "  Means the history log storage directory, default './changelogs', if it does not exist, it will be created automatically"
-  ],
-  'changelog.save': [
-    'Filename for saving the log, without extension, for example:',
-    "  'CHANGELOG.txt' => 'CHANGELOG.txt.md'",
-    "  'CHANGELOG.md' => 'CHANGELOG.md.md'",
-    "  'CHANGELOG' => 'CHANGELOG.md'",
+    'If the limit number is not met, all logs will be stored in the index.md file in this directory;',
+    'When there are different translation versions, corresponding directories will be automatically created based on the language code, such as: zh-CN/index.md, en/index.md, etc.;',
+    'You can create a CHANGELOG.md file in the project root directory and link to the index.md file in this directory;',
     '',
-    "If 'limit' is 0",
-    '  Then all logs will be saved in this file',
-    "If 'limit' is 10",
-    '  Only the latest 10 logs will be saved in this file',
-    "  The rest of the logs will be saved in the 'history' directory, with filenames as md5(content).md, and each file contains 10 versions of logs"
+    'If this configuration has been applied and logs are generated, it will only affect subsequently generated logs',
+    'If you want to apply the new configuration to all',
+    'Use the `log management` function, `regenerate the log` or `clean the log`, and then `regenerate`'
   ],
+  'changelog.save': 'Log storage directory',
   'changelog.translate': 'Changelog translation related configuration',
   'changelog.translate.origin': ["Original language of the CHANGELOG file, default 'zh-CN'", '  Supported languages list: https://cloud.google.com/translate/docs/languages'],
   'changelog.translate.target': [
-    "Target language for the CHANGELOG file, default 'en', can be an array, indicating translation into multiple languages",
-    '  Supported languages list: https://cloud.google.com/translate/docs/languages'
-  ],
-  'changelog.translate.statement': [
-    'Translation statement starting marker, default value: > 🚩',
-    "Supports 'md syntax'",
-    "  Only when 'translated by translation tool', this statement will be added at the beginning of the translation",
-    '  For example:',
-    '    The following content is automatically translated by Google Translate and may be inaccurate',
-    "    This statement will also be translated into different versions by the 'translation tool'",
-    '  Reference: https://github.com/kwooshung/cvlar/releases'
+    "The target language of the CHANGELOG file, default 'en', can be an array, indicating translation into multiple languages",
+    "If a translated version of the log already exists, it is only valid for the newly generated log. You can select 'Regenerate all logs'",
+    'Supported language list: https://cloud.google.com/translate/docs/languages'
   ],
   'changelog.template': 'Changelog template related configuration',
-  'changelog.template.before': 'Header template of the CHANGELOG file, supports md syntax',
   'changelog.template.content': [
-    'Content template of the CHANGELOG file, supports md syntax',
-    '  Default value:',
-    '    ## 🎉 {{tag}} `{{date}}`',
-    '    {{logs}}',
-    '  Logs will be categorized according to commit type order'
+    'Content template of CHANGELOG file, supports md syntax',
+    '  default value:',
+    ' ## 🎉 {{tag}} `{{date}}`',
+    '{{logs}}',
+    'Logs will be sorted in order of submission type',
+    '',
+    'The currently supported variables are as follows:',
+    '  tag:tag name',
+    '  date: date, e.g., 2023-12-17',
+    '  time: time, e.g., 04:59:39',
+    '  logs: log content'
   ],
-  'changelog.template.separator': 'Separator between each version log in the CHANGELOG file, supports md syntax',
-  'changelog.template.after': 'Footer template of the CHANGELOG file, supports md syntax',
-  'changelog.poweredby': [
+  'changelog.template.logs': [
+    'Categorize according to type, specific log content',
+    'If a translated version of the log already exists,',
+    'it is only valid for the newly generated log.',
+    "You can choose 'Regenerate all logs'"
+  ],
+  'changelog.template.logs.title': 'Title template',
+  'changelog.template.logs.title.standard': [
+    'The standard title template, that is, the template when the `submission type` exists',
+    '',
+    'Usable variables:',
+    '  emoji: emoji corresponding to the `submission type`',
+    '  type: `submission type`, the first letter of the variable is capitalized, the first letter of the content will also be capitalized',
+    '  scope: submission scope, the first letter of the variable is capitalized, the first letter of the content will also be capitalized',
+    '  date: date, e.g., 2023-12-17',
+    '  time: time, e.g., 04:59:39'
+  ],
+  'changelog.template.logs.title.other': 'Other title templates, that is, templates when `submission type` does not exist, titles that cannot be classified according to `submission type`',
+  'changelog.template.logs.item': [
+    'Template for each log message',
+    '',
+    'Available variables:',
+    '  message: log message, if the variable starts with a capital letter, the content will start with a capital letter',
+    '  commitlink: link to the commit details page',
+    '  date: date, e.g., 2023-12-17',
+    '  time: time, e.g., 04:59:39'
+  ],
+  'changelog.template.logs.commitlink': ['In the CHANGELOG file, each log entry has a specific commit details page', 'Used to link to the commit record details page'],
+  'changelog.template.logs.commitlink.text': [
+    'Link Text',
+    '  id: Represents the commit ID',
+    '   [substr:n,l]:',
+    '   n (required parameter): Indicates the starting character for substring extraction. If l is not present, this parameter represents extracting from 0 to n characters',
+    '   l (optional parameter): Indicates the number of characters to extract'
+  ],
+  'changelog.template.logs.commitlink.url': ['Link address', '', 'Available variables:', 'id: represents the full commit id, usually 40 characters long'],
+  'release.subject': ['Release page, tag version title template', '', 'Available variables:', '  tag: tag name', '  date: date, e.g., 2023-12-17', '  time: time, e.g., 04:59:39'],
+  'release.pushTagMessage': [
+    'Whenever you create a new tag and store it in the local git repository, and have not yet pushed it to the remote repository,',
+    'automatic log generation, translation, and file writing operations will be executed.',
+    'This will result in changes to your repository files, hence requiring you to commit these changes to the repository (usually only log changes),',
+    'thus, commit information is needed. However, it would be too cumbersome to manually select a commit type and commit scope for each tag submission, especially when the commit information is almost the same each time, so this configuration item was created',
+    '',
+    'However, since the tag stored in the local repository does not include the newly created logs,',
+    'it is necessary to revoke the tag from the local repository and recreate the same tag, so that it will include the new logs',
+    '',
+    'Therefore, the internal execution process looks like this:',
+    ' 1. Create tag 1.0.0 (definitely will not include the log content of the second step)',
+    ' 2. Generate logs based on the tag',
+    ' 3. Store logs in the local git repository',
+    ' 4. Revoke local git repository tag 1.0.0',
+    ' 5. Recreate tag 1.0.0 (so it will include the logs generated based on the tag)',
+    ' 6. Push the local repository to the remote repository',
+    ' 7. Push the tag to the remote repository',
+    '',
+    '',
+    'Based on the `type`, `scope`, and `subject` below, the short description of the generated commit information:',
+    'The internal execution template: {{emoji}}{{type}}({{scope}}): {{subject}}',
+    '',
+    'If using the default `commit types` and `commit scopes` configuration',
+    'and if `subject` content is `new version {{tag}}`,',
+    'the final result would be:',
+    '📦️ release(tag): new version 1.0.0'
+  ],
+  'release.pushTagMessage.type': [
+    'Commit type, referring to `commit.types` in this document,',
+    'will automatically match the submission type based on the `name` field',
+    '',
+    '【Note】It is recommended to keep it consistent with the `name` field in `commit.types`'
+  ],
+  'release.pushTagMessage.scope': [
+    'Optional, `commit scopes`, the scope of the submission,',
+    'referring to `commit.scopes` in this document',
+    '',
+    '【Note】It is recommended to keep it consistent with the `name` field in `commit.scopes`'
+  ],
+  'release.pushTagMessage.subject': [
+    '`commit subject`, the short description of the commit information',
+    '',
+    'Available variables:',
+    ' tag: tag name',
+    '',
+    'If commit message translation is enabled, i.e., the `commit.submit` configuration item is not false,',
+    '`commit.submit.origin` specifies the language in which this option should be written,',
+    '`commit.submit.target` will then translate the content into the specified language based on this configuration'
+  ],
+  'release.poweredby': [
     'Boolean type, default: true',
     "Whether to add the following markdown code at the end of each 'Release' in 'Github Release':",
-    '  This [Changelog](/{0}), Powered by @kwooshung / [cvlar](https://github.com/kwooshung/cvlar/)',
-    "  Here, `{0}` represents the relative path to the 'Changelog' entry file in your repository.",
+    '  > This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)',
+    "  Here, `CHANGELOG.md` represents the relative path to the 'Changelog' entry file in your repository.",
     '  Reference: https://github.com/kwooshung/cvlar/releases'
   ],
-  i18n: ['Used for the internationalization of this tool’s prompt messages', 'Can be customized in any language, translate the following content into the desired language as needed']
+  i18n: ['Used for the internationalization of this tool’s prompt messages', 'Can be customized in any language, translate the following content into the desired language as needed'],
+  'i18n.yes': 'Yes, mainly used for single selection in menus, indicating selected',
+  'i18n.no': 'No, mainly used for single selection in menus, indicating not selected',
+  'i18n.choicesLimit': ['Maximum selectable amount, mainly used in menu options, ', 'indicates the minimum number of options to display, extras require scrolling to view'],
+  'i18n.checkbox': 'Multiple selection, can only be used for multiple choice related menu configurations',
+  'i18n.checkbox.instructions': 'Default prompt when displaying multiple-choice menu, indicates key operations',
+  'i18n.select': 'Title of the primary menu',
+  'i18n.scripts': 'scripts in package.json, used for running scripts in menus',
+  'i18n.scripts.message': 'Title for running scripts in the menu',
+  'i18n.package.commands.search.result.score.process.symbol': [
+    'Symbol for the progress bar of package scores in search results',
+    "  If set as a string: '▇'",
+    '    It would appear as: ▇▇▇▇▇▇▇▇▇▇▇▇',
+    '',
+    "  If set as an array of strings: ['▇', '_']",
+    '    It would appear as: ▇▇▇▇________'
+  ],
+  'i18n.package.commands.search.result.score.process.length': [
+    'Length of the progress bar for package scores in search results, ',
+    '  Default: 50',
+    '  The percentage will be automatically calculated based on the value'
+  ],
+  'i18n.package.commands.search.result.score.process.activeBold': 'Indicates whether the active part of the progress bar should be bold. Boolean type, default: false',
+  'i18n.package.commands.search.pagination.size': 'Number of items per page',
+  'i18n.package.commands.search.pagination.range': 'Page number range',
+  'i18n.git': 'Git related',
+  'i18n.git.commit': 'Git commit related',
+  'i18n.git.commit.subject': [
+    'Git commit message, short description, ',
+    '',
+    ' Includes',
+    '   transformer: Optional, represents a value processing function',
+    '   validate: Optional, represents a validation function',
+    '',
+    '   Both functions can be customized, for more details see: https://github.com/SBoudrias/Inquirer.js/tree/master/packages/input'
+  ],
+  'i18n.git.commit.body': 'Long description, also supports `transformer` and `validate`',
+  'i18n.git.commit.body.required': 'Whether a required field, boolean type, default: false',
+  'i18n.git.commit.body.requiredMessage': 'Prompt message for required fields',
+  'i18n.git.commit.breaking': 'Breaking changes, not backwards compatible, also supports `transformer` and `validate`',
+  'i18n.git.commit.custom': [
+    'Custom fields, supports three types: `input`, `select`, `checkbox`, refer to the `.ks-cvlarrc.cjs` file in the root directory of this repository',
+    'Detailed explanations of this configuration are also available in the repository description',
+    'If not needed, the `custom` field can be deleted or set to `false`'
+  ],
+  'i18n.git.commit.issues': 'Issues related',
+  'i18n.git.commit.issues.close.choices': 'Issues related, customizable keywords, default: `fixes`, `resolves`, and `closes`',
+  'i18n.git.commit.issues.number.message': 'Issue ID numbers',
+  'i18n.git.commit.complate': [
+    'Upon generating the commit message, this function is triggered, allowing custom handling of the commit message format',
+    'The return value is an object, containing two properties, fail and val:',
+    '  fail: when true, the commit operation will not continue,',
+    '  val: the commit message',
+    'Can also be used for custom prompt messages'
+  ],
+  'i18n.git.commit.push.default': 'true: automatically select yes, false: automatically select no, default: false',
+  'i18n.git.commit.tag.default': 'true: automatically select yes, false: automatically select no, default: false',
+  'i18n.git.version': 'Version upgrade/downgrade related',
+  'i18n.package': 'Package management related',
+  'i18n.changelog': 'Log related, also related to `cvlar -r`, if logging is not enabled, `cvlar -r` is also not available',
+  'i18n.help': 'Help related',
+  'i18n.back': 'Return to previous menu',
+  'i18n.exit': 'Exit'
 };
 
 export default list;

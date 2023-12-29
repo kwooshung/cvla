@@ -53,7 +53,7 @@ const saveConfig = async (saveDir: string, datas: ICommitType[] | TCommitScope, 
 
   do {
     // 写入文件
-    success = await io.write(savePath, configTypes, true);
+    success = await io.write(savePath, configTypes, false, true);
 
     if (success) {
       retry = false;

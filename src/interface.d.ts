@@ -100,15 +100,14 @@ type TConfigCommit =
 type TChangelogFileConfig =
   | {
       /**
-       * CHANGELOG 文件中记录的条数，0表示不限制，全部记录；默认 10 条，表示每个文件最多记录 10 条，且自动分页，超过 10 条则自动创建新的 CHANGELOG 文件，文件名为 md5(content).md，以此类推
+       * CHANGELOG 文件中记录的条数，0表示不限制，全部记录；默认 10 条，表示每个文件最多记录 10 条，且自动分页，超过 limit 条则自动创建新的 CHANGELOG 文件，文件名为 md5{content}.md，以此类推；
+       * 若是没有满足 limit 条数，则会将所有的日志都存放在这个目录中的 index.md 文件中；
+       * 当有不同翻译版本时，会依据语言代码自动创建对应目录，例如：zh-CN/index.md、en/index.md、等；
+       * 你可以在项目根目录下创建一个 CHANGELOG.md 文件，链接到这个目录中的 index.md 文件
        */
       limit?: number;
       /**
-       * 如果limit为0，那么此配置无效；如果limit不为0，那么此配置有效，表示历史记录存储的目录，默认 './changelogs'，如果不存在则自动创建
-       */
-      history?: string;
-      /**
-       * 如果limit为0，所有的日志都存放在这个文件中；当满足 limit 条数时，会将此文件重命名为 md5(content).md，并存在 history 目录下，然后创建新的 CHANGELOG 文件，文件名为此处配置的值；
+       * 日志存储的目录
        */
       save?: string;
     }
@@ -128,38 +127,192 @@ type TChangelogTranslateConfig =
        * 目标语言，可以是一个字符串或字符串数组
        */
       target: string | string[];
-      /**
-       * 说明文字，如果为 false，则不显示翻译声明
-       */
-      statement?: string | false | 'default';
     }
   | false
   | 'default';
 
 /**
+ * 类型：日志模板标题
+ */
+type TChangelogTemplateLogConfigTitle = {
+  /**
+   * 标准标题
+   */
+  standard: string;
+  /**
+   * 其他标题，无法根据 提交类型 分类的标题
+   */
+  other: string;
+};
+
+/**
+ * 类型：日志详情链接
+ */
+type TChangelogTemplateLogCommitLinkConfig = {
+  /**
+   * 链接文本
+   */
+  text: string;
+  /**
+   * 链接地址
+   */
+  url: string;
+};
+
+/**
+ * 类型：日志模板
+ */
+type TChangelogTemplateLogConfig = {
+  // 标题模板
+  title: TChangelogTemplateLogConfigTitle;
+  // 每条日志消息的模板
+  item: string;
+  // CHANGELOG 文件中，每条日志的模板的提交id，用于跳转到提交记录详情页链接，不填则不会生成链接
+  commitlink: TChangelogTemplateLogCommitLinkConfig;
+};
+
+/**
  * 类型：变更日志模板配置
  */
-type TChangelogTemplateConfig =
+type TChangelogTemplate =
   | {
-      /**
-       * 每个模版前的内容
-       */
-      before: string;
       /**
        * 每个模版的内容
        */
       content: string;
       /**
-       * 每个版本之间的分隔符
+       * 日志模板
        */
-      separator: string;
-      /**
-       * 每个模版后的内容
-       */
-      after: string;
+      logs: TChangelogTemplateLogConfig;
     }
   | false
   | 'default';
+
+/**
+ * 类型：Git消息解析结构
+ */
+type TCommitCategory = {
+  /**
+   * 完整的类型
+   */
+  full: string;
+  /**
+   * 表情符号和类型
+   */
+  emojiOrType: string;
+  /**
+   * 表情符号，用于视觉标识
+   */
+  emoji: string;
+  /**
+   * 类型
+   */
+  type: string;
+  /**
+   * 范围
+   */
+  scope: string;
+  /**
+   * 信息
+   */
+  message: string;
+};
+
+/**
+ * 类型：Git 提交信息
+ */
+type TGitMessage = {
+  /**
+   * 提交 ID
+   */
+  id: string;
+  /**
+   * 日期
+   */
+  date: string;
+  /**
+   * 时间
+   */
+  time: string;
+  /**
+   * 提交信息
+   */
+  message: string;
+};
+
+/**
+ * 类型：日志信息
+ */
+type TGitMessageToChangeLog = {
+  /**
+   * 名称，tag版本号
+   */
+  tag: string;
+  /**
+   * 日期
+   */
+  date: string;
+  /**
+   * 时间
+   */
+  time: string;
+  /**
+   * 消息列表
+   */
+  list: TGitMessage[];
+};
+
+/**
+ * 类型：日志信息 > message > 不带有翻译版本
+ */
+type TChangeLogList = Record<string, string[]>;
+
+/**
+ * 类型：日志信息 > message > 带有翻译版本
+ */
+type TChangeLogLangList = Record<string, TChangeLogList>;
+
+/**
+ * 类型：日志信息
+ */
+type TChangeLog = {
+  /**
+   * 名称，tag版本号
+   */
+  tag: string;
+  /**
+   * 日期
+   */
+  date: string;
+  /**
+   * 时间
+   */
+  time: string;
+  /**
+   * 消息列表
+   */
+  list: TChangeLogList | TChangeLogLangList;
+};
+
+/**
+ * 类型：处理后的日志信息
+ */
+type TChangeLogResult = string | Record<string, string>;
+
+/**
+ * 类型：Release 处理后的日志信息
+ */
+type TReleaseResult = string | Record<string, string>;
+
+/**
+ * 类型：Release
+ */
+type TRelease = {
+  tag: string;
+  date: string;
+  time: string;
+  logs: TReleaseResult;
+};
 
 /**
  * 类型：包管理器命令
@@ -174,6 +327,9 @@ interface IPackageManagerConfig {
    * 管理器类型
    */
   type?: string;
+  /**
+   * 数据源
+   */
   registry?: string;
   /**
    * 包管理器命令
@@ -216,7 +372,45 @@ type TConfigChangelog =
   | {
       file?: TChangelogFileConfig;
       translate?: TChangelogTranslateConfig;
-      template?: TChangelogTemplateConfig;
+      template?: TChangelogTemplate;
+    }
+  | false
+  | 'default';
+
+/**
+ * 类型：配置 > release > pushTagMessage
+ */
+type TPushTagMessage = {
+  /**
+   * commit type
+   */
+  type: string;
+  /**
+   * commit scope
+   */
+  scope: string;
+  /**
+   * commit subject
+   */
+  subject: string;
+};
+
+/**
+ * 类型：配置 > release
+ */
+type TConfigRelease =
+  | {
+      /**
+       * 标题
+       */
+      subject?: string;
+      /**
+       * 自动发布的提交信息
+       */
+      pushTagMessage?: TPushTagMessage;
+      /**
+       * 是否显示 powered by
+       */
       poweredby?: boolean;
     }
   | false
@@ -230,6 +424,7 @@ interface IConfig {
   package?: TConfigPackage;
   version?: TConfigVersion;
   changelog?: TConfigChangelog;
+  release?: TConfigRelease;
   i18n?: any;
 }
 
@@ -644,36 +839,6 @@ interface IPackageVersionSemverStandard {
  */
 interface IPackagesVersions {
   /**
-   * 补丁更新
-   */
-  patch: IPackageVersionSemverStandard;
-  /**
-   * 次要更新
-   */
-  minor: IPackageVersionSemverStandard;
-  /**
-   * 主要更新
-   */
-  major: IPackageVersionSemverStandard;
-  /**
-   * 最新预发布版本
-   */
-  prerelease: IPackageVersionSemverStandard;
-  /**
-   * 缺失
-   */
-  missing: boolean;
-  /**
-   * 无更新
-   */
-  no: boolean;
-}
-
-/**
- * 接口：包版本号信息
- */
-interface IPackagesVersions {
-  /**
    * 当前版本
    */
   current: IPackageVersionSemverStandard;
@@ -689,6 +854,10 @@ interface IPackagesVersions {
    * 补丁更新
    */
   patch: IPackageVersionSemverStandard;
+  /**
+   * 预发布版本
+   */
+  prerelease: IPackageVersionSemverStandard;
   /**
    * 缺失
    */
@@ -774,12 +943,26 @@ export {
   TConfigCommit,
   TChangelogFileConfig,
   TChangelogTranslateConfig,
-  TChangelogTemplateConfig,
+  TChangelogTemplateLogConfigTitle,
+  TChangelogTemplateLogCommitLinkConfig,
+  TChangelogTemplateLogConfig,
+  TChangelogTemplate,
+  TCommitCategory,
+  TGitMessage,
+  TGitMessageToChangeLog,
+  TChangeLogList,
+  TChangeLogLangList,
+  TChangeLog,
+  TChangeLogResult,
+  TReleaseResult,
+  TRelease,
   TpackageManagerCommands,
   IPackageManagerConfig,
   TConfigPackage,
   TConfigVersion,
   TConfigChangelog,
+  TPushTagMessage,
+  TConfigRelease,
   IConfig,
   IConfigResult,
   TConfigResult,
@@ -795,8 +978,8 @@ export {
   IEditorOptions,
   IResultConfigBase,
   IResultConfigCommit,
-  TGitIssue,
   TGitCustomField,
+  TGitIssue,
   IGitCommitData,
   IPackageVersionSemverStandard,
   IPackagesVersions,

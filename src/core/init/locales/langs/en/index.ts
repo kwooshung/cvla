@@ -151,13 +151,9 @@ const lang = {
         message: 'How many version logs to record?',
         description: 'Default is 10, not 10 lines of logs, but 10 versions of logs'
       },
-      history: {
-        message: 'Directory for storing historical logs?',
-        description: 'Default is ./changelogs'
-      },
       save: {
-        message: 'Filename for saving the log?',
-        description: 'Default is ./changelog'
+        message: 'Directory to save logs?',
+        description: 'Default is ./changelogs'
       }
     },
     translate: {
@@ -174,36 +170,71 @@ const lang = {
       target: {
         message: `Target language?`,
         description: 'Default is English'
-      },
-      statement: {
-        message: 'Translation statement?',
-        description:
-          '    Note: A different translation statement will be displayed for different languages, stating: “The following content is automatically translated by Google Translate and may not be accurate.”\n  Preview: > 🚩 The following content is automatically translated by Google Translate and may not be accurate.',
-        content: {
-          message: 'Statement starting content?'
-        }
       }
     },
     template: {
       message: 'Configure template?',
-      before: {
-        message: 'Header content template for each log file (leave blank for no header)?'
-      },
       content: {
         message: 'Content template for each log entry (leave blank for default template)?'
       },
-      separator: {
-        message: 'Separator between versions (leave blank for default separator: \\n\\n---\\n\\n)?',
-        description: ''
+      logs: {
+        title: {
+          standard: {
+            message: 'Standard log title template, supports `type`, `scope`, `date`, `time` variables (default template applies if left blank)'
+          },
+          other: {
+            message: "Alternate log title template, used when logs can't be categorized by `commit type`"
+          }
+        },
+        item: {
+          message: 'Each log entry, content template, can use the variables `message`, `date`, `time`, `commitlink` (if left blank, the default template will be used).'
+        },
+        commitlink: {
+          message: 'Do you add commit link at the end of each log? ',
+          platforms: {
+            message: 'Your code hosting platform? ',
+            other: {
+              message: 'Other address? ',
+              input: {
+                message: 'Please enter the complete url template'
+              }
+            }
+          },
+          author: 'Author',
+          repository: 'Pepository name, supports `author`, `repository`, `id` variables'
+        }
+      }
+    }
+  },
+  release: {
+    title: 'GitHub Release Version',
+    message: 'Automate release through GitHub Actions?',
+    description: 'Enable GitHub Release feature for automatic version releases through GitHub Actions, requires Changelog functionality to be effective',
+    subject: {
+      message: 'Release page, tag version title template'
+    },
+    pushTagMessage: {
+      message:
+        'When creating a tag for the repository, logs are automatically generated. At this time, the tag will not include the new logs, so it is necessary to commit these changes to the repository. Do you want to set the corresponding configuration items?',
+      description: {
+        yes: 'Will separately set `type`, `scope`, `subject` configuration items',
+        no: 'Will use the default configuration items'
       },
-      after: {
-        message: 'Footer content template for each log file (leave blank for no footer)?'
+      type: {
+        message: 'Choose commit type'
+      },
+      scope: {
+        message: 'Choose commit scope'
+      },
+      subject: {
+        message: 'Enter commit title, can use `tag` variable',
+        description: 'For example: new version {{tag}}, which means: new version 1.0.0'
       }
     },
     poweredby: {
-      message: `After automatic publishing via ${pc.green('Github Actions')}, a link to ${pc.green('View all logs')} will be inserted at the end?`,
+      message: `After automated release via ${pc.green('GitHub Actions')}, insert a link to ${pc.green('View All Logs')} at the end?`,
       description:
-        "At the end of each 'Release' in 'Github Release', add the following markdown code:\n    This [Changelog](/{0}), Powered by @kwooshung / [cvlar](https://github.com/kwooshung/cvlar/)\n    Here, `{0}` represents the relative path to the 'Changelog' entry file in your repository.\n    Reference: https://github.com/kwooshung/cvlar/releases"
+        "In the content of 'GitHub Release', at the end of each 'Release', add the following Markdown code:\n    ------------------------------------------------------------------------------------------------------------------------\n    - This [Changelog](/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)\n    ------------------------------------------------------------------------------------------------------------------------\n    Here, CHANGELOG.md refers to the relative path of the 'Changelog' entry file in your repository\n    Reference: https://github.com/kwooshung/cvlar/releases"
     }
   },
   save: {
