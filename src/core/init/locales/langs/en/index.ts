@@ -213,6 +213,24 @@ const lang = {
     subject: {
       message: 'Release page, tag version title template'
     },
+    pushTagMessage: {
+      message:
+        'When creating a tag for the repository, logs are automatically generated. At this time, the tag will not include the new logs, so it is necessary to commit these changes to the repository. Do you want to set the corresponding configuration items?',
+      description: {
+        yes: 'Will separately set `type`, `scope`, `subject` configuration items',
+        no: 'Will use the default configuration items'
+      },
+      type: {
+        message: 'Choose commit type'
+      },
+      scope: {
+        message: 'Choose commit scope'
+      },
+      subject: {
+        message: 'Enter commit title, can use `tag` variable',
+        description: 'For example: new version {{tag}}, which means: new version 1.0.0'
+      }
+    },
     poweredby: {
       message: `After automated release via ${pc.green('GitHub Actions')}, insert a link to ${pc.green('View All Logs')} at the end?`,
       description:

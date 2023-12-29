@@ -1,8 +1,9 @@
+import ora from 'ora';
 import pc from 'picocolors';
 import semver from 'semver';
 import { range as _range, clone as _clone, isUndefined as _isUn, isPlainObject as _isObj, isBoolean as _isBool, isArray as _isArr, isString as _isStr } from 'lodash-es';
 import { ICommitScope, ICommitType, IConfig, IGitCommitData, IPackageJson, IPackageJsonData, TGitCustomField, TPushTagMessage } from '@/interface';
-import { command, convert, console as cs, git, package as _package, version as V } from '@/utils';
+import { command, convert, console as cs, git, package as _package, version as V, translate } from '@/utils';
 import changelog from '../changelog';
 import menuState from '../_state';
 
@@ -111,6 +112,66 @@ class gitControl {
   private transformer(key: string): (value: string, { isFinal }: { isFinal: boolean }) => string {
     const obj = this.getValueByPath(this.CONF.i18n.git.commit, key);
     return obj?.transformer ? obj?.transformer : (val: string) => val;
+  }
+
+  /**
+   * 私有函数：release 是否能连接上
+   * @param {boolean} [isTranslate = false] 是否启用翻译
+   * @returns {Promise<boolean>} 是否能连接上
+   */
+  private async checkTranslateConnect(isTranslate: boolean): Promise<boolean> {
+    let result = false;
+
+    // 如果已启用翻译，那么就检查是否能连接到翻译服务
+    if (isTranslate) {
+      let retry = false;
+      let inx = 0;
+
+      do {
+        if (inx > 0) {
+          cs.clear.lastLine(2);
+        }
+
+        inx++;
+
+        const spinner = ora(pc.cyan(this.CONF.i18n.git.version.translate.check.message));
+        spinner.start();
+        const resultCheck = await translate.check();
+
+        if (resultCheck) {
+          spinner.succeed(pc.bold(pc.green(this.CONF.i18n.git.version.translate.check.success)));
+          result = true;
+        } else {
+          spinner.fail(pc.bold(pc.red(this.CONF.i18n.git.version.translate.check.fail)));
+          result = false;
+        }
+        spinner.stop();
+
+        if (!result) {
+          retry = await command.prompt.select({
+            message: this.CONF.i18n.git.version.translate.check.retry,
+            choices: [
+              {
+                name: this.CONF.i18n.yes,
+                value: true
+              },
+              {
+                name: this.CONF.i18n.no,
+                value: false
+              }
+            ],
+            default: true
+          });
+        }
+        // 如果连接失败，那么就提示是否重新检查
+      } while (retry);
+    }
+    // 如果未启用翻译，那么就直接返回 true
+    else {
+      result = true;
+    }
+
+    return result;
   }
 
   /**
@@ -303,7 +364,7 @@ class gitControl {
         const item = this.CONF.commit['types'][index];
         const select = {
           name: `${pc.bold(val)}     ${pc.dim(item.description)}`,
-          value: `${item.emoji}${item.name}`,
+          value: `${!_isUn(item.emoji) ? item.emoji : ''}${item.name}`,
           description: pc.green(`${item.emoji}  ${pc.bold(item.name)} ${item.description}`),
           descriptionDim: false
         };
@@ -365,16 +426,18 @@ class gitControl {
   /**
    * 私有函数：git > commit > 获得推送标签的提交信息
    * @param {string} tag 标签
+   * @param {boolean} isTranslate 是否启用翻译
    * @returns {string} 提交信息
    */
-  private getPushTagWithLogUpdatesMessage(tag: string): string {
+  private async getPushTagWithLogUpdatesMessage(tag: string, isTranslate: boolean): Promise<string> {
     const pushTagMessage = this.CONF.release['pushTagMessage'] as TPushTagMessage;
     const types = this.CONF.release['types'] as ICommitType[];
     const scopes = this.CONF.release['scopes'] as ICommitScope[];
     const type = _isArr(types) ? types.find((type) => type.name.toLowerCase() === pushTagMessage.type.toLowerCase()) : types[0];
-    const scope = _isArr(scopes) ? scopes.find((scope) => scope.name.toLowerCase() === pushTagMessage.scope.toLowerCase()) : scopes[0];
+    const scope = _isArr(scopes) ? scopes.find((scope) => scope.name.toLowerCase() === pushTagMessage.scope.toLowerCase()) : '';
     const subjectTemplate = pushTagMessage.subject as string;
-    const subject = convert.replaceTemplate(subjectTemplate, { tag });
+    let subject = convert.replaceTemplate(subjectTemplate, { tag });
+    isTranslate && (subject = await translate.text(subject, this.CONF.commit['submit']['origin'], this.CONF.commit['submit']['target']));
     const message = `${type.emoji}${type.name}${scope ? `(${scope.name})` : ''}: ${subject}`;
     return message;
   }
@@ -388,32 +451,37 @@ class gitControl {
    */
   private async pushTagWithLogUpdates(tag: string, code: string, args: string[]): Promise<void> {
     try {
-      // 首先生成提交信息
-      const message = this.getPushTagWithLogUpdatesMessage(tag);
+      const isTranslate = this.CONF.commit['submit'] !== false && this.CONF.commit['submit']['origin'] && this.CONF.commit['submit']['target'];
 
-      // 创建标签
-      await this.parentCmd(code, args);
+      // 如果翻译功能已启用，那么就检测是否能链接到翻译；如果翻译功能没启用，则直接返回 true
+      if (await this.checkTranslateConnect(isTranslate)) {
+        // 首先生成提交信息
+        const message = await this.getPushTagWithLogUpdatesMessage(tag, isTranslate);
 
-      // 生成日志
-      await this.changeLog.build();
+        // 创建标签
+        await this.parentCmd(code, args);
 
-      // 暂存日志
-      await this.parentCmd('git', git.add.current);
+        // 生成日志
+        await this.changeLog.build();
 
-      // 创建提交信息
-      await this.parentCmd('git', ['commit', '-m', `"${message}"`]);
+        // 暂存日志
+        await this.parentCmd('git', git.add.current);
 
-      // 撤销标签
-      await this.parentCmd('git', ['tag', '-d', tag]);
+        // 创建提交信息
+        await this.parentCmd('git', ['commit', '-m', `"${message}"`]);
 
-      // 重新创建标签
-      await this.parentCmd(code, args);
+        // 撤销标签
+        await this.parentCmd('git', ['tag', '-d', tag]);
 
-      // 推送本地仓库到远程仓库
-      await this.parentCmd('git', git.push());
+        // 重新创建标签
+        await this.parentCmd(code, args);
 
-      // 推送标签到远程仓库
-      await this.parentCmd('git', git.push(true));
+        // 推送本地仓库到远程仓库
+        await this.parentCmd('git', git.push());
+
+        // 推送标签到远程仓库
+        await this.parentCmd('git', git.push(true));
+      }
     } catch (e) {
       cs.error('推送标签失败', 'Push tag failed');
       console.log(pc.red(e));
@@ -789,9 +857,9 @@ class gitControl {
       this.versionUpdatePackageJson(version);
 
       if (annotate.trim() === '') {
-        this.pushTagWithLogUpdates(version, 'git', ['tag', version]);
+        await this.pushTagWithLogUpdates(version, 'git', ['tag', version]);
       } else {
-        this.pushTagWithLogUpdates(version, 'git', ['tag', '-a', `"${version}"`, '-m', `"${annotate}"`]);
+        await this.pushTagWithLogUpdates(version, 'git', ['tag', '-a', `"${version}"`, '-m', `"${annotate}"`]);
       }
 
       if (

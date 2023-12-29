@@ -98,6 +98,15 @@ const list = {
     version: {
       message: 'Version Number',
       description: 'Manage version numbers for upgrades, rollbacks, auto-updates, and commits',
+      translate: {
+        check: {
+          message: 'Since other languages will use Google Translate, do you want to check the connection status?',
+          success: 'Connected to Google Translate successfully',
+          fail: 'Connection failed',
+          retry: 'Do you want to retry?',
+          error: 'Unable to connect to Google Translate, unable to generate logs temporarily'
+        }
+      },
       select: {
         message: 'Please select an action'
       },

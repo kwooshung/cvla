@@ -217,6 +217,23 @@ const lang = {
     subject: {
       message: '发布页面，tag版本标题模板'
     },
+    pushTagMessage: {
+      message: '给仓库创建tag时，会自动生成日志，此时tag是不会包含新的日志的，因此需要提交这些变化的文件到仓库。是否设置对应配置项？',
+      description: {
+        yes: '将分别设置 `type`、`scope`、`subject` 配置项',
+        no: '将使用默认配置项'
+      },
+      type: {
+        message: '选择提交类型'
+      },
+      scope: {
+        message: '选择提交范围'
+      },
+      subject: {
+        message: '输入提交标题，可用 `tag` 变量',
+        description: '例如：新版本 {{tag}}，则表示：新版本 1.0.0'
+      }
+    },
     poweredby: {
       message: `通过 ${pc.green('Github Acitons')} 自动发布后，将在最后插入 ${pc.green('查看所有日志')} 的链接？`,
       description:

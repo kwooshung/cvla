@@ -177,22 +177,22 @@ const list = {
     '根据下面的 `type`、`scope` 和 `subject`，生成的提交信息的短说明：',
     '程序内部执行的模板：{{emoji}}{{type}}({{scope}}): {{subject}}',
     '',
-    '如果使用的是默认 commit type 和 commit scope 配置',
+    '如果使用的是默认 `commit types` 和 `commit scopes` 配置',
     '而且 `subject` 内容为 `new version {{tag}}`',
     '那么最终结果如下：',
     '📦️ release(tag): new version 1.0.0'
   ],
-  'release.pushTagMessage.type': ['commit type，提交类型，参考本文配置文件中的 commit.types', '将根据name字段，自动匹配到对应的提交类型'],
-  'release.pushTagMessage.scope': '可选，commit scope，提交范围，参考本文配置文件中的 commit.scopes',
+  'release.pushTagMessage.type': ['提交类型，参考本文配置文件中的 `commit.types`', '将根据 `name` 字段，自动匹配到对应的提交类型', '', '【注意】建议与 `commit.types` 中的 `name` 字段保持一致'],
+  'release.pushTagMessage.scope': ['可选，`commit scopes`，提交范围，参考本文配置文件中的 `commit.scopes`', '', '【注意】建议与 `commit.scopes` 中的 `name` 字段保持一致'],
   'release.pushTagMessage.subject': [
-    'commit subject，提交信息的短说明',
+    '`commit subject`，提交信息的短说明',
     '',
     '可使用的变量：',
     ' tag：tag名',
     '',
-    '若是启用了提交信息翻译，即 commit.submit 配置项不为 false',
-    'commit.submit.origin 这里指定什么语言，此选项就应该使用什么语言写内容',
-    'commit.submit.target 而后会根据这个配置，将内容翻译成指定的语言'
+    '若是启用了提交信息翻译，即 `commit.submit` 配置项不为 false',
+    '`commit.submit.origin` 这里指定什么语言，此选项就应该使用什么语言写内容',
+    '`commit.submit.target` 而后会根据这个配置，将内容翻译成指定的语言'
   ],
   'release.poweredby': [
     '布尔类型，默认：true',
