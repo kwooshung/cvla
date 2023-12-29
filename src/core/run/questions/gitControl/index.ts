@@ -479,9 +479,6 @@ class gitControl {
         // 推送本地仓库到远程仓库
         await this.parentCmd('git', git.push());
 
-        // 推送标签到远程仓库
-        await this.parentCmd('git', git.push(true));
-
         return true;
       }
     } catch (e) {
