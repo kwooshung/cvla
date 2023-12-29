@@ -7,23 +7,15 @@ const user: IConfig = {
     scopes: scopes['zh-CN']
   },
   package: {
-    scripts: {
-      prepare: 'prepare',
-      dev: 'dev',
-      build: 'build',
-      eslint: 'eslint',
-      test: 'test',
-      'test:ci': 'test:ci',
-      'test:watch': 'test:watch'
-    },
+    scripts: {},
     manager: {
       type: 'pnpm',
       registry: 'auto',
       commands: {
         install: '安装',
-        uninstall: '卸载',
         update: '更新',
-        outdated: '检查是否过时',
+        uninstall: '卸载',
+        outdated: '列出过时的包',
         list: '查看列表',
         info: '查看信息',
         search: '搜索',
@@ -33,7 +25,6 @@ const user: IConfig = {
     }
   },
   version: {
-    validate: 'default',
     package: true
   },
   changelog: {
@@ -42,16 +33,16 @@ const user: IConfig = {
     },
     translate: {
       origin: 'en',
-      target: ['zh-CN', 'zh-TW', 'ru', 'ja', 'ko']
+      target: ['zh-CN']
     },
     template: {
       content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
       logs: {
         title: {
-          standard: '\n### {{emoji}} {{Type}}',
-          other: '\n### Other'
+          standard: '### {{emoji}} {{Type}}',
+          other: '### Other'
         },
-        item: '- {{Message}} ({{commitlink}})',
+        item: '- {{message}} ({{commiturl}})',
         commitlink: {
           text: '#{{id[substr:7]}}',
           url: 'https://github.com/kwooshung/cvlar/commit/{{id}}'
@@ -64,7 +55,7 @@ const user: IConfig = {
     pushTagMessage: {
       type: 'release',
       scope: 'tag',
-      subject: 'new version {{tag}}'
+      subject: '{{tag}}'
     },
     poweredby: true
   },
@@ -98,7 +89,6 @@ const user: IConfig = {
         scope: {
           message: '选择修改范围'
         },
-        //支持：transformer & validate
         subject: {
           message: '短说明',
           description: '不建议超过72个字符',
@@ -112,42 +102,22 @@ const user: IConfig = {
             return true;
           }
         },
-        //支持：transformer & validate
         body: {
           message: '长说明',
           description: '使用 "|" 换行',
-          // 此处验证函数，若是开启，则 required, requiredMessage 不再生效，需自行处理逻辑
-          // transformer: (val, {isFinal}) => {
-          //   if (isFinal) {
-          //     return val;
-          //   }
-          //   return val;
-          // },
-          // 此处验证函数，若是开启，则 required, requiredMessage 不再生效，需自行处理逻辑
-          // validate: (val) => {
-          // },
           required: false,
           requiredMessage: '长说明不能为空'
         },
-        //支持：transformer & validate
         breaking: {
           message: 'BREAKING CHANGES（破坏性变更，不向下兼容）',
           field: 'BREAKING CHANGE: ',
-          // 此处验证函数，若是开启，则 required, requiredMessage 不再生效，需自行处理逻辑
-          // validate: (val) => {
-          // },
           required: false,
           requiredMessage: '长说明不能为空'
         },
-        /**
-         * 自定义字段，支持两种类型：input、select、checkbox
-         * 以下定义内容为演示，可自行修改
-         * 若不需要，可删除 'custom' 字段 或 将 'custom' 字段赋值为 'false'
-         */
         custom: [],
         issues: {
           message: '是否需要关闭 issue？',
-          default: false, // true：自动选择是，false：自动选择否，默认：false
+          default: false,
           close: {
             message: '选择关闭 issue 的关键词，支持多选',
             choices: [
@@ -187,13 +157,6 @@ const user: IConfig = {
             config: 'commit.submit 配置项错误'
           }
         },
-        /**
-         * 生成提交信息后，触发此函数，可自行处理提交信息的格式
-         * 返回值，是一个对象，包含两个属性，fail、val：
-         *  fail：true时，则不会继续执行提交操作，
-         *  val：提交信息
-         * 也可用于自定义提示信息
-         */
         complate(val: string) {
           return { fail: false, val };
         },
@@ -207,11 +170,11 @@ const user: IConfig = {
         },
         push: {
           message: '是否推送到远程仓库？',
-          default: false // true：自动选择是，false：自动选择否，默认：false
+          default: false
         },
         tag: {
           message: '是否需要打标签？',
-          default: false // true：自动选择是，false：自动选择否，默认：false
+          default: false
         }
       },
       version: {
@@ -253,10 +216,10 @@ const user: IConfig = {
             message: '请选择要撤销的版本号',
             confirm: {
               message: '是否修改 package.json 中的版本号？',
-              default: true, // true：自动选择是，false：自动选择否，默认：true
+              default: true,
               remote: {
                 message: '是否删除远程仓库中的 tag？',
-                default: false // true：自动选择是，false：自动选择否，默认：false
+                default: false
               },
               change: {
                 message: '您想使用哪个版本号 package.json 中？',
@@ -326,15 +289,15 @@ const user: IConfig = {
           no: '无说明',
           short: '短说明',
           long: '长说明（将使用文本编辑器打开）',
-          default: '' // 可选值：'short'、'long'，默认：'no'
+          default: ''
         },
         file: {
           message: '是否更新 package.json 中的版本号？',
-          default: true // true：自动选择是，false：自动选择否，默认：true
+          default: true
         },
         push: {
           message: '是否推送 tags 到远程仓库？',
-          default: true // true：自动选择是，false：自动选择否，默认：false
+          default: true
         },
         error: {
           exists: '当前版本号 {0} 已存在，请重新输入',
@@ -456,8 +419,8 @@ const user: IConfig = {
           },
           pagination: {
             message: '找到了 {0} 条结果，每页 {1} 条，总共 {2} 页，当前第 {3} 页，你打算：',
-            size: 10, // 每页条数
-            range: 10, // 页码范围
+            size: 10,
+            range: 10,
             next: '下一页',
             prev: '上一页',
             n: '第 {0} 页',
@@ -524,7 +487,7 @@ const user: IConfig = {
         },
         retry: {
           message: '清理日志失败，是否重试？',
-          default: true // true：自动选择是，false：自动选择否，默认：true
+          default: true
         }
       },
       loading: {
@@ -534,7 +497,7 @@ const user: IConfig = {
             success: '读取本地 git 仓库 tag 成功',
             retry: {
               message: '读取 tag 失败，是否重试？',
-              default: true // true：自动选择是，false：自动选择否，默认：true
+              default: true
             }
           },
           messages: {
@@ -542,7 +505,7 @@ const user: IConfig = {
             success: '读取本地 git 仓库 提交消息 成功',
             retry: {
               message: '读取 提交信息 失败，是否重试？',
-              default: true // true：自动选择是，false：自动选择否，默认：true
+              default: true
             }
           }
         },
@@ -556,7 +519,7 @@ const user: IConfig = {
             fail: {
               message: '没有找到记录文件 {0}，是否生成所有日志？',
               description: '这将会清理掉之前生成的所有日志文件，并重新生成，可能需要一定的时间',
-              default: true // true：自动选择是，false：自动选择否，默认：true
+              default: true
             }
           }
         },

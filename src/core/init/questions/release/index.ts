@@ -1,8 +1,19 @@
 import pc from 'picocolors';
-import { isUndefined as _isUn, isArray as _isArr } from 'lodash-es';
+import { isArray as _isArr } from 'lodash-es';
 import { IResultConfigCommit, TConfigRelease } from '@/interface';
 import { command } from '@/utils';
 import { get } from '../../locales';
+
+/**
+ * 对字符串数组进行对齐。
+ * 计算数组中字符串的最大长度，并为每个字符串添加足够的空格以对齐。
+ * @param {string[]} arr 字符串数组。
+ * @returns {string[]} 对齐后的字符串数组。
+ */
+const alignStrings = (arr: string[]): string[] => {
+  const maxLength = Math.max(...arr.map((str) => str.length));
+  return arr.map((str) => str + ' '.repeat(maxLength - str.length));
+};
 
 /**
  * 初始化 发布
@@ -66,28 +77,40 @@ const release = async (configCommit: IResultConfigCommit): Promise<TConfigReleas
       })
     ) {
       if (_isArr(configCommit.config['types'])) {
-        const typesChoices = [];
+        const choices = [];
 
+        let aligns: string[] = [];
         for (const val of configCommit.config['types']) {
-          typesChoices.push({
-            name: `${pc.bold(val.name)}     ${pc.dim(val.description)}`,
-            value: val.name,
-            description: pc.green(`${!_isUn(val.emoji) ? val.emoji : ''}  ${pc.bold(val.name)} ${val.description}`),
+          const align = [];
+          align.push(val.name);
+          aligns.push(align.join(''));
+        }
+
+        aligns = alignStrings(aligns);
+
+        for (const [index, val] of aligns.entries()) {
+          const item = configCommit.config['types'][index];
+          choices.push({
+            name: `${pc.bold(val)}     ${pc.dim(item.description)}`,
+            value: item.name,
+            description: pc.green(`${item.emoji}  ${pc.bold(item.name)} ${item.description}`),
             descriptionDim: false
           });
         }
 
+        choices.push(command.prompt.separator());
+
         // 选择提交类型
         config.pushTagMessage.type = await command.prompt.select({
           message: get('release.pushTagMessage.type.message'),
-          choices: typesChoices
+          choices: choices
         });
       }
 
       if (_isArr(configCommit.config['scopes'])) {
-        const scopesChoices = [];
-
         let emoji = '';
+        const choices = [];
+        let aligns: string[] = [];
 
         for (const val of configCommit.config['types']) {
           if (val.name === config.pushTagMessage.type) {
@@ -97,18 +120,31 @@ const release = async (configCommit: IResultConfigCommit): Promise<TConfigReleas
         }
 
         for (const val of configCommit.config['scopes']) {
-          scopesChoices.push({
-            name: `${pc.bold(val.name)}     ${pc.dim(val.description)}`,
-            value: val.name,
-            description: pc.green(`${pc.dim(`${emoji}${config.pushTagMessage.type}`)}(${val.name})`),
-            descriptionDim: false
-          });
+          const align = [];
+          align.push(val.name);
+          aligns.push(align.join(''));
         }
+
+        aligns = alignStrings(aligns);
+
+        for (const [index, val] of aligns.entries()) {
+          const item = configCommit.config['scopes'][index];
+          const select = {
+            name: `${pc.bold(val)}     ${pc.dim(item.description)}`,
+            value: item.name,
+            description: pc.green(`${pc.dim(`${emoji}${config.pushTagMessage.type}`)}(${item.name})`),
+            descriptionDim: false
+          };
+
+          choices.push(select);
+        }
+
+        choices.push(command.prompt.separator());
 
         // 选择提交范围
         config.pushTagMessage.scope = await command.prompt.select({
           message: get('release.pushTagMessage.scope.message'),
-          choices: scopesChoices
+          choices: choices
         });
       }
 

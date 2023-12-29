@@ -2,7 +2,7 @@ import pc from 'picocolors';
 import { Octokit } from '@octokit/rest';
 import { isUndefined as _isUn, isPlainObject as _isObj, isArray as _isArr, isString as _isStr, isBoolean as _isBool } from 'lodash-es';
 import { IConfig, TChangeLog, TGitMessageToChangeLog, ILanguage, TReleaseResult, TRelease } from '@/interface';
-import { convert, git, translate } from '@/utils';
+import { convert, git, translate, console as cs } from '@/utils';
 
 /**
  * 类：日志记录
@@ -140,7 +140,8 @@ class release {
 
       return allReleasedTags;
     } catch (error) {
-      console.error('Error fetching released tags:', error);
+      cs.error('获取已发布的标签时出错：', 'Error fetching released tags:');
+      console.error(error);
       throw error;
     }
   }

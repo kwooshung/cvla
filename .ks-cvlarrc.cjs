@@ -234,7 +234,7 @@ module.exports = {
       /**
        * 可选，`commit scopes`，提交范围，参考本文配置文件中的 `commit.scopes`
        *
-       * 【注意】建议与 commit.scopes 中的 `name` 字段保持一致
+       * 【注意】建议与 `commit.scopes` 中的 `name` 字段保持一致
        */
       scope: 'tag',
       /**
@@ -247,7 +247,7 @@ module.exports = {
        * `commit.submit.origin` 这里指定什么语言，此选项就应该使用什么语言写内容
        * `commit.submit.target` 而后会根据这个配置，将内容翻译成指定的语言
        */
-      subject: 'new version {{tag}}'
+      subject: '{{tag}}'
     },
     /**
      * 布尔类型，默认：true
@@ -308,9 +308,9 @@ module.exports = {
         /**
          * git提交信息，短说明，
          *
-         *    其中
-         *      transformer：可选，表示对值处理函数
-         *      validate：可选，表示验证函数
+         *  其中
+         *    transformer：可选，表示对值处理函数
+         *    validate：可选，表示验证函数
          *
          *    两个函数均可自定义，具体请参考：https://github.com/SBoudrias/Inquirer.js/tree/master/packages/input
          */
@@ -384,8 +384,8 @@ module.exports = {
         /**
          * 生成提交信息后，触发此函数，可自行处理提交信息的格式
          * 返回值，是一个对象，包含两个属性，fail、val：
-         *    fail：true时，则不会继续执行提交操作，
-         *    val：提交信息
+         *   fail：true时，则不会继续执行提交操作，
+         *   val：提交信息
          * 也可用于自定义提示信息
          */
         complate(val) {
@@ -416,7 +416,7 @@ module.exports = {
         description: '版本号管理，可用于升级、撤销 版本号，自动升级和提交',
         translate: {
           check: {
-            message: '由于 其他语言 将使用 Google翻译，是否检查连接状态？',
+            message: '将使用 Google翻译，是否检查连接状态？',
             success: '连接 Google翻译 成功',
             fail: '连接失败',
             retry: '是否重试？',
@@ -631,8 +631,22 @@ module.exports = {
               popularity: '欢迎：',
               maintenance: '维护：',
               process: {
+                /**
+                 * 搜索结果的包打分的进度条符号
+                 *   若是设置为字符串：'▇'
+                 *     则表示为：▇▇▇▇▇▇▇▇▇▇▇▇
+                 *
+                 *   若设置为字符串数组：['▇', '_']
+                 *     则表示为：▇▇▇▇________
+                 */
                 symbol: '▇',
+                /**
+                 * 搜索结果的包打分的进度条长度,
+                 *   默认：50
+                 *   会自动根据值计算百分比
+                 */
                 length: 50,
+                // 表示激活的进度，是否加粗，布尔类型，默认：false
                 activeBold: false
               }
             },
@@ -648,7 +662,9 @@ module.exports = {
           },
           pagination: {
             message: '找到了 {0} 条结果，每页 {1} 条，总共 {2} 页，当前第 {3} 页，你打算：',
+            // 每页条数
             size: 10,
+            // 页码范围
             range: 10,
             next: '下一页',
             prev: '上一页',

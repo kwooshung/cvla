@@ -228,14 +228,30 @@ const list = {
   'i18n.select': 'Title of the primary menu',
   'i18n.scripts': 'scripts in package.json, used for running scripts in menus',
   'i18n.scripts.message': 'Title for running scripts in the menu',
+  'i18n.package.commands.search.result.score.process.symbol': [
+    'Symbol for the progress bar of package scores in search results',
+    "  If set as a string: '▇'",
+    '    It would appear as: ▇▇▇▇▇▇▇▇▇▇▇▇',
+    '',
+    "  If set as an array of strings: ['▇', '_']",
+    '    It would appear as: ▇▇▇▇________'
+  ],
+  'i18n.package.commands.search.result.score.process.length': [
+    'Length of the progress bar for package scores in search results, ',
+    '  Default: 50',
+    '  The percentage will be automatically calculated based on the value'
+  ],
+  'i18n.package.commands.search.result.score.process.activeBold': 'Indicates whether the active part of the progress bar should be bold. Boolean type, default: false',
+  'i18n.package.commands.search.pagination.size': 'Number of items per page',
+  'i18n.package.commands.search.pagination.range': 'Page number range',
   'i18n.git': 'Git related',
   'i18n.git.commit': 'Git commit related',
   'i18n.git.commit.subject': [
     'Git commit message, short description, ',
     '',
-    '   Includes',
-    '     transformer: Optional, represents a value processing function',
-    '     validate: Optional, represents a validation function',
+    ' Includes',
+    '   transformer: Optional, represents a value processing function',
+    '   validate: Optional, represents a validation function',
     '',
     '   Both functions can be customized, for more details see: https://github.com/SBoudrias/Inquirer.js/tree/master/packages/input'
   ],

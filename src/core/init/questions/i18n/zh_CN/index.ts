@@ -111,7 +111,7 @@ const list = {
       description: '版本号管理，可用于升级、撤销 版本号，自动升级和提交',
       translate: {
         check: {
-          message: '由于 其他语言 将使用 Google翻译，是否检查连接状态？',
+          message: '将使用 Google翻译，是否检查连接状态？',
           success: '连接 Google翻译 成功',
           fail: '连接失败',
           retry: '是否重试？',

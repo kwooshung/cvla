@@ -100,7 +100,7 @@ const list = {
       description: 'Manage version numbers for upgrades, rollbacks, auto-updates, and commits',
       translate: {
         check: {
-          message: 'Since other languages will use Google Translate, do you want to check the connection status?',
+          message: 'will use Google Translate, do you want to check the connection status?',
           success: 'Connected to Google Translate successfully',
           fail: 'Connection failed',
           retry: 'Do you want to retry?',
