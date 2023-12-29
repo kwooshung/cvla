@@ -431,8 +431,8 @@ class gitControl {
    */
   private async getPushTagWithLogUpdatesMessage(tag: string, isTranslate: boolean): Promise<string> {
     const pushTagMessage = this.CONF.release['pushTagMessage'] as TPushTagMessage;
-    const types = this.CONF.release['types'] as ICommitType[];
-    const scopes = this.CONF.release['scopes'] as ICommitScope[];
+    const types = this.CONF.commit['types'] as ICommitType[];
+    const scopes = this.CONF.commit['scopes'] as ICommitScope[];
     const type = _isArr(types) ? types.find((type) => type.name.toLowerCase() === pushTagMessage.type.toLowerCase()) : types[0];
     const scope = _isArr(scopes) ? scopes.find((scope) => scope.name.toLowerCase() === pushTagMessage.scope.toLowerCase()) : '';
     const subjectTemplate = pushTagMessage.subject as string;
@@ -447,9 +447,9 @@ class gitControl {
    * @param {string} tag 标签
    * @param {string} code 命令代码
    * @param {string[]} args 命令参数
-   * @returns {string} 提交信息
+   * @returns {Promise<boolean>} 提交信息
    */
-  private async pushTagWithLogUpdates(tag: string, code: string, args: string[]): Promise<void> {
+  private async pushTagWithLogUpdates(tag: string, code: string, args: string[]): Promise<boolean> {
     try {
       const isTranslate = this.CONF.commit['submit'] !== false && this.CONF.commit['submit']['origin'] && this.CONF.commit['submit']['target'];
 
@@ -481,10 +481,14 @@ class gitControl {
 
         // 推送标签到远程仓库
         await this.parentCmd('git', git.push(true));
+
+        return true;
       }
     } catch (e) {
+      console.log('');
       cs.error('推送标签失败', 'Push tag failed');
       console.log(pc.red(e));
+      return false;
     }
   }
 
@@ -854,16 +858,18 @@ class gitControl {
 
     // 如果版本号有效，则添加 tag
     if (semver.valid(version)) {
+      let result = false;
       this.versionUpdatePackageJson(version);
 
       if (annotate.trim() === '') {
-        await this.pushTagWithLogUpdates(version, 'git', ['tag', version]);
+        result = await this.pushTagWithLogUpdates(version, 'git', ['tag', version]);
       } else {
-        await this.pushTagWithLogUpdates(version, 'git', ['tag', '-a', `"${version}"`, '-m', `"${annotate}"`]);
+        result = await this.pushTagWithLogUpdates(version, 'git', ['tag', '-a', `"${version}"`, '-m', `"${annotate}"`]);
       }
 
       if (
-        await command.prompt.select({
+        result &&
+        (await command.prompt.select({
           message: this.CONF.i18n.git.version.push.message,
           choices: [
             {
@@ -876,7 +882,7 @@ class gitControl {
             }
           ],
           default: this.CONF.i18n.git.version.push.default
-        })
+        }))
       ) {
         await this.parentCmd('git', git.push(true));
       }

@@ -247,7 +247,7 @@ module.exports = {
        * `commit.submit.origin` 这里指定什么语言，此选项就应该使用什么语言写内容
        * `commit.submit.target` 而后会根据这个配置，将内容翻译成指定的语言
        */
-      subject: '{{tag}}'
+      subject: '新版本 {{tag}}'
     },
     /**
      * 布尔类型，默认：true

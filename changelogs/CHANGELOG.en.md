@@ -51,3 +51,22 @@
 
 ----
 
+## 🎉 0.1.0-rc.1 `2023-12-29`
+### 🐛 Fix
+- Fix the automatic annotation of interactive experience and configuration ({{commiturl}})
+- Restore the file configuration of GitHub Actions, and correct the code process ({{commiturl}})
+- Fix the logic of submitting information transfer logs ({{commiturl}})
+### ✨ Feature
+- Can initialize Pushtagmessage and submit tags and generate logs ({{commiturl}})
+- Add submission information ({{commiturl}})
+- At present, the function is complete, and the next step is added to the GitHub Actions script, try to call ({{commiturl}})
+- Perfect function, the next test configuration switch situation ({{commiturl}})
+- Complete GitHub Release function ({{commiturl}})
+- Increase the function of re -generating and cleaning up the log ({{commiturl}})
+### 🆕 Add
+- Increased the configuration and comment description of the language package of i18N ({{commiturl}})
+- Add Chinese and English versions that configure i18N ({{commiturl}})
+- Increased the operation of logs ({{commiturl}})
+- Added log file function, but it has not been completed ({{commiturl}})
+### 🚧 Wip
+- The analysis log message function is done ({{commiturl}})
