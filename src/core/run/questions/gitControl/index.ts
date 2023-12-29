@@ -1,7 +1,7 @@
 import pc from 'picocolors';
 import semver from 'semver';
 import { range as _range, clone as _clone, isUndefined as _isUn, isPlainObject as _isObj, isBoolean as _isBool, isArray as _isArr, isString as _isStr } from 'lodash-es';
-import { IConfig, IGitCommitData, IPackageJson, IPackageJsonData, TGitCustomField } from '@/interface';
+import { ICommitScope, ICommitType, IConfig, IGitCommitData, IPackageJson, IPackageJsonData, TGitCustomField, TPushTagMessage } from '@/interface';
 import { command, convert, console as cs, git, package as _package, version as V } from '@/utils';
 import changelog from '../changelog';
 import menuState from '../_state';
@@ -291,7 +291,7 @@ class gitControl {
       const choices = [];
 
       let aligns: string[] = [];
-      for (const val of this.CONF.commit['types']) {
+      for (const val of this.CONF.commit['types'] as ICommitType[]) {
         const align = [];
         align.push(val.name);
         aligns.push(align.join(''));
@@ -332,7 +332,7 @@ class gitControl {
     let aligns: string[] = [];
 
     if (_isArr(this.CONF.commit['scopes'])) {
-      for (const val of this.CONF.commit['scopes']) {
+      for (const val of this.CONF.commit['scopes'] as ICommitScope[]) {
         const align = [];
         align.push(val.name);
         aligns.push(align.join(''));
@@ -359,6 +359,64 @@ class gitControl {
         choices,
         pageSize: this.CONF.i18n.choicesLimit ?? 15
       });
+    }
+  }
+
+  /**
+   * 私有函数：git > commit > 获得推送标签的提交信息
+   * @param {string} tag 标签
+   * @returns {string} 提交信息
+   */
+  private getPushTagWithLogUpdatesMessage(tag: string): string {
+    const pushTagMessage = this.CONF.release['pushTagMessage'] as TPushTagMessage;
+    const types = this.CONF.release['types'] as ICommitType[];
+    const scopes = this.CONF.release['scopes'] as ICommitScope[];
+    const type = _isArr(types) ? types.find((type) => type.name.toLowerCase() === pushTagMessage.type.toLowerCase()) : types[0];
+    const scope = _isArr(scopes) ? scopes.find((scope) => scope.name.toLowerCase() === pushTagMessage.scope.toLowerCase()) : scopes[0];
+    const subjectTemplate = pushTagMessage.subject as string;
+    const subject = convert.replaceTemplate(subjectTemplate, { tag });
+    const message = `${type.emoji}${type.name}${scope ? `(${scope.name})` : ''}: ${subject}`;
+    return message;
+  }
+
+  /**
+   * 私有函数：git > commit > 获得推送标签的提交信息
+   * @param {string} tag 标签
+   * @param {string} code 命令代码
+   * @param {string[]} args 命令参数
+   * @returns {string} 提交信息
+   */
+  private async pushTagWithLogUpdates(tag: string, code: string, args: string[]): Promise<void> {
+    try {
+      // 首先生成提交信息
+      const message = this.getPushTagWithLogUpdatesMessage(tag);
+
+      // 创建标签
+      await this.parentCmd(code, args);
+
+      // 生成日志
+      await this.changeLog.build();
+
+      // 暂存日志
+      await this.parentCmd('git', git.add.current);
+
+      // 创建提交信息
+      await this.parentCmd('git', ['commit', '-m', `"${message}"`]);
+
+      // 撤销标签
+      await this.parentCmd('git', ['tag', '-d', tag]);
+
+      // 重新创建标签
+      await this.parentCmd(code, args);
+
+      // 推送本地仓库到远程仓库
+      await this.parentCmd('git', git.push());
+
+      // 推送标签到远程仓库
+      await this.parentCmd('git', git.push(true));
+    } catch (e) {
+      cs.error('推送标签失败', 'Push tag failed');
+      console.log(pc.red(e));
     }
   }
 
@@ -731,11 +789,9 @@ class gitControl {
       this.versionUpdatePackageJson(version);
 
       if (annotate.trim() === '') {
-        await this.parentCmd('git', ['tag', version]);
-        await this.changeLog.build();
+        this.pushTagWithLogUpdates(version, 'git', ['tag', version]);
       } else {
-        await this.parentCmd('git', ['tag', '-a', `"${version}"`, '-m', `"${annotate}"`]);
-        await this.changeLog.build();
+        this.pushTagWithLogUpdates(version, 'git', ['tag', '-a', `"${version}"`, '-m', `"${annotate}"`]);
       }
 
       if (

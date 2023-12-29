@@ -378,6 +378,24 @@ type TConfigChangelog =
   | 'default';
 
 /**
+ * 类型：配置 > release > pushTagMessage
+ */
+type TPushTagMessage = {
+  /**
+   * commit type
+   */
+  type: string;
+  /**
+   * commit scope
+   */
+  scope: string;
+  /**
+   * commit subject
+   */
+  subject: string;
+};
+
+/**
  * 类型：配置 > release
  */
 type TConfigRelease =
@@ -386,6 +404,10 @@ type TConfigRelease =
        * 标题
        */
       subject?: string;
+      /**
+       * 自动发布的提交信息
+       */
+      pushTagMessage?: TPushTagMessage;
       /**
        * 是否显示 powered by
        */
@@ -939,6 +961,7 @@ export {
   TConfigPackage,
   TConfigVersion,
   TConfigChangelog,
+  TPushTagMessage,
   TConfigRelease,
   IConfig,
   IConfigResult,
