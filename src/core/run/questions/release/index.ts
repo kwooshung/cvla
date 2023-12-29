@@ -198,6 +198,8 @@ class release {
       // 使用 filter 方法过滤出 tags 数组中不在 releasedTagsSet 中的元素
       const unreleasedTags = tags.filter((tag) => !releasedTagsSet.has(tag.trim()));
 
+      console.log(unreleasedTags);
+
       if (unreleasedTags.length > 0) {
         const contents: TRelease[] = await this.readMessages(unreleasedTags);
 
