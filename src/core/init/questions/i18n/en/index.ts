@@ -404,6 +404,10 @@ const list = {
       confirm: {
         message: 'This operation may take some time, continue?',
         description: 'This will delete all previously generated log files and regenerate, which may take some time'
+      },
+      template: {
+        message:
+          'Due to modifications in the log template `changelog.template.content`, the `cvlar -r` release function may not accurately identify the log content pending release. You will need to regenerate all logs. Do you wish to continue?'
       }
     },
     clean: {

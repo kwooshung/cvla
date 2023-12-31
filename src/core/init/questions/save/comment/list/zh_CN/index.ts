@@ -121,7 +121,10 @@ const list = {
     '  tag：tag名',
     '  date：日期，如：2023-12-17',
     '  time：时间，如：04:59:39',
-    '  logs：日志内容，对应下面的 logs 配置项'
+    '  logs：日志内容，对应下面的 logs 配置项',
+    '',
+    '【注意】当已存在使用此模板生成的日志，且启用了 `cvlar -r/release` 自动发布，',
+    '       建议重新生成所有日志，避免 `cvlar -r/release` 自动发布时，可能无法准确获取到日志内容'
   ],
   'changelog.template.logs': ['根据type分类，具体的日志内容', '若已存在翻译版本的日志，仅对新生成的日志有效，', "你可选择 '重新生成所有日志'"],
   'changelog.template.logs.title': '标题模板',

@@ -406,6 +406,9 @@ const list = {
       confirm: {
         message: '此操作可能需要较长的时间，是否继续？',
         description: '此操作将会删除之前生成的所有日志文件，并重新生成，可能需要一定的时间'
+      },
+      template: {
+        message: '由于日志模板 `changelog.template.content` 已修改，会导致 `cvlar -r` 发布功能无法准确识别待发布的日志内容，您需要重新生成所有日志，是否继续？'
       }
     },
     clean: {

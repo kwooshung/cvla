@@ -65,7 +65,7 @@ const list = {
   'package.manager.type': ['Package management tool type, assigned as a string, assignable values:', 'The names of npm, yarn, pnpm, and other package management tools'],
   'package.manager.registry': [
     'Dependency source, default: auto, indicates according to the default source of the package management tool, generally: https://registry.npmjs.org',
-    'Note: This configuration will not affect the global or current project dependency source, only affects the dependency source when installing dependencies through this tool'
+    '[Note]: This configuration will not affect the global or current project dependency source, only affects the dependency source when installing dependencies through this tool'
   ],
   'package.manager.commands': [
     'Package management command, format description:',
@@ -124,7 +124,10 @@ const list = {
     '  tag:tag name',
     '  date: date, e.g., 2023-12-17',
     '  time: time, e.g., 04:59:39',
-    '  logs: log content'
+    '  logs: log content',
+    '',
+    '[Note] If there are already logs generated using this template and the `cvlar -r/release` auto-release feature is enabled,',
+    '       Recommend regenerating all logs to avoid potential inaccuracies in log content retrieval during automatic release with `cvlar -r/release`.'
   ],
   'changelog.template.logs': [
     'Categorize according to type, specific log content',

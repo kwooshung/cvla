@@ -11,7 +11,7 @@ const cleanString = (str: string, trim: boolean = true): string => {
   if (trim) {
     result = result.trim();
   }
-  return result.replace(/^[\s\uFEFF\xA0]+/g, '');
+  return result.trimStart().replace(/^[\s\uFE0F\uFEFF\xA0\u2000-\u200B\u2028\u2029\u3000]+/, '');
 };
 
 /**
@@ -44,7 +44,7 @@ const parse = (commitMessage: string): TCommitCategory => {
     }
 
     // 从 emojiOrType 中提取 type
-    result.type = cleanString(result.emojiOrType.replace(/^(\p{Emoji}*\s*)?/u, ''));
+    result.type = cleanString(result.emojiOrType.replace(/^(\p{Emoji}*\s*)?/u, ''), false);
 
     // 提取 scope（小括号里面的）
     if (typeScopeMatch[2]) {

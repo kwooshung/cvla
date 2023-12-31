@@ -1,25 +1,29 @@
 ## 🎉 0.1.0-rc.6 `2023-12-30`
+### 📦 Release
+- 新しいバージョン0.1.0-RC.6 ([#8f3bd0d](https://github.com/kwooshung/cvlar/commit/8f3bd0d2980254207b6a0c4a41fc2b01a0128233))
 ### 🔄 Workflow
 - ワークフロー、自動リリースバージョンの更新 ([#31f65ac](https://github.com/kwooshung/cvlar/commit/31f65acb40672453afd2981f9d007f162a27313e))
 ### 🐛 Fix
 - スクリプトプロセスを修正して、バージョンのノードバージョンが低すぎるため、PNPMを使用できません ([#db09ca2](https://github.com/kwooshung/cvlar/commit/db09ca227c3c5f401f0e1c76f77afa2990dae4a2))
 - タグが送信されないようにし、送信するかどうかをもう一度尋ねると、複製の質問が発生します ([#7a4fda6](https://github.com/kwooshung/cvlar/commit/7a4fda6bb499c62bfbe003b700eab602c7e750b9))
-### ⚰ ️ remove
+### ⚰ Remove
 - gitの一時ファイルを削除し、再度削除されているかどうかを確認します ([#90249e9](https://github.com/kwooshung/cvlar/commit/90249e92a37909adcc6155fed42e5a6825ae609a))
 
 ## 🎉 0.1.0-rc.5 `2023-12-30`
+### 📦 Release
+- 新しいバージョン0.1.0-rc.5 ([#1a9761d](https://github.com/kwooshung/cvlar/commit/1a9761d1aa483ae57c37749cb6fe8aef68cea70e))
 ### 🐛 Fix
 - コードバージョン番号を変更して追加します ([#b6cf54c](https://github.com/kwooshung/cvlar/commit/b6cf54ccbcae5723c162854334a264dd6da7142b))
 - 結果の特別な空白の文字列の問題を修正します ([#524fa19](https://github.com/kwooshung/cvlar/commit/524fa194008adf7b6aba2ac37846ddd281213615))
 
 ## 🎉 0.1.0-rc.4 `2023-12-30`
-### 📦 ️release
+### 📦 Release
 - 新しいバージョン0.1.0-RC.4 ([#765be56](https://github.com/kwooshung/cvlar/commit/765be5696bdb21121022c95c0ed5bd713a27054e))
 ### 🆕 Add
 - ログは形式で生成されました ([#562c519](https://github.com/kwooshung/cvlar/commit/562c519ed9b32d5d62f4bb38861b019378dcc550))
 
 ## 🎉 0.1.0-rc.3 `2023-12-30`
-### 📦 ️release
+### 📦 Release
 - 新しいバージョン0.1.0-RC.3 ([#18a89fb](https://github.com/kwooshung/cvlar/commit/18a89fb156cff3b702bb58bec820c768c745242e))
 - 新しいバージョン0.1.0-RC.3 ([#a23539a](https://github.com/kwooshung/cvlar/commit/a23539a0557190eb2e31c257c61cbe3cb916ed22))
 ### 🐛 Fix
@@ -31,7 +35,7 @@
 - ログ翻訳とpackage.jsonの修理 ([#0b5f906](https://github.com/kwooshung/cvlar/commit/0b5f90694c5cd27bae1906c33756cb86729b5ca1))
 
 ## 🎉 0.1.0-rc.1 `2023-12-29`
-### 📦 ️release
+### 📦 Release
 - 新0.1.0-rc.1 ([#840e82d](https://github.com/kwooshung/cvlar/commit/840e82d90709dedcd2423d993d90867a89b622cd))
 ### 🐛 Fix
 - インタラクティブなエクスペリエンスと構成の自動注釈を修正します ([#feb129e](https://github.com/kwooshung/cvlar/commit/feb129e81d2bc1e2e03a6473f0d69a7dc483c2c9))
