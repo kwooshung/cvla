@@ -1,4 +1,31 @@
+## 🎉 1.0.0-rc.1 `2024-01-03`
+### 🐛 Fix
+- According to the new configuration, re -generate the log file ([#1c62600](https://github.com/kwooshung/cvlar/commit/1c6260044923e1fdb97d6024052d620c22ce8529))
+- Repair the preview version of the submitted version number iteration number logic ([#4796e38](https://github.com/kwooshung/cvlar/commit/4796e38f407aa113b41ef0e9994385fceb27e9e1))
+- `Changelog.translate.origin` and` Changelog.translate.target` Multi -language title settings error ([#20628dc](https://github.com/kwooshung/cvlar/commit/20628dc712f9d924b91468205083a2fdba142ab1))
+- `Changelog.translate.origin` and` Changelog.translate.target` Function ([#dc0f82b](https://github.com/kwooshung/cvlar/commit/dc0f82b0ab606a0cb1e3323fc3aae47137aaa6ad))
+- Fix the order of the release version of Github Release, the smaller the version, the earlier the release ([#88c167f](https://github.com/kwooshung/cvlar/commit/88c167fd42e4e4c2a10a5999c24aa2a6a786e669))
+- Fix the API release problem, and test whether it is effective again ([#a3e2280](https://github.com/kwooshung/cvlar/commit/a3e22806828ef19e425dd6068f2f874960644025))
+- Gradually narrow the scope of error, test whether the request object is correct ([#e5d8470](https://github.com/kwooshung/cvlar/commit/e5d84700467e172c11c5869ad0aea110f0ffc5ff))
+- The error function name is added to the debug instruction string ([#3d7d194](https://github.com/kwooshung/cvlar/commit/3d7d194581071379bd4f649c0efc63a7754e9340))
+- Fix the code to startus to avoid errors ([#d4ac30b](https://github.com/kwooshung/cvlar/commit/d4ac30b44dc123d11f5ee0b111fe695ecd7b3bf1))
+- Fix the attributes of the Handleuserexit function to avoid outdated problems ([#8d5f1e9](https://github.com/kwooshung/cvlar/commit/8d5f1e9b3c6033a4cdc996758c9aa93b0ee30496))
+- Do you accidentally delete the code more ([#0200c06](https://github.com/kwooshung/cvlar/commit/0200c062bc2275ec5a3b23b3da92bc2c700f3f7a))
+- The code is temporarily not compressed, and it is convenient to view the error code ([#4a85dd5](https://github.com/kwooshung/cvlar/commit/4a85dd57f328da0244eeb52af3c52ec6fa2e090c))
+- Re -repair the method of obtaining all tags ([#a153ca9](https://github.com/kwooshung/cvlar/commit/a153ca9084a888cf60d6bd408f773ac55a747656))
+- It is found that GitHub Actions must still use the `Node Dist/bin.js -R` in this project ([#92160c1](https://github.com/kwooshung/cvlar/commit/92160c13c73d8f440f840c53db28bd601fa2fb07))
+- Modify Github Actions to CVLAR -R, modify the API to get TAG, and change it to attributes ([#5f20be6](https://github.com/kwooshung/cvlar/commit/5f20be615d9f749685c758baaec36aa216f635ad))
+- The code that forgot to recover before before debugging, resulting in type errors ([#64e0f3b](https://github.com/kwooshung/cvlar/commit/64e0f3beefaa4f0a7563a2ed7db892a2714adab3))
+- Temporarily add the output string to facilitate debugging ([#90b5d13](https://github.com/kwooshung/cvlar/commit/90b5d133f80768d70bf12f0c87d46085760c3796))
+- Put a variety to write again to avoid the unusable of github actions ([#c55e855](https://github.com/kwooshung/cvlar/commit/c55e85577d39d474a9335958c1435fa8d8ec8692))
+- Fix the configuration of GitHub Actions CI and clearly comment ([#5a0ffcb](https://github.com/kwooshung/cvlar/commit/5a0ffcb7d93df7257828b81d62f765a8ee0b23a8))
+- The test log file has been deleted, and now submit it again ([#df0f720](https://github.com/kwooshung/cvlar/commit/df0f72015ac4260eb7c6267c5bc15f596d07a58f))
+### ✨ Feature
+- New Github Release multi -language related configuration and functions ([#ae608e5](https://github.com/kwooshung/cvlar/commit/ae608e573bb8cc91e368a9689eb1c081a7586c85))
+
 ## 🎉 0.1.0-rc.7 `2024-01-03`
+### 📦 Release
+- new version 0.1.0-rc.7 ([#2cb0ee9](https://github.com/kwooshung/cvlar/commit/2cb0ee9eaec85089cde304355a86aabb3e59d4a3))
 ### 🐛 Fix
 - Now it has been changed to read log MD file for publishing content ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
 - Fix and add prompts `Changelog.template.content`, resulting ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))

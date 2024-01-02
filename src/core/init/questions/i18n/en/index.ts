@@ -195,7 +195,8 @@ const list = {
         iterations: {
           message: {
             no: 'Current version number: {0}, no pre-release number, confirm to use {1} as the pre-release version number?',
-            add: 'Current version number: {0}, pre-release type {1}, iteration number: {2}, use {3} as the pre-release version number?'
+            add: 'Current version number: {0}, pre-release type {1}, iteration number: {2}, use {3} as the pre-release version number?',
+            newno: 'Current version: {0}, new version is: {1}, no pre-release version exists. Would you like to use: {2} as the pre-release version?'
           },
           input: {
             message: 'Please enter the iteration version number:',
