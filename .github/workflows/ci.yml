@@ -38,9 +38,9 @@ jobs:
       - name: build
         run: pnpm build
 
-      # 自动发布，仅在本项目中使用 `node dist/bin.js -r`，其他项目使用 `cvlar -r`
+      # 自动发布，仅在本项目中使用 `pnpm cvlar:release`，其他项目使用 `cvlar -r`
       - name: Auto Release
-        run: node dist/bin.js -r
+        run: pnpm cvlar:release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
