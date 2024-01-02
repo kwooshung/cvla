@@ -271,8 +271,7 @@ module.exports = {
     /**
      * 布尔类型，默认：true
      * 是否在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：
-     *   > This [Changelog](CHANGELOG.md), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)
-     *   其中，`CHANGELOG.md` 表示当前 您仓库中 'Changelog' 入口文件的相对路径
+     *   > This [Changelog](changelog.file.save 的目录设置值), Powered by @kwooshung/[cvlar](https://github.com/kwooshung/cvlar/)
      *   参考：https://github.com/kwooshung/cvlar/releases
      */
     poweredby: true

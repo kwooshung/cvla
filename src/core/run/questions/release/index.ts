@@ -209,6 +209,8 @@ class release {
       this.CONF['release'] &&
       this.CONF['release']['subject'] &&
       this.CONF['changelog'] &&
+      this.CONF['changelog']['file'] &&
+      this.CONF['changelog']['file']['save'] &&
       this.CONF['changelog']['template'] &&
       this.CONF['changelog']['template']['content'] &&
       this.CONF['changelog']['template']['logs'] &&
@@ -311,6 +313,8 @@ class release {
       list.push(pc.dim('=================================================='));
       list.push(pc.cyan('  release'));
       list.push(pc.cyan('  release.subject'));
+      list.push(pc.cyan('  changelog.file'));
+      list.push(pc.cyan('  changelog.file.save'));
       list.push(pc.cyan('  changelog.template.content'));
       list.push(pc.cyan('  changelog.template.logs.title.standard'));
       list.push(pc.cyan('  changelog.template.logs.title.other'));
@@ -414,7 +418,9 @@ class release {
 
       if (body.length > 0) {
         const name = convert.replaceTemplate(subjectTemplate, { tag: changelog.tag });
-        this.CONF['release']['poweredby'] && body.push(`\n---\n> This [Changelog](../../blob/${branch}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
+        const savePath = this.CONF['changelog']['file']['save'];
+        const dir = savePath.replace(/^(\.|\.\/|\/)/, '');
+        this.CONF['release']['poweredby'] && body.push(`\n---\n> This [Changelog](../../blob/${branch}/${dir}), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
 
         await this.OCTOKIT.repos.createRelease({
           owner,
