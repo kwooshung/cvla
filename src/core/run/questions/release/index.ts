@@ -130,12 +130,12 @@ class release {
       const owner = this.getRepoOwner();
       const repo = this.getRepoName();
       const allTags: string[] = [];
-      let releases: any;
+      let localtags: any;
       do {
-        releases = await this.OCTOKIT.repos.listTags({ owner, repo, per_page: 100, page });
-        allTags.push(releases.data.name);
+        localtags = await this.OCTOKIT.repos.listTags({ owner, repo, per_page: 100, page });
+        allTags.push(...localtags.data.map((localtag: { name: string }) => localtag.name));
         page++;
-      } while (releases.data.length === 100); // 如果一页满载（100个条目），则可能还有更多页面
+      } while (localtags.data.length === 100); // 如果一页满载（100个条目），则可能还有更多页面
 
       return allTags;
     } catch (error) {
