@@ -281,14 +281,6 @@ type TChangeLog = {
    */
   tag: string;
   /**
-   * 日期
-   */
-  date: string;
-  /**
-   * 时间
-   */
-  time: string;
-  /**
    * 消息列表
    */
   list: TChangeLogList | TChangeLogLangList;
@@ -302,15 +294,13 @@ type TChangeLogResult = string | Record<string, string>;
 /**
  * 类型：Release 处理后的日志信息
  */
-type TReleaseResult = string | Record<string, string>;
+type TReleaseResult = string | Record<string, TChangeLogResult>;
 
 /**
  * 类型：Release
  */
 type TRelease = {
   tag: string;
-  date: string;
-  time: string;
   logs: TReleaseResult;
 };
 
