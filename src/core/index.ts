@@ -9,7 +9,7 @@ import run from '@/core/run';
  * 处理用户退出
  * @param {any} error 错误信息
  */
-const handleUserExit = async (error: { code: string }) => error.code === 'ERR_UNHANDLED_REJECTION' && console.log(pc.green('Clvar：已退出（Exited）'));
+const handleUserExit = async (error: { code: string; status: string }) => [error['code'], error['status']].includes('ERR_UNHANDLED_REJECTION') && console.log(pc.green('Clvar：已退出（Exited）'));
 process.on('uncaughtException', handleUserExit);
 
 /**
