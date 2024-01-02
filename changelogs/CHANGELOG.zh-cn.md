@@ -1,25 +1,42 @@
+## 🎉 0.1.0-rc.7 `2024-01-03`
+### 🐛 Fix
+- 现在已更改它以读取用于发布内容的日志MD文件 ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
+- 修复并添加提示`changelog.template.content`，结果 ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))
+- 输出未删除的标签，看看为什么未发布 ([#a18c8d5](https://github.com/kwooshung/cvlar/commit/a18c8d50186a5d1cbd26c4636064644ae17cb1d2))
+- 修复GitHub操作配置脚本的顺序 ([#22a86ff](https://github.com/kwooshung/cvlar/commit/22a86ffacd0dc7dcfb60f2810bf7a51fb95d8128))
+- 修复删除并提交信息临时文件功能，以避免对象中不存在的问题 ([#60ee49f](https://github.com/kwooshung/cvlar/commit/60ee49f2891e950a82ce3c79eed41456676fb95d))
+### 🆕 Add
+- 增加通过API获取标签的方法的方法 ([#8fdba13](https://github.com/kwooshung/cvlar/commit/8fdba13fd66ae44d66d7f97a24ef0aa1e56ad7ab))
+### ✅ Test
+- 添加调试信息以简化检查 ([#0d5f882](https://github.com/kwooshung/cvlar/commit/0d5f882fd156f02671a6239d43b4a3542701c347))
+- 调试并获取用于测试的当前发布列表信息 ([#e63df25](https://github.com/kwooshung/cvlar/commit/e63df251835fbed961c2dfdb60c99f7057a5e362))
+
 ## 🎉 0.1.0-rc.6 `2023-12-30`
+### 📦 Release
+- 新版本0.1.0-rc.6 ([#8f3bd0d](https://github.com/kwooshung/cvlar/commit/8f3bd0d2980254207b6a0c4a41fc2b01a0128233))
 ### 🔄 Workflow
 - 工作流程，自动发布版本更新 ([#31f65ac](https://github.com/kwooshung/cvlar/commit/31f65acb40672453afd2981f9d007f162a27313e))
 ### 🐛 Fix
 - 修复脚本过程以避免版本的节点版本太低，因此无法使用PNPM ([#db09ca2](https://github.com/kwooshung/cvlar/commit/db09ca227c3c5f401f0e1c76f77afa2990dae4a2))
 - 避免标签提交，然后再次询问是否提交，引起重复的问题 ([#7a4fda6](https://github.com/kwooshung/cvlar/commit/7a4fda6bb499c62bfbe003b700eab602c7e750b9))
-### ⚰ ️ remove
+### ⚰ Remove
 - 删除git的临时文件，并检查是否再次删除它 ([#90249e9](https://github.com/kwooshung/cvlar/commit/90249e92a37909adcc6155fed42e5a6825ae609a))
 
 ## 🎉 0.1.0-rc.5 `2023-12-30`
+### 📦 Release
+- 新版本0.1.0-rc.5 ([#1a9761d](https://github.com/kwooshung/cvlar/commit/1a9761d1aa483ae57c37749cb6fe8aef68cea70e))
 ### 🐛 Fix
 - 修改并添加代码版本号 ([#b6cf54c](https://github.com/kwooshung/cvlar/commit/b6cf54ccbcae5723c162854334a264dd6da7142b))
 - 修复特殊空白的结果的问题。 ([#524fa19](https://github.com/kwooshung/cvlar/commit/524fa194008adf7b6aba2ac37846ddd281213615))
 
 ## 🎉 0.1.0-rc.4 `2023-12-30`
-### 📦 ️release
+### 📦 Release
 - 新版本0.1.0-rc.4 ([#765be56](https://github.com/kwooshung/cvlar/commit/765be5696bdb21121022c95c0ed5bd713a27054e))
 ### 🆕 Add
 - 该日志已以格式生成 ([#562c519](https://github.com/kwooshung/cvlar/commit/562c519ed9b32d5d62f4bb38861b019378dcc550))
 
 ## 🎉 0.1.0-rc.3 `2023-12-30`
-### 📦 ️release
+### 📦 Release
 - 新版本0.1.0-rc.3 ([#18a89fb](https://github.com/kwooshung/cvlar/commit/18a89fb156cff3b702bb58bec820c768c745242e))
 - 新版本0.1.0-rc.3 ([#a23539a](https://github.com/kwooshung/cvlar/commit/a23539a0557190eb2e31c257c61cbe3cb916ed22))
 ### 🐛 Fix
@@ -31,7 +48,7 @@
 - 日志翻译和软件包。 ([#0b5f906](https://github.com/kwooshung/cvlar/commit/0b5f90694c5cd27bae1906c33756cb86729b5ca1))
 
 ## 🎉 0.1.0-rc.1 `2023-12-29`
-### 📦 ️release
+### 📦 Release
 - 新版本0.1.0-rc.1 ([#840e82d](https://github.com/kwooshung/cvlar/commit/840e82d90709dedcd2423d993d90867a89b622cd))
 ### 🐛 Fix
 - 修复交互式体验和配置的自动注释 ([#feb129e](https://github.com/kwooshung/cvlar/commit/feb129e81d2bc1e2e03a6473f0d69a7dc483c2c9))

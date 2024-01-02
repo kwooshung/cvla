@@ -128,6 +128,9 @@ module.exports = {
        *   date：日期，如：2023-12-17
        *   time：时间，如：04:59:39
        *   logs：日志内容，对应下面的 logs 配置项
+       *
+       *【注意】当已存在使用此模板生成的日志，且启用了 `cvlar -r/release` 自动发布，
+       *       建议重新生成所有日志，避免 `cvlar -r/release` 自动发布时，可能无法准确获取到日志内容'
        */
       content: '## 🎉 {{tag}} `{{date}}`\n{{logs}}',
       /**
@@ -192,8 +195,6 @@ module.exports = {
      *
      * 可使用的变量：
      *   tag：tag名
-     *   date: 日期，如：2023-12-17
-     *   time: 时间，如：04:59:39
      */
     subject: '🎉 {{tag}}',
     /**
@@ -722,6 +723,9 @@ module.exports = {
         confirm: {
           message: '此操作可能需要较长的时间，是否继续？',
           description: '此操作将会删除之前生成的所有日志文件，并重新生成，可能需要一定的时间'
+        },
+        template: {
+          message: '由于日志模板 `changelog.template.content` 已修改，会导致 `cvlar -r` 发布功能无法准确识别待发布的日志内容，您需要重新生成所有日志，是否继续？'
         }
       },
       clean: {

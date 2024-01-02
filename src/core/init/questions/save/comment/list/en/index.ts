@@ -65,7 +65,7 @@ const list = {
   'package.manager.type': ['Package management tool type, assigned as a string, assignable values:', 'The names of npm, yarn, pnpm, and other package management tools'],
   'package.manager.registry': [
     'Dependency source, default: auto, indicates according to the default source of the package management tool, generally: https://registry.npmjs.org',
-    'Note: This configuration will not affect the global or current project dependency source, only affects the dependency source when installing dependencies through this tool'
+    '[Note]: This configuration will not affect the global or current project dependency source, only affects the dependency source when installing dependencies through this tool'
   ],
   'package.manager.commands': [
     'Package management command, format description:',
@@ -121,10 +121,13 @@ const list = {
     'Logs will be sorted in order of submission type',
     '',
     'The currently supported variables are as follows:',
-    '  tag:tag name',
-    '  date: date, e.g., 2023-12-17',
-    '  time: time, e.g., 04:59:39',
-    '  logs: log content'
+    '  tag (required parameter):tag name',
+    '  date (optional parameter): date, e.g., 2023-12-17',
+    '  time (optional parameter): time, e.g., 04:59:39',
+    '  logs (required parameter): log content',
+    '',
+    '[Note] If there are already logs generated using this template and the `cvlar -r/release` auto-release feature is enabled,',
+    '       Recommend regenerating all logs to avoid potential inaccuracies in log content retrieval during automatic release with `cvlar -r/release`.'
   ],
   'changelog.template.logs': [
     'Categorize according to type, specific log content',
@@ -162,7 +165,7 @@ const list = {
     '   l (optional parameter): Indicates the number of characters to extract'
   ],
   'changelog.template.logs.commitlink.url': ['Link address', '', 'Available variables:', 'id: represents the full commit id, usually 40 characters long'],
-  'release.subject': ['Release page, tag version title template', '', 'Available variables:', '  tag: tag name', '  date: date, e.g., 2023-12-17', '  time: time, e.g., 04:59:39'],
+  'release.subject': ['Release page, tag version title template', '', 'Available variables:', '  tag: tag name'],
   'release.pushTagMessage': [
     'Whenever you create a new tag and store it in the local git repository, and have not yet pushed it to the remote repository,',
     'automatic log generation, translation, and file writing operations will be executed.',

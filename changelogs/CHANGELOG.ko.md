@@ -1,25 +1,42 @@
+## 🎉 0.1.0-rc.7 `2024-01-03`
+### 🐛 Fix
+- 이제 콘텐츠 게시를 위해 로그 MD 파일을 읽도록 변경되었습니다. ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
+- 프롬프트`changelog.template.content`, 결과를 수정하고 추가하십시오 ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))
+- 출력 UnrelefeRedTags, 왜 출시되지 않은지 확인하십시오 ([#a18c8d5](https://github.com/kwooshung/cvlar/commit/a18c8d50186a5d1cbd26c4636064644ae17cb1d2))
+- GitHub 조치 구성 스크립트의 시퀀스를 수정하십시오 ([#22a86ff](https://github.com/kwooshung/cvlar/commit/22a86ffacd0dc7dcfb60f2810bf7a51fb95d8128))
+- 객체에 존재하지 않는 문제를 피하기 위해 삭제를 수정하고 정보 제출 임시 파일 기능을 제출하십시오. ([#60ee49f](https://github.com/kwooshung/cvlar/commit/60ee49f2891e950a82ce3c79eed41456676fb95d))
+### 🆕 Add
+- API를 통해 태그를 얻는 메소드를 증가시키는 방법 ([#8fdba13](https://github.com/kwooshung/cvlar/commit/8fdba13fd66ae44d66d7f97a24ef0aa1e56ad7ab))
+### ✅ Test
+- 쉽게 확인하기 위해 디버깅 정보를 추가하십시오 ([#0d5f882](https://github.com/kwooshung/cvlar/commit/0d5f882fd156f02671a6239d43b4a3542701c347))
+- 테스트를 위해 현재 릴리스 목록 정보를 디버그하고 가져옵니다. ([#e63df25](https://github.com/kwooshung/cvlar/commit/e63df251835fbed961c2dfdb60c99f7057a5e362))
+
 ## 🎉 0.1.0-rc.6 `2023-12-30`
+### 📦 Release
+- 새 버전 0.1.0-RC.6 ([#8f3bd0d](https://github.com/kwooshung/cvlar/commit/8f3bd0d2980254207b6a0c4a41fc2b01a0128233))
 ### 🔄 Workflow
 - 워크 플로, 자동 릴리스 버전 업데이트 ([#31f65ac](https://github.com/kwooshung/cvlar/commit/31f65acb40672453afd2981f9d007f162a27313e))
 ### 🐛 Fix
 - 버전의 노드 버전을 너무 낮게 피하기 위해 스크립트 프로세스를 수정하여 PNPM을 사용할 수 없습니다. ([#db09ca2](https://github.com/kwooshung/cvlar/commit/db09ca227c3c5f401f0e1c76f77afa2990dae4a2))
 - 제출 태그를 피하고 제출 여부를 다시 물어 보면서 중복 질문이 발생합니다. ([#7a4fda6](https://github.com/kwooshung/cvlar/commit/7a4fda6bb499c62bfbe003b700eab602c7e750b9))
-### ⚰ ️ remove
+### ⚰ Remove
 - GIT의 임시 파일을 삭제하고 다시 삭제되었는지 확인하십시오. ([#90249e9](https://github.com/kwooshung/cvlar/commit/90249e92a37909adcc6155fed42e5a6825ae609a))
 
 ## 🎉 0.1.0-rc.5 `2023-12-30`
+### 📦 Release
+- 새 버전 0.1.0-RC.5 ([#1a9761d](https://github.com/kwooshung/cvlar/commit/1a9761d1aa483ae57c37749cb6fe8aef68cea70e))
 ### 🐛 Fix
 - 코드 버전 번호를 수정하고 추가하십시오 ([#b6cf54c](https://github.com/kwooshung/cvlar/commit/b6cf54ccbcae5723c162854334a264dd6da7142b))
 - 특수 빈 rstring의 문제를 해결하십시오 .emojior ([#524fa19](https://github.com/kwooshung/cvlar/commit/524fa194008adf7b6aba2ac37846ddd281213615))
 
 ## 🎉 0.1.0-rc.4 `2023-12-30`
-### 📦 ️release
+### 📦 Release
 - 새 버전 0.1.0-RC.4 ([#765be56](https://github.com/kwooshung/cvlar/commit/765be5696bdb21121022c95c0ed5bd713a27054e))
 ### 🆕 Add
 - 로그는 형식으로 생성되었습니다 ([#562c519](https://github.com/kwooshung/cvlar/commit/562c519ed9b32d5d62f4bb38861b019378dcc550))
 
 ## 🎉 0.1.0-rc.3 `2023-12-30`
-### 📦 ️release
+### 📦 Release
 - 새 버전 0.1.0-RC.3 ([#18a89fb](https://github.com/kwooshung/cvlar/commit/18a89fb156cff3b702bb58bec820c768c745242e))
 - 새 버전 0.1.0-RC.3 ([#a23539a](https://github.com/kwooshung/cvlar/commit/a23539a0557190eb2e31c257c61cbe3cb916ed22))
 ### 🐛 Fix
@@ -31,7 +48,7 @@
 - 로그 변환 및 package.json 수리 ([#0b5f906](https://github.com/kwooshung/cvlar/commit/0b5f90694c5cd27bae1906c33756cb86729b5ca1))
 
 ## 🎉 0.1.0-rc.1 `2023-12-29`
-### 📦 ️release
+### 📦 Release
 - 新 新 0.1.0-rc.1 ([#840e82d](https://github.com/kwooshung/cvlar/commit/840e82d90709dedcd2423d993d90867a89b622cd))
 ### 🐛 Fix
 - 대화식 경험 및 구성의 자동 주석을 수정하십시오 ([#feb129e](https://github.com/kwooshung/cvlar/commit/feb129e81d2bc1e2e03a6473f0d69a7dc483c2c9))

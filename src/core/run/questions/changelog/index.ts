@@ -32,6 +32,11 @@ class changelog {
   private HistoryFilename = '.history';
 
   /**
+   * 私有属性：模板历史记录文件名
+   */
+  private TemplateFilename = '.template';
+
+  /**
    * 私有属性：Markdown & HTML 正则表达式
    */
   private TranslateRegexs = [
@@ -239,7 +244,7 @@ class changelog {
    */
   private async writeHistory(historyUpdated: string[]): Promise<boolean> {
     const filename = this.getHistoryFilename();
-    const content = [await this.readHistory(), historyUpdated].flat().join('\n');
+    const content = [historyUpdated, await this.readHistory()].flat().join('\n');
     return io.write(filename, content, false, true);
   }
 
@@ -256,14 +261,85 @@ class changelog {
   }
 
   /**
+   * 私有函数：changelog > IO > 获得历史记录文件名
+   * @returns {string} 历史记录文件名
+   */
+  private getTemplateFilename(): string {
+    const save = this.CONF.changelog['file'].save ?? '';
+    const filename = `${save}/${this.TemplateFilename}`;
+    return filename;
+  }
+
+  private async checkTemplateChange(): Promise<boolean> {
+    // 如果启用了发布，就要检查模板是否有变更
+    if (!_isUn(this.CONF['release'])) {
+      const filename = this.getTemplateFilename();
+      const configContentTemplate = this.CONF.changelog['template']?.content;
+
+      // 如果模板历史记录文件存在，那么就读取
+      if (await io.exists(filename)) {
+        const fileContentTemplate = await io.read(filename);
+
+        // 如果配置模板 与 模板历史记录文件的内容不一致，那么就提示是否重新生成日志
+        if (configContentTemplate !== fileContentTemplate) {
+          const result = await command.prompt.select({
+            message: this.CONF.i18n.changelog?.rebuild?.template?.message,
+            choices: [
+              {
+                name: this.CONF.i18n.yes,
+                value: true
+              },
+              {
+                name: this.CONF.i18n.no,
+                value: false
+              }
+            ]
+          });
+
+          // 如果选择了是，则表示重新生成日志
+          result && (await this.rebuild());
+          // 无论用户选择什么，都返回 true，则不会进入继续生成日志的情况。
+          return true;
+        }
+        // 如果一致，那么就不需要重新生成日志，直接继续生成
+        return false;
+      }
+      // 如果模板历史记录文件不存在，那么就创建
+      else {
+        if (await io.write(filename, configContentTemplate, false, true)) {
+          // 新建的，同样表示没有变更
+          return false;
+        } else {
+          cs.error('创建模板历史记录文件失败，可能没有读写权限。', 'create template history file failed, maybe no read and write permissions.');
+          console.log('\n\n\n');
+          return false;
+        }
+      }
+    }
+
+    // 表示没有变更
+    return false;
+  }
+
+  /**
+   * 私有函数：changelog > IO > 获得日志模板文件名
+   * @param {string} [langcode = ''] 语言代码
+   * @returns {string} 日志模板文件名
+   */
+  private getLogFilename(langcode: string = ''): string {
+    langcode = langcode.toLowerCase().trim();
+    const save = this.CONF.changelog['file'].save ?? '';
+    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
+    return filename;
+  }
+
+  /**
    * 私有函数：changelog > IO > 读取翻译
    * @param {string} langcode 语言代码
    * @returns {Promise<string>} 日志内容
    */
   private async readLog(langcode: string = ''): Promise<string> {
-    langcode = langcode.toLowerCase().trim();
-    const save = this.CONF.changelog['file'].save ?? '';
-    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
+    const filename = this.getLogFilename(langcode);
 
     if (await io.exists(filename)) {
       const content = await io.read(filename);
@@ -285,8 +361,7 @@ class changelog {
    */
   private async writeLog(content: string, langcode: string = '', prepend: boolean = true): Promise<boolean> {
     langcode = langcode.toLowerCase().trim();
-    const save = this.CONF.changelog['file'].save ?? '';
-    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
+    const filename = this.getLogFilename(langcode);
 
     let result = false;
     let retry = false;
@@ -576,15 +651,18 @@ class changelog {
    * @returns {Promise<void>} 无返回值
    */
   public async build(): Promise<void> {
-    const spinner = ora(pc.cyan(this.CONF.i18n.changelog.loading.git.tag.reading));
-    const tags = await this.readtags(spinner);
+    // 检查是否有模板变更，如果没有变更，则继续执行下面的日志生成
+    if (!(await this.checkTemplateChange())) {
+      const spinner = ora(pc.cyan(this.CONF.i18n.changelog.loading.git.tag.reading));
+      const tags = await this.readtags(spinner);
 
-    if (tags.length > 0) {
-      const buildTags = await this.readHistoryBuildList(spinner, tags);
-      if (buildTags.length > 0) {
-        const contents: TChangeLogResult[] = await this.readMessages(spinner, buildTags);
-        await this.writeLogFiles(spinner, contents);
-        await this.writeHistory(buildTags);
+      if (tags.length > 0) {
+        const buildTags = await this.readHistoryBuildList(spinner, tags);
+        if (buildTags.length > 0) {
+          const contents: TChangeLogResult[] = await this.readMessages(spinner, buildTags);
+          await this.writeLogFiles(spinner, contents);
+          await this.writeHistory(buildTags);
+        }
       }
     }
   }
@@ -818,8 +896,6 @@ class changelog {
     // }
 
     spinner.stop();
-
-    await this.delay(3000000000000);
 
     return result;
   }
