@@ -69,8 +69,7 @@
     "eslint": "eslint . --fix --cache --quiet --report-unused-disable-directives --max-warnings 0 --ext .js,.js,.jsx,.ts,.cts,.tsx",
     "test": "jest --coverage --verbose",
     "test:ci": "jest --coverage --ci",
-    "test:watch": "jest --coverage --verbose --watch",
-    "cvlar:release": "node dist/bin.js -r"
+    "test:watch": "jest --coverage --verbose --watch"
   },
   "dependencies": {
     "@inquirer/editor": "^1.2.13",
