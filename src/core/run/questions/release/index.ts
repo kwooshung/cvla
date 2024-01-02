@@ -298,7 +298,7 @@ class release {
 
           // 如果存在这些配置，那么就发布
           if (subjectTemplate && owner && repo && branch) {
-            await this.publish(subjectTemplate, 'owner', 'repo', 'branch', list);
+            await this.publish(subjectTemplate, owner, repo, branch, list);
           }
         }
       }
@@ -404,21 +404,13 @@ class release {
         const name = convert.replaceTemplate(subjectTemplate, { tag: changelog.tag });
         this.CONF['release']['poweredby'] && body.push(`> This [Changelog](../../blob/${branch}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
 
-        console.log({
+        await this.OCTOKIT.repos.createRelease({
           owner,
           repo,
           tag_name: changelog.tag,
           name,
           body: body.join('\n\n---\n\n')
         });
-
-        // await this.OCTOKIT.repos.createRelease({
-        //   owner,
-        //   repo,
-        //   tag_name: changelog.tag,
-        //   name,
-        //   body: body.join('\n\n---\n\n')
-        // });
       }
     }
 
