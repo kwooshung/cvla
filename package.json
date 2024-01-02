@@ -70,7 +70,7 @@
     "test": "jest --coverage --verbose",
     "test:ci": "jest --coverage --ci",
     "test:watch": "jest --coverage --verbose --watch",
-    "cvlar": "cvlar"
+    "cvlar:release": "node dist/bin.js -r"
   },
   "dependencies": {
     "@inquirer/editor": "^1.2.13",
