@@ -110,7 +110,9 @@ const list = {
   'changelog.translate.target': [
     "The target language of the CHANGELOG file, default 'en', can be an array, indicating translation into multiple languages",
     "If a translated version of the log already exists, it is only valid for the newly generated log. You can select 'Regenerate all logs'",
-    'Supported language list: https://cloud.google.com/translate/docs/languages'
+    'Supported language list: https://cloud.google.com/translate/docs/languages',
+    '',
+    '[Note] It is not recommended to set too many languages, as GitHub API may truncate excessively long content!'
   ],
   'changelog.template': 'Changelog template related configuration',
   'changelog.template.content': [
@@ -215,6 +217,18 @@ const list = {
     '`commit.submit.origin` specifies the language in which this option should be written,',
     '`commit.submit.target` will then translate the content into the specified language based on this configuration'
   ],
+  'release.lang': ['When multilingual support is enabled', 'i.e., when `changelog.translate.origin` and `changelog.translate.target` are not set to false, use this configuration'],
+  'release.lang.subject': [
+    'Multilingual content template',
+    '',
+    'Available variables:',
+    '  name (required parameter): Language name',
+    '  code (optional parameter): Language code',
+    '',
+    'If not needed, set this option to false, and the title will not appear in the log'
+  ],
+  'release.lang.separator': 'Separator between multilingual content',
+
   'release.poweredby': [
     'Boolean type, default: true',
     "Whether to add the following markdown code at the end of each 'Release' in 'Github Release':",

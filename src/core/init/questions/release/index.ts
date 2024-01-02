@@ -49,6 +49,10 @@ const release = async (configCommit: IResultConfigCommit): Promise<TConfigReleas
         scope: 'tag',
         subject: '{{tag}}'
       },
+      lang: {
+        subject: '## 🌐 {{name}}({{code}})',
+        separator: '\n\n'
+      },
       poweredby: true
     };
 
@@ -154,6 +158,18 @@ const release = async (configCommit: IResultConfigCommit): Promise<TConfigReleas
         default: '{{tag}}'
       });
     }
+
+    // Github Release 发布，多语言内容所使用的标题
+    config.lang.subject = await command.prompt.input({
+      message: get('release.lang.subject.message'),
+      default: config.lang.subject
+    });
+
+    // Github Release 发布，多语言内容的分隔符
+    config.lang.separator = await command.prompt.input({
+      message: get('release.lang.separator.message'),
+      default: config.lang.separator
+    });
 
     // 通过 Github Acitons 自动发布后，将在最后显示项目链接，同时连接到所有 日志
     config.poweredby = await command.prompt.select({

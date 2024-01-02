@@ -107,7 +107,9 @@ const list = {
   'changelog.translate.target': [
     "CHANGELOG 文件的目标语言，default 'en'，可以是数组，表示翻译成多种语言",
     "若已存在翻译版本的日志，仅对新生成的日志有效，你可选择 '重新生成所有日志'",
-    '  支持的语言列表：https://cloud.google.com/translate/docs/languages'
+    '  支持的语言列表：https://cloud.google.com/translate/docs/languages',
+    '',
+    '【注意】不建议设置语言过多，因为 github api 可能会对过长的内容截断！'
   ],
   'changelog.template': '日志模板相关配置',
   'changelog.template.content': [
@@ -197,6 +199,9 @@ const list = {
     '`commit.submit.origin` 这里指定什么语言，此选项就应该使用什么语言写内容',
     '`commit.submit.target` 而后会根据这个配置，将内容翻译成指定的语言'
   ],
+  'release.lang': ['当启用多语言', '即 `changelog.translate.origin` 和 `changelog.translate.target` 配置项不为 false 时，使用此配置项'],
+  'release.lang.subject': ['多语言内容模板', '', '可使用的变量：', '  name（必要参数）：语言名称', '  code（可选参数）：语言代码', '', '若不需要，可设置此项为false，将不会在日志中出现此标题'],
+  'release.lang.separator': '多语言内容之间的分隔符',
   'release.poweredby': [
     '布尔类型，默认：true',
     "是否在 'Github Release' 内容中，每条 'Release' 的最后，加入如下md代码：",

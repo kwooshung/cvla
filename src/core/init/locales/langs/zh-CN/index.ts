@@ -234,6 +234,14 @@ const lang = {
         description: '例如：新版本 {{tag}}，则表示：新版本 1.0.0'
       }
     },
+    lang: {
+      subject: {
+        message: 'Github Release 发布，多语言内容所使用的标题'
+      },
+      separator: {
+        message: 'Github Release 发布，多语言内容的分隔符'
+      }
+    },
     poweredby: {
       message: `通过 ${pc.green('Github Acitons')} 自动发布后，将在最后插入 ${pc.green('查看所有日志')} 的链接？`,
       description:

@@ -137,7 +137,8 @@ class release {
         page++;
       } while (localtags.data.length === 100); // 如果一页满载（100个条目），则可能还有更多页面
 
-      return allTags;
+      // 标签列表按照版本号从小到大排序，也就是最新的版本在最后
+      return allTags.reverse();
     } catch (error) {
       cs.error('获取仓库中的标签时出错：', 'Error fetching released tags:');
       console.error(error);
@@ -386,12 +387,26 @@ class release {
    * @returns {Promise<void>} 无返回值
    */
   private async publish(subjectTemplate: string, owner: string, repo: string, branch: string, list: TRelease[]): Promise<void> {
+    let langSubject = '';
+    let langSeparator = '';
+
+    if (this.IsTranslate && this.CONF.release['lang']) {
+      langSubject = this.CONF.release['lang']['subject'];
+      langSeparator = this.CONF.release['lang']['separator'];
+    }
+
     for (const changelog of list) {
       const body: string[] = [];
       // 如果是翻译，并且不是字符串，并且是对象，那么就是多语言
       if (this.IsTranslate && !_isStr(changelog.logs) && _isObj(changelog.logs)) {
         for (const lang in changelog.logs) {
           if (Object.prototype.hasOwnProperty.call(changelog.logs, lang)) {
+            // 如果语言标题存在，那么就替换
+            if (langSubject) {
+              const l = translate.lang[lang.toLowerCase()];
+              langSubject = convert.replaceTemplate(langSubject, { name: l.name, code: l.code });
+              body.push(langSubject);
+            }
             const logs = changelog.logs[lang];
             _isStr(logs) && body.push(logs);
           }
@@ -409,8 +424,10 @@ class release {
           repo,
           tag_name: changelog.tag,
           name,
-          body: body.join('\n\n---\n\n')
+          body: body.join(langSeparator)
         });
+
+        await this.delay(100);
       }
     }
 
