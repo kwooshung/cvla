@@ -203,6 +203,7 @@ class release {
    * @returns {Promise<void>} 无返回值
    */
   public async release(): Promise<void> {
+    console.log('这里1');
     // 如果启用了 release 和 changelog，才能发布
     if (
       this.CONF['release'] &&
@@ -219,16 +220,19 @@ class release {
       this.CONF['changelog']['template']['logs']['commitlink']['text'] &&
       this.CONF['changelog']['template']['logs']['commitlink']['url']
     ) {
+      console.log('这里2');
       /**
        * 获得仓库的所有标签，按照版本号从小到大排序，也就是最新的版本在最后
        */
       const tags = await this.getAllTags();
+      console.log(3, tags);
 
       // 本地测试用
       // const tags = await git.tag.get.all(true);
 
       // 获得仓库的所有发布标签
       const releasedTags = await this.getReleasedTags();
+      console.log(4, releasedTags);
 
       // 本地测试用
       // const releasedTags = [];
@@ -237,6 +241,7 @@ class release {
       const releasedTagsSet = new Set(releasedTags);
       // 使用 filter 方法过滤出 tags 数组中不在 releasedTagsSet 中的元素
       const unreleasedTags = tags.filter((tag) => !releasedTagsSet.has(tag.trim()));
+      console.log(5, unreleasedTags);
 
       if (unreleasedTags.length > 0) {
         // 列表
@@ -285,6 +290,7 @@ class release {
         }
 
         if (list.length > 0) {
+          console.log(6, list);
           // 标题模板
           const subjectTemplate = this.CONF.release['subject'];
           // 获取仓库拥有者
@@ -293,8 +299,10 @@ class release {
           const repo = this.getRepoName();
           // 获取仓库分支
           const branch = this.getRepoBranch();
+          console.log(7, subjectTemplate, owner, repo, branch);
           // 如果存在这些配置，那么就发布
           if (subjectTemplate && owner && repo && branch) {
+            console.log(8, '发布');
             await this.public(subjectTemplate, 'owner', 'repo', 'branch', list);
           }
         }
