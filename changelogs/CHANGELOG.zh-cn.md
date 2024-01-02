@@ -1,3 +1,28 @@
+## 🎉 1.0.0-rc.1 `2024-01-03`
+### 🐛 Fix
+- 根据新的配置，重新加入日志文件 ([#1c62600](https://github.com/kwooshung/cvlar/commit/1c6260044923e1fdb97d6024052d620c22ce8529))
+- 修理提交版本号码迭代编号逻辑的预览版本 ([#4796e38](https://github.com/kwooshung/cvlar/commit/4796e38f407aa113b41ef0e9994385fceb27e9e1))
+- `changelog.translate.origin`和'changelog.translate.target`多语言标题设置错误 ([#20628dc](https://github.com/kwooshung/cvlar/commit/20628dc712f9d924b91468205083a2fdba142ab1))
+- `changelog.translate.origin`和'changelog.translate.target`函数 ([#dc0f82b](https://github.com/kwooshung/cvlar/commit/dc0f82b0ab606a0cb1e3323fc3aae47137aaa6ad))
+- 修复了GitHub版本的发行版本的顺序，版本越小，发行版越早 ([#88c167f](https://github.com/kwooshung/cvlar/commit/88c167fd42e4e4c2a10a5999c24aa2a6a786e669))
+- 解决API发布问题，并测试是否再次有效 ([#a3e2280](https://github.com/kwooshung/cvlar/commit/a3e22806828ef19e425dd6068f2f874960644025))
+- 逐渐缩小错误范围，测试请求对象是否正确 ([#e5d8470](https://github.com/kwooshung/cvlar/commit/e5d84700467e172c11c5869ad0aea110f0ffc5ff))
+- 错误函数名称被添加到调试指令字符串中 ([#3d7d194](https://github.com/kwooshung/cvlar/commit/3d7d194581071379bd4f649c0efc63a7754e9340))
+- 修复代码以避免错误 ([#d4ac30b](https://github.com/kwooshung/cvlar/commit/d4ac30b44dc123d11f5ee0b111fe695ecd7b3bf1))
+- 修复handleserexit函数的属性以避免过时的问题 ([#8d5f1e9](https://github.com/kwooshung/cvlar/commit/8d5f1e9b3c6033a4cdc996758c9aa93b0ee30496))
+- 您会意外删除代码吗 ([#0200c06](https://github.com/kwooshung/cvlar/commit/0200c062bc2275ec5a3b23b3da92bc2c700f3f7a))
+- 该代码暂时不压缩，很方便查看错误代码 ([#4a85dd5](https://github.com/kwooshung/cvlar/commit/4a85dd57f328da0244eeb52af3c52ec6fa2e090c))
+- 重新修复获得所有标签的方法 ([#a153ca9](https://github.com/kwooshung/cvlar/commit/a153ca9084a888cf60d6bd408f773ac55a747656))
+- 发现GitHub动作仍然必须在此项目中使用`node dist/bin.js -r` ([#92160c1](https://github.com/kwooshung/cvlar/commit/92160c13c73d8f440f840c53db28bd601fa2fb07))
+- 将github操作修改为cvlar -r，修改API以获取标签，然后将其更改为属性 ([#5f20be6](https://github.com/kwooshung/cvlar/commit/5f20be615d9f749685c758baaec36aa216f635ad))
+- 在调试之前忘记要恢复的代码，导致类型错误 ([#64e0f3b](https://github.com/kwooshung/cvlar/commit/64e0f3beefaa4f0a7563a2ed7db892a2714adab3))
+- 暂时添加输出字符串以促进调试 ([#90b5d13](https://github.com/kwooshung/cvlar/commit/90b5d133f80768d70bf12f0c87d46085760c3796))
+- 再说一遍要再写，以避免无法使用的github动作 ([#c55e855](https://github.com/kwooshung/cvlar/commit/c55e85577d39d474a9335958c1435fa8d8ec8692))
+- 修复github操作的配置CI并清楚评论 ([#5a0ffcb](https://github.com/kwooshung/cvlar/commit/5a0ffcb7d93df7257828b81d62f765a8ee0b23a8))
+- 测试日志文件已删除，现在再次提交 ([#df0f720](https://github.com/kwooshung/cvlar/commit/df0f72015ac4260eb7c6267c5bc15f596d07a58f))
+### ✨ Feature
+- 新的GitHub发布多语言相关的配置和功能 ([#ae608e5](https://github.com/kwooshung/cvlar/commit/ae608e573bb8cc91e368a9689eb1c081a7586c85))
+
 ## 🎉 0.1.0-rc.7 `2024-01-03`
 ### 📦 Release
 - 新版本0.1.0-RC.7 ([#2cb0ee9](https://github.com/kwooshung/cvlar/commit/2cb0ee9eaec85089cde304355a86aabb3e59d4a3))
