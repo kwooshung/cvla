@@ -402,12 +402,11 @@ class release {
         for (const lang in changelog.logs) {
           if (Object.prototype.hasOwnProperty.call(changelog.logs, lang)) {
             // 如果语言标题存在，那么就替换
+            let logs = changelog.logs[lang];
             if (langSubject) {
-              const l = translate.lang[lang.toLowerCase()];
-              langSubject = convert.replaceTemplate(langSubject, { name: l.name, code: l.code });
-              body.push(langSubject);
+              langSubject = convert.replaceTemplate(langSubject, { name: translate.getNameByCode(lang), code: lang });
+              logs = `${langSubject}\n${logs}`;
             }
-            const logs = changelog.logs[lang];
             _isStr(logs) && body.push(logs);
           }
         }
@@ -417,7 +416,7 @@ class release {
 
       if (body.length > 0) {
         const name = convert.replaceTemplate(subjectTemplate, { tag: changelog.tag });
-        this.CONF['release']['poweredby'] && body.push(`> This [Changelog](../../blob/${branch}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
+        this.CONF['release']['poweredby'] && body.push(`\n---\n> This [Changelog](../../blob/${branch}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
 
         await this.OCTOKIT.repos.createRelease({
           owner,
