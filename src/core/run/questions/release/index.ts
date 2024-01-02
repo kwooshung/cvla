@@ -137,7 +137,8 @@ class release {
         page++;
       } while (localtags.data.length === 100); // 如果一页满载（100个条目），则可能还有更多页面
 
-      return allTags;
+      // 标签列表按照版本号从小到大排序，也就是最新的版本在最后
+      return allTags.reverse();
     } catch (error) {
       cs.error('获取仓库中的标签时出错：', 'Error fetching released tags:');
       console.error(error);
@@ -425,6 +426,8 @@ class release {
           name,
           body: body.join(langSeparator)
         });
+
+        await this.delay(100);
       }
     }
 
