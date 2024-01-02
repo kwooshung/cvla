@@ -38,9 +38,9 @@ jobs:
       - name: build
         run: pnpm build
 
-      # 自动发布
+      # 自动发布，仅在本项目中使用 `node dist/bin.js -r`，其他项目使用 `cvlar -r`
       - name: Auto Release
-        run: npx cvlar -r
+        run: node dist/bin.js -r
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -52,7 +52,7 @@ jobs:
         with:
           source-repo: 'git@github.com:kwooshung/cvlar.git'
           destination-repo: 'git@gitee.com:kwooshung/cvlar.git'
-      
+
       # 自动发布到 npm
       - name: Sync to Npm.js
         uses: actions/setup-node@main
