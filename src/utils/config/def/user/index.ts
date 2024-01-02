@@ -57,6 +57,10 @@ const user: IConfig = {
       scope: 'tag',
       subject: '{{tag}}'
     },
+    lang: {
+      subject: '## 🌐 {{name}} ({{code}})',
+      separator: '\n\n'
+    },
     poweredby: true
   },
   i18n: {

@@ -394,6 +394,14 @@ type TPushTagMessage = {
 };
 
 /**
+ * 类型：配置 > release > 多语言
+ */
+type TConfigReleaseLang = {
+  subject: string;
+  separator: string;
+};
+
+/**
  * 类型：配置 > release
  */
 type TConfigRelease =
@@ -406,6 +414,10 @@ type TConfigRelease =
        * 自动发布的提交信息
        */
       pushTagMessage?: TPushTagMessage;
+      /**
+       * 当发布多语言内容时，使用的标题模板
+       */
+      lang?: TConfigReleaseLang;
       /**
        * 是否显示 powered by
        */
@@ -960,6 +972,7 @@ export {
   TConfigVersion,
   TConfigChangelog,
   TPushTagMessage,
+  TConfigReleaseLang,
   TConfigRelease,
   IConfig,
   IConfigResult,

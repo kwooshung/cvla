@@ -231,6 +231,14 @@ const lang = {
         description: 'For example: new version {{tag}}, which means: new version 1.0.0'
       }
     },
+    lang: {
+      subject: {
+        message: 'Title used for Github Release when publishing multilingual content'
+      },
+      separator: {
+        message: 'Separator for multilingual content in Github Release'
+      }
+    },
     poweredby: {
       message: `After automated release via ${pc.green('GitHub Actions')}, insert a link to ${pc.green('View All Logs')} at the end?`,
       description:
