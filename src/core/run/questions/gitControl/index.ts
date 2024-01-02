@@ -938,9 +938,10 @@ class gitControl {
 
   /**
    * 私有函数：git > version > 版本号标识符
+   * @param {string} version 版本号，不带有预发布之类的标记，如 x.y.z
    * @returns {Promise<string>} 版本号标识符
    */
-  private async versionFlag(): Promise<string> {
+  private async versionFlag(version: string): Promise<string> {
     const isAdd = await command.prompt.select({
       message: this.CONF.i18n.git.version.flag.message,
       choices: [
@@ -958,6 +959,10 @@ class gitControl {
     if (isAdd && this.loadPackageJson()) {
       const packageJson: IPackageJsonData = this.PACK.data as IPackageJsonData;
       const currentVersion = packageJson.version;
+      const newV = semver.parse(version);
+      const currentV = semver.parse(currentVersion);
+      const newName = `${newV.major}.${newV.minor}.${newV.patch}`;
+      const currentName = `${currentV.major}.${currentV.minor}.${currentV.patch}`;
 
       let suffixId: string | number = 1;
       let suffixIdNew: string | number = suffixId;
@@ -967,7 +972,11 @@ class gitControl {
       const choices = _clone(this.CONF.i18n.git.version.flag.select.choices);
 
       for (const val of choices) {
-        val.description = convert.replacePlaceholders(val.description, `${currentVersion}-${val.value}`);
+        if (newName === currentName) {
+          val.description = convert.replacePlaceholders(val.description, `${currentName}-${val.value}.n`);
+        } else {
+          val.description = convert.replacePlaceholders(val.description, `${newName}-${val.value}.n`);
+        }
       }
 
       this.addBack(choices);
@@ -978,11 +987,9 @@ class gitControl {
       });
 
       if (type !== '..') {
-        const semversion = semver.parse(currentVersion);
-
         // 如果当前版本号中已经包含了预发布类型
-        if (semversion.prerelease.length > 0) {
-          if (currentVersion.includes(`-${type}.`)) {
+        if (currentV.prerelease.length > 0) {
+          if (newName === currentName && currentVersion.includes(`-${type}.`)) {
             // 再获取当前预发布版本的的迭代号
             const regex = new RegExp(`-${type}.(\\d+)$`);
             const match = regex.exec(currentVersion);
@@ -994,13 +1001,25 @@ class gitControl {
             suffixId = 0;
           }
 
-          suffixIdMessage = convert.replacePlaceholders(
-            this.CONF.i18n.git.version.flag.iterations.message.add,
-            pc.dim(pc.green(currentVersion)),
-            pc.green(`${type}`),
-            pc.green(suffixId),
-            `${pc.green(type)}.${pc.bold(pc.cyan(suffixIdNew))}`
-          );
+          // 如果升级的版本号和当前版本号相同，那么就询问是否添加迭代号
+          if (newName === currentName) {
+            suffixIdMessage = convert.replacePlaceholders(
+              this.CONF.i18n.git.version.flag.iterations.message.add,
+              pc.dim(pc.green(currentVersion)),
+              pc.green(`${type}`),
+              pc.green(suffixId),
+              `${pc.green(type)}.${pc.bold(pc.cyan(suffixIdNew))}`
+            );
+          }
+          // 如果升级的版本号和当前版本号不同，那么就询问是否新添加迭代号
+          else {
+            suffixIdMessage = convert.replacePlaceholders(
+              this.CONF.i18n.git.version.flag.iterations.message.newno,
+              pc.dim(pc.green(currentVersion)),
+              pc.green(version),
+              `${pc.green(type)}.${pc.bold(pc.cyan(suffixIdNew))}`
+            );
+          }
 
           // 获取迭代号
           const suffixInputId = await command.prompt.input({
@@ -1044,12 +1063,12 @@ class gitControl {
     let isExists = false;
 
     do {
-      const versionType = await this.versionType();
+      const version = await this.versionType();
 
-      if (versionType && versionType !== '..') {
-        const versionFlag = await this.versionFlag();
+      if (version && version !== '..') {
+        const versionFlag = await this.versionFlag(version);
         if (versionFlag) {
-          const newVersion = V.normalize(`${versionType}${versionFlag}`, true);
+          const newVersion = V.normalize(`${version}${versionFlag}`, true);
           isExists = await git.tag.exists(newVersion);
 
           if (isExists) {
