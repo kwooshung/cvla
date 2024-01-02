@@ -281,6 +281,14 @@ type TChangeLog = {
    */
   tag: string;
   /**
+   * 日期
+   */
+  date: string;
+  /**
+   * 时间
+   */
+  time: string;
+  /**
    * 消息列表
    */
   list: TChangeLogList | TChangeLogLangList;
