@@ -239,7 +239,6 @@ class release {
       const releasedTagsSet = new Set(releasedTags);
       // 使用 filter 方法过滤出 tags 数组中不在 releasedTagsSet 中的元素
       const unreleasedTags = tags.filter((tag) => !releasedTagsSet.has(tag.trim()));
-      console.log(1, unreleasedTags);
 
       if (unreleasedTags.length > 0) {
         // 列表
@@ -287,8 +286,6 @@ class release {
           list.push(changelog);
         }
 
-        console.log(2, list);
-
         if (list.length > 0) {
           // 标题模板
           const subjectTemplate = this.CONF.release['subject'];
@@ -298,11 +295,9 @@ class release {
           const repo = this.getRepoName();
           // 获取仓库分支
           const branch = this.getRepoBranch();
-          console.log(2, owner, repo, branch);
 
           // 如果存在这些配置，那么就发布
           if (subjectTemplate && owner && repo && branch) {
-            console.log('publish');
             await this.publish(subjectTemplate, 'owner', 'repo', 'branch', list);
           }
         }
@@ -408,13 +403,22 @@ class release {
       if (body.length > 0) {
         const name = convert.replaceTemplate(subjectTemplate, { tag: changelog.tag });
         this.CONF['release']['poweredby'] && body.push(`> This [Changelog](../../blob/${branch}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
-        await this.OCTOKIT.repos.createRelease({
+
+        console.log({
           owner,
           repo,
           tag_name: changelog.tag,
           name,
           body: body.join('\n\n---\n\n')
         });
+
+        // await this.OCTOKIT.repos.createRelease({
+        //   owner,
+        //   repo,
+        //   tag_name: changelog.tag,
+        //   name,
+        //   body: body.join('\n\n---\n\n')
+        // });
       }
     }
 
