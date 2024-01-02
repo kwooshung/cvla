@@ -1,4 +1,6 @@
 ## 🎉 0.1.0-rc.7 `2024-01-03`
+### 📦 Release
+- 新版本0.1.0-RC.7 ([#2cb0ee9](https://github.com/kwooshung/cvlar/commit/2cb0ee9eaec85089cde304355a86aabb3e59d4a3))
 ### 🐛 Fix
 - 現在已更改它以讀取用於發佈內容的日誌MD文件 ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
 - 修復並添加提示`changelog.template.content`，結果 ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))

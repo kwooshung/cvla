@@ -1,4 +1,6 @@
 ## 🎉 0.1.0-rc.7 `2024-01-03`
+### 📦 Release
+- new version 0.1.0-rc.7 ([#2cb0ee9](https://github.com/kwooshung/cvlar/commit/2cb0ee9eaec85089cde304355a86aabb3e59d4a3))
 ### 🐛 Fix
 - Now it has been changed to read log MD file for publishing content ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
 - Fix and add prompts `Changelog.template.content`, resulting ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))

@@ -403,8 +403,8 @@ class release {
           if (Object.prototype.hasOwnProperty.call(changelog.logs, lang)) {
             // 如果语言标题存在，那么就替换
             let logs = changelog.logs[lang];
+            // 表示存在多语言标题
             langSubject && (logs = `${convert.replaceTemplate(langSubject, { name: translate.getNameByCode(lang), code: lang })}\n${logs}`);
-
             _isStr(logs) && body.push(logs);
           }
         }
