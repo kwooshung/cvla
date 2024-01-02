@@ -1,3 +1,16 @@
+## 🎉 0.1.0-rc.7 `2024-01-03`
+### 🐛 Fix
+- 이제 콘텐츠 게시를 위해 로그 MD 파일을 읽도록 변경되었습니다. ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
+- 프롬프트`changelog.template.content`, 결과를 수정하고 추가하십시오 ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))
+- 출력 UnrelefeRedTags, 왜 출시되지 않은지 확인하십시오 ([#a18c8d5](https://github.com/kwooshung/cvlar/commit/a18c8d50186a5d1cbd26c4636064644ae17cb1d2))
+- GitHub 조치 구성 스크립트의 시퀀스를 수정하십시오 ([#22a86ff](https://github.com/kwooshung/cvlar/commit/22a86ffacd0dc7dcfb60f2810bf7a51fb95d8128))
+- 객체에 존재하지 않는 문제를 피하기 위해 삭제를 수정하고 정보 제출 임시 파일 기능을 제출하십시오. ([#60ee49f](https://github.com/kwooshung/cvlar/commit/60ee49f2891e950a82ce3c79eed41456676fb95d))
+### 🆕 Add
+- API를 통해 태그를 얻는 메소드를 증가시키는 방법 ([#8fdba13](https://github.com/kwooshung/cvlar/commit/8fdba13fd66ae44d66d7f97a24ef0aa1e56ad7ab))
+### ✅ Test
+- 쉽게 확인하기 위해 디버깅 정보를 추가하십시오 ([#0d5f882](https://github.com/kwooshung/cvlar/commit/0d5f882fd156f02671a6239d43b4a3542701c347))
+- 테스트를 위해 현재 릴리스 목록 정보를 디버그하고 가져옵니다. ([#e63df25](https://github.com/kwooshung/cvlar/commit/e63df251835fbed961c2dfdb60c99f7057a5e362))
+
 ## 🎉 0.1.0-rc.6 `2023-12-30`
 ### 📦 Release
 - 새 버전 0.1.0-RC.6 ([#8f3bd0d](https://github.com/kwooshung/cvlar/commit/8f3bd0d2980254207b6a0c4a41fc2b01a0128233))

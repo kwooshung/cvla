@@ -1,3 +1,16 @@
+## 🎉 0.1.0-rc.7 `2024-01-03`
+### 🐛 Fix
+- 現在已更改它以讀取用於發佈內容的日誌MD文件 ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
+- 修復並添加提示`changelog.template.content`，結果 ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))
+- 輸出未刪除的標籤，看看為什麼未發布 ([#a18c8d5](https://github.com/kwooshung/cvlar/commit/a18c8d50186a5d1cbd26c4636064644ae17cb1d2))
+- 修復GitHub操作配置腳本的順序 ([#22a86ff](https://github.com/kwooshung/cvlar/commit/22a86ffacd0dc7dcfb60f2810bf7a51fb95d8128))
+- 修復刪除並提交信息臨時文件功能，以避免對像中不存在的問題 ([#60ee49f](https://github.com/kwooshung/cvlar/commit/60ee49f2891e950a82ce3c79eed41456676fb95d))
+### 🆕 Add
+- 增加通過API獲取標籤的方法的方法 ([#8fdba13](https://github.com/kwooshung/cvlar/commit/8fdba13fd66ae44d66d7f97a24ef0aa1e56ad7ab))
+### ✅ Test
+- 添加調試信息以簡化檢查 ([#0d5f882](https://github.com/kwooshung/cvlar/commit/0d5f882fd156f02671a6239d43b4a3542701c347))
+- 調試並獲取用於測試的當前發布列表信息 ([#e63df25](https://github.com/kwooshung/cvlar/commit/e63df251835fbed961c2dfdb60c99f7057a5e362))
+
 ## 🎉 0.1.0-rc.6 `2023-12-30`
 ### 📦 Release
 - 新版本0.1.0-rc.6 ([#8f3bd0d](https://github.com/kwooshung/cvlar/commit/8f3bd0d2980254207b6a0c4a41fc2b01a0128233))

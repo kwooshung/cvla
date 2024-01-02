@@ -1,3 +1,16 @@
+## 🎉 0.1.0-rc.7 `2024-01-03`
+### 🐛 Fix
+- Now it has been changed to read log MD file for publishing content ([#4018681](https://github.com/kwooshung/cvlar/commit/4018681e1cc8cbc26a5a4d4ee228d67e83b9d6da))
+- Fix and add prompts `Changelog.template.content`, resulting ([#0fd2175](https://github.com/kwooshung/cvlar/commit/0fd2175b24815703587a56f5b2f7c77786f9fa14))
+- Output Unreleasedtags, see why it is not released ([#a18c8d5](https://github.com/kwooshung/cvlar/commit/a18c8d50186a5d1cbd26c4636064644ae17cb1d2))
+- Fix the sequence of Github Actions configuration script ([#22a86ff](https://github.com/kwooshung/cvlar/commit/22a86ffacd0dc7dcfb60f2810bf7a51fb95d8128))
+- Fix the delete and submit information temporary file function to avoid problems that do not exist in the object ([#60ee49f](https://github.com/kwooshung/cvlar/commit/60ee49f2891e950a82ce3c79eed41456676fb95d))
+### 🆕 Add
+- Method to increase the method to get TAGS through the API ([#8fdba13](https://github.com/kwooshung/cvlar/commit/8fdba13fd66ae44d66d7f97a24ef0aa1e56ad7ab))
+### ✅ Test
+- Add debugging information for easy check ([#0d5f882](https://github.com/kwooshung/cvlar/commit/0d5f882fd156f02671a6239d43b4a3542701c347))
+- Debug and get the current release list information, for testing ([#e63df25](https://github.com/kwooshung/cvlar/commit/e63df251835fbed961c2dfdb60c99f7057a5e362))
+
 ## 🎉 0.1.0-rc.6 `2023-12-30`
 ### 📦 Release
 - new version 0.1.0-rc.6 ([#8f3bd0d](https://github.com/kwooshung/cvlar/commit/8f3bd0d2980254207b6a0c4a41fc2b01a0128233))
