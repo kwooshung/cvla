@@ -65,7 +65,7 @@
   "scripts": {
     "prepare": "husky install",
     "dev": "node scripts/build.mjs && tsup --watch",
-    "build": "node scripts/build.mjs",
+    "build": "node scripts/build.mjs && tsup",
     "eslint": "eslint . --fix --cache --quiet --report-unused-disable-directives --max-warnings 0 --ext .js,.js,.jsx,.ts,.cts,.tsx",
     "test": "jest --coverage --verbose",
     "test:ci": "jest --coverage --ci",
