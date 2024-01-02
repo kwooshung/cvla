@@ -1,8 +1,8 @@
 import pc from 'picocolors';
 import { Octokit } from '@octokit/rest';
 import { isUndefined as _isUn, isPlainObject as _isObj, isArray as _isArr, isString as _isStr, isBoolean as _isBool } from 'lodash-es';
-import { IConfig, TChangeLog, TGitMessageToChangeLog, ILanguage, TReleaseResult, TRelease } from '@/interface';
-import { convert, git, translate, console as cs } from '@/utils';
+import { IConfig, ILanguage, TRelease } from '@/interface';
+import { convert, translate, io, console as cs } from '@/utils';
 
 /**
  * 类：日志记录
@@ -187,6 +187,18 @@ class release {
   }
 
   /**
+   * 私有函数：release > IO > 获得日志模板文件名
+   * @param {string} [langcode = ''] 语言代码
+   * @returns {string} 日志模板文件名
+   */
+  private getLogFilename(langcode: string = ''): string {
+    langcode = langcode.toLowerCase().trim();
+    const save = this.CONF.changelog['file'].save ?? '';
+    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
+    return filename;
+  }
+
+  /**
    * 公开函数：release > 发布
    * @returns {Promise<void>} 无返回值
    */
@@ -194,8 +206,10 @@ class release {
     // 如果启用了 release 和 changelog，才能发布
     if (
       this.CONF['release'] &&
+      this.CONF['release']['subject'] &&
       this.CONF['changelog'] &&
       this.CONF['changelog']['template'] &&
+      this.CONF['changelog']['template']['content'] &&
       this.CONF['changelog']['template']['logs'] &&
       this.CONF['changelog']['template']['logs']['title'] &&
       this.CONF['changelog']['template']['logs']['title']['standard'] &&
@@ -205,62 +219,84 @@ class release {
       this.CONF['changelog']['template']['logs']['commitlink']['text'] &&
       this.CONF['changelog']['template']['logs']['commitlink']['url']
     ) {
-      // 标题模板
-      const subjectTemplate = this.CONF.release['subject'];
       /**
        * 获得仓库的所有标签，按照版本号从小到大排序，也就是最新的版本在最后
        */
-      // const tags = await this.getAllTags();
-      const tags = await git.tag.get.all(true);
+      const tags = await this.getAllTags();
+
+      // 本地测试用
+      // const tags = await git.tag.get.all(true);
+
       // 获得仓库的所有发布标签
       const releasedTags = await this.getReleasedTags();
+
+      // 本地测试用
+      // const releasedTags = [];
+
       // 将 releasedTags 数组转换为 Set 以提高查找效率
       const releasedTagsSet = new Set(releasedTags);
       // 使用 filter 方法过滤出 tags 数组中不在 releasedTagsSet 中的元素
       const unreleasedTags = tags.filter((tag) => !releasedTagsSet.has(tag.trim()));
 
       if (unreleasedTags.length > 0) {
-        // 获取仓库拥有者
-        const owner = this.getRepoOwner();
-        // 获取仓库名
-        const repo = this.getRepoName();
-        // 读取日志内容
-        const contents: TRelease[] = await this.readMessages(unreleasedTags);
+        // 列表
+        const list: TRelease[] = [];
 
-        if (contents.length > 0) {
-          for (const content of contents) {
-            const name = convert.replaceTemplate(subjectTemplate, { tag: content.tag, date: content.date, time: content.time });
-            const body: string[] = [];
+        for (const tag of unreleasedTags) {
+          const changelog: TRelease = {
+            tag,
+            logs: {}
+          };
 
-            // 如果不是字符串，并且是对象，那么就是多语言
-            if (!_isStr(content.logs) && _isObj(content.logs)) {
-              for (const lang in content.logs) {
-                if (Object.prototype.hasOwnProperty.call(content.logs, lang)) {
-                  const logs = content.logs[lang];
-                  _isStr(logs) && body.push(logs);
-                }
+          if (this.IsTranslate) {
+            // 读取日志文件内容
+            const contents: Record<string, string> = {};
+
+            for (const langcode of this.translateLangs) {
+              const filename = this.getLogFilename(langcode);
+
+              // 如果内容列表中不存在，那么就读取
+              _isUn(contents[filename]) && (contents[filename] = await io.read(filename));
+
+              // 获取日志内容
+              const tagContent = await this.getContents(tag, contents[filename]);
+
+              // 如果内容列表中存在
+              if (tagContent) {
+                // 如果对应的标签不存在，那么就创建标签对象
+                changelog.logs[langcode] = tagContent;
               }
             }
-            // 如果是字符串，那么就是单语言
-            else if (_isStr(content.logs)) {
-              body.push(content.logs);
-            }
+          } else {
+            const filename = this.getLogFilename();
+            const content = await io.read(filename);
 
-            if (body.length > 0) {
-              this.CONF['release']['poweredby'] &&
-                body.push(`> This [Changelog](../../blob/${this.getRepoBranch()}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
+            // 获取日志内容
+            const tagContent = await this.getContents(tag, content);
 
-              await this.OCTOKIT.repos.createRelease({
-                owner,
-                repo,
-                tag_name: content.tag,
-                name,
-                body: body.join('\n\n---\n\n')
-              });
+            // 如果内容列表中存在
+            if (tagContent) {
+              // 如果对应的标签不存在，那么就创建标签对象
+              changelog.logs = tagContent;
             }
           }
 
-          console.log(pc.green('✔ SUCCESS !!!'));
+          list.push(changelog);
+        }
+
+        if (list.length > 0) {
+          // 标题模板
+          const subjectTemplate = this.CONF.release['subject'];
+          // 获取仓库拥有者
+          const owner = this.getRepoOwner();
+          // 获取仓库名
+          const repo = this.getRepoName();
+          // 获取仓库分支
+          const branch = this.getRepoBranch();
+          // 如果存在这些配置，那么就发布
+          if (subjectTemplate && owner && repo && branch) {
+            await this.public(subjectTemplate, 'owner', 'repo', 'branch', list);
+          }
         }
       }
     } else {
@@ -269,6 +305,9 @@ class release {
       list.push(pc.red('  zh-CN：您还未开启 `release`功能，或没有开启 `日志功能` 相关功能，特别是日志模板相关配置，如下参数必须存在。'));
       list.push(pc.red('  en: The release feature or log functionality, particularly log template configurations, have not been activated. The following parameters are required.'));
       list.push(pc.dim('=================================================='));
+      list.push(pc.cyan('  release'));
+      list.push(pc.cyan('  release.subject'));
+      list.push(pc.cyan('  changelog.template.content'));
       list.push(pc.cyan('  changelog.template.logs.title.standard'));
       list.push(pc.cyan('  changelog.template.logs.title.other'));
       list.push(pc.cyan('  changelog.template.logs.item'));
@@ -279,161 +318,99 @@ class release {
   }
 
   /**
-   * 公开函数：changelog > 读取
-   * @param {string[]} tags 需要生成日志的版本标签列表
-   * @returns {Promise<TRelease[]>} 无返回值
+   * 私有函数：release > 获取日志内容
+   * @param {string} tag 标签
+   * @param {string} content 日志内容
+   * @returns {Promise<string>} 日志内容
    */
-  private async readMessages(tags: string[]): Promise<TRelease[]> {
-    let result: TRelease[] = [];
-    const itemTemplate = this.CONF.changelog['template']?.logs?.item;
-    const titleStandardTemplate = this.CONF.changelog['template']?.logs?.title?.standard;
-    const titleOtherTemplate = this.CONF.changelog['template']?.logs?.title?.other;
-    const commitlinkTextTemplate = this.CONF.changelog['template']?.logs?.commitlink?.text;
-    const commitlinkUrlTemplate = this.CONF.changelog['template']?.logs?.commitlink?.url;
+  private async getContents(tag: string, content: string): Promise<string> {
+    if (content) {
+      // 获取日志模板，目前默认是 '## 🎉 {{tag}} `{{date}}`\n{{logs}}'，日志生成的也是这个格式的。
+      const logTemplate = this.CONF['changelog']['template']['content'];
 
-    const list: TGitMessageToChangeLog[] = await git.message.toChangeLog(tags);
+      // eslint-disable-next-line prettier/prettier, no-useless-escape
+      const version =
+        '(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?';
+      const date = '\\d{4}-\\d{2}-\\d{2}';
+      const time = '\\d{2}:\\d{2}:\\d{2}';
+      const logs = '([\\s\\S]*?)';
 
-    const changelogs: TChangeLog[] = [];
-
-    for (const val of list) {
-      const changelog: TChangeLog = {
-        tag: val.tag,
-        date: val.date,
-        time: val.time,
-        list: {}
-      };
-
-      if (_isArr(val.list)) {
-        for (const log of val.list) {
-          // 解析日志内容
-          const { emojiOrType, emoji, type, scope, message } = git.message.parse(log.message);
-
-          let key = '';
-          // 如果存在，下方的key，是为了让其能够按照type分类
-          if (emojiOrType) {
-            const vars = { emoji, type, scope, date: log.date, time: log.time };
-            key = convert.replaceTemplate(titleStandardTemplate, vars);
-          } else {
-            key = titleOtherTemplate;
-          }
-
-          // 如果启用了翻译，那么就翻译
-          if (this.IsTranslate) {
-            for (const lang of this.translateLangs) {
-              // 翻译，如果原始语言与目标语言相同，那么就不翻译
-              const messageTranslated = this.translateOrigin === lang ? message : await this.translate(message, this.translateOrigin, lang);
-
-              // 生成日志内容
-              const msg = convert.replaceTemplate(itemTemplate, {
-                message: messageTranslated,
-                date: log.date,
-                time: log.time,
-                commitlink: `[${convert.replaceTemplate(commitlinkTextTemplate, { id: log.id })}](${convert.replaceTemplate(commitlinkUrlTemplate, { id: log.id })})`
-              });
-
-              // 如果对应的语言不存在，那么就创建
-              _isUn(changelog.list[lang]) && (changelog.list[lang] = {});
-
-              // 如果对应的 key 不存在，那么就创建
-              _isUn(changelog.list[lang][key]) && (changelog.list[lang][key] = []);
-
-              changelog.list[lang][key].push(msg);
-            }
-          } else {
-            // 生成日志内容
-            const msg = convert.replaceTemplate(itemTemplate, {
-              message,
-              date: log.date,
-              time: log.time,
-              commitlink: `[${convert.replaceTemplate(commitlinkTextTemplate, { id: log.id })}](${convert.replaceTemplate(commitlinkUrlTemplate, { id: log.id })})`
-            });
-
-            _isUn(changelog.list[key]) && (changelog.list[key] = []);
-            (changelog.list[key] as string[]).push(msg);
-          }
-        }
-      }
-
-      changelogs.push(changelog);
-    }
-
-    // 如果changelogs长度大于0，也就表示有内容，那么就生成changelog
-    if (changelogs.length > 0) {
-      result = await this.buildData(changelogs);
-    }
-
-    return result;
-  }
-
-  /**
-   * 私有函数：release > 生成 > 数据
-   * @param {TChangeLog[]} changelogs 日志列表
-   * @returns {Promise<TRelease[]>} 日志内容
-   */
-  private async buildData(changelogs: TChangeLog[]): Promise<TRelease[]> {
-    const result: TRelease[] = [];
-
-    for (const changelog of changelogs) {
-      const logs: TReleaseResult = await this.buildContent(changelog);
-
-      result.push({
-        tag: changelog.tag,
-        date: changelog.date,
-        time: changelog.time,
+      // 当前版本的正则表达式
+      const currentStrRegex = convert.replaceTemplate(logTemplate, {
+        tag,
+        date,
+        time,
         logs
       });
-    }
 
-    return result;
-  }
+      // 下一个版本的正则表达式
+      const nextStrRegex = convert
+        .replaceTemplate(logTemplate, {
+          tag: version,
+          date,
+          time,
+          logs: ''
+        })
+        .trimEnd();
 
-  /**
-   * 私有函数：release > 生成 > 内容
-   * @param {TChangeLog} changelog 日志
-   * @returns {TReleaseResult} 日志内容
-   */
-  private async buildContent(changelog: TChangeLog): Promise<TReleaseResult> {
-    if (this.IsTranslate) {
-      const result = {};
+      // 完整的版本号正则表达式，可获取当前版本和下一个版本的之间的日志内容
+      const tagRegex = new RegExp(`^${currentStrRegex}${nextStrRegex}$`, 'm');
 
-      for (const lang of this.translateLangs) {
-        result[lang] = await this.buildContentItems(changelog, lang);
+      // 获取当前版本号的日志内容
+      const matchResult = content.match(tagRegex);
+
+      // 匹配到版本号，返回当前版本的日志内容
+      if (matchResult) {
+        return matchResult[1].trim();
       }
-      return result;
+      // 未匹配到版本号，尝试从当前版本匹配到文件尾部
+      else {
+        const currentMatch = content.match(new RegExp(`^${currentStrRegex}([\\s\\S]*)$`, 'm'));
+        return (currentMatch?.[2] ?? '').trim();
+      }
     }
 
-    return await this.buildContentItems(changelog);
+    return content;
   }
 
   /**
-   * 私有函数：release > 生成 > 内容
-   * @param {TChangeLog} changelog 日志
-   * @param {string} [lang=''] 语言，如果为空，那么就是没有翻译
-   * @returns {Promise<TRelease>} 日志内容
+   * 私有函数：release > 发布
+   * @param {string} subjectTemplate 标题模板
+   * @param {string} owner 仓库所有者
+   * @param {string} repo 仓库名
+   * @param {string} branch 仓库分支
+   * @param {TRelease[]} list 列表
+   * @returns {Promise<void>} 无返回值
    */
-  private async buildContentItems(changelog: TChangeLog, lang: string = ''): Promise<string> {
-    let logs = '';
-
-    const list = lang ? changelog.list[lang] : changelog.list;
-
-    if (!_isUn(list)) {
-      const content = [];
-
-      for (const key in list) {
-        if (Object.prototype.hasOwnProperty.call(list, key)) {
-          const items = list[key];
-
-          if (!_isUn(items) && _isArr(items)) {
-            content.push(key);
-            content.push(items.join('\n'));
+  private async public(subjectTemplate: string, owner: string, repo: string, branch: string, list: TRelease[]): Promise<void> {
+    for (const changelog of list) {
+      const body: string[] = [];
+      // 如果是翻译，并且不是字符串，并且是对象，那么就是多语言
+      if (this.IsTranslate && !_isStr(changelog.logs) && _isObj(changelog.logs)) {
+        for (const lang in changelog.logs) {
+          if (Object.prototype.hasOwnProperty.call(changelog.logs, lang)) {
+            const logs = changelog.logs[lang];
+            _isStr(logs) && body.push(logs);
           }
         }
+      } else if (!this.IsTranslate && _isStr(changelog.logs) && !_isObj(changelog.logs)) {
+        body.push(changelog.logs);
       }
 
-      logs = content.join('\n').trim();
+      if (body.length > 0) {
+        const name = convert.replaceTemplate(subjectTemplate, { tag: changelog.tag });
+        this.CONF['release']['poweredby'] && body.push(`> This [Changelog](../../blob/${branch}/CHANGELOG.md), Powered by @kwooshung /[cvlar](https://github.com/kwooshung/cvlar/)`);
+        await this.OCTOKIT.repos.createRelease({
+          owner,
+          repo,
+          tag_name: changelog.tag,
+          name,
+          body: body.join('\n\n---\n\n')
+        });
+      }
     }
 
-    return logs;
+    console.log(pc.green('✔ SUCCESS !!!'));
   }
 }
 

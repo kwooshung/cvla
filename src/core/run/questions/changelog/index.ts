@@ -322,14 +322,24 @@ class changelog {
   }
 
   /**
+   * 私有函数：changelog > IO > 获得日志模板文件名
+   * @param {string} [langcode = ''] 语言代码
+   * @returns {string} 日志模板文件名
+   */
+  private getLogFilename(langcode: string = ''): string {
+    langcode = langcode.toLowerCase().trim();
+    const save = this.CONF.changelog['file'].save ?? '';
+    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
+    return filename;
+  }
+
+  /**
    * 私有函数：changelog > IO > 读取翻译
    * @param {string} langcode 语言代码
    * @returns {Promise<string>} 日志内容
    */
   private async readLog(langcode: string = ''): Promise<string> {
-    langcode = langcode.toLowerCase().trim();
-    const save = this.CONF.changelog['file'].save ?? '';
-    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
+    const filename = this.getLogFilename(langcode);
 
     if (await io.exists(filename)) {
       const content = await io.read(filename);
@@ -351,8 +361,7 @@ class changelog {
    */
   private async writeLog(content: string, langcode: string = '', prepend: boolean = true): Promise<boolean> {
     langcode = langcode.toLowerCase().trim();
-    const save = this.CONF.changelog['file'].save ?? '';
-    const filename = `${save}/CHANGELOG${langcode ? `.${langcode}` : ''}.md`;
+    const filename = this.getLogFilename(langcode);
 
     let result = false;
     let retry = false;
