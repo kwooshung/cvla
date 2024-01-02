@@ -1,3 +1,8 @@
+## 🎉 1.0.0-rc.2 `2024-01-03`
+### 🐛 Fix
+- Repair version help ([#fc48568](https://github.com/kwooshung/cvlar/commit/fc485685f3fde58634843c6401021e34f012b11f))
+- `Release.poweredby` Directory in the middle of the log ([#f293958](https://github.com/kwooshung/cvlar/commit/f29395828afe2d5a72de8d1719b8694f1c78e042))
+
 ## 🎉 1.0.0-rc.1 `2024-01-03`
 ### 🐛 Fix
 - According to the new configuration, re -generate the log file ([#1c62600](https://github.com/kwooshung/cvlar/commit/1c6260044923e1fdb97d6024052d620c22ce8529))
