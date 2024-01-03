@@ -1,25 +1,23 @@
 <div align="center">
 
-<img style="width:120px; height:120px;" alt="@kwooshung/cvlar" src="./logo/logo.png"/>
+<img alt="@kwooshung/cvlar" src="./images/logos/128x128.png"/>
 
-# Standard Version Helper
+# @kwooshung/cvlar
 
-是一个基于 [standard-version](https://github.com/conventional-changelog/standard-version/) 的帮助工具，可以在控制台中提供简单的菜单选择。
-
-[![GitHub License](https://img.shields.io/github/license/kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)](LICENSE)
-![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/kwooshung/standard-version-helper?labelColor=272e3b&color=00b42A&logo=github)
-![GitHub last commit](https://img.shields.io/github/last-commit/kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)
-![GitHub top language](https://img.shields.io/github/languages/top/kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)
-![GitHub issues](https://img.shields.io/github/issues/kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)
-![Github Stars](https://img.shields.io/github/stars/kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)
-[![NPM Version](https://img.shields.io/npm/v/@kwooshung/standard-version-helper?labelColor=272e3b&color=165dff)](https://www.npmjs.com/package/@kwooshung/standard-version-helper)
-[![Npm.js Downloads/Week](https://img.shields.io/npm/dw/@kwooshung/standard-version-helper?labelColor=272e3b&labelColor=272e3b&color=165dff&logo=npm)](https://www.npmjs.com/package/@kwooshung/standard-version-helper)
-[![Github CI/CD](https://github.com/kwooshung/standard-version-helper/actions/workflows/ci.yml/badge.svg)](https://github.com/kwooshung/standard-version-helper/actions/)
-[![codecov](https://codecov.io/gh/kwooshung/standard-version-helper/graph/badge.svg?token=VVZJE7H0KD)](https://codecov.io/gh/kwooshung/standard-version-helper)
-[![Maintainability](https://api.codeclimate.com/v1/badges/325d0881b1ca19165d35/maintainability)](https://codeclimate.com/github/kwooshung/standard-version-helper/maintainability/)
-[![Gitee Repo](https://img.shields.io/badge/Gitee-standard--version--helper-165dff?logo=gitee)](https://gitee.com/kwooshung/standard-version-helper/)
+![GitHub Release Date - Published_At](https://img.shields.io/github/release-date/kwooshung/cvlar?labelColor=272e3b&color=00b42A&logo=github)
+![GitHub last commit](https://img.shields.io/github/last-commit/kwooshung/cvlar?labelColor=272e3b&color=165dff)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/kwooshung/cvlar?labelColor=272e3b&color=165dff)
+![GitHub top language](https://img.shields.io/github/languages/top/kwooshung/cvlar?labelColor=272e3b&color=165dff)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/kwooshung/cvlar?labelColor=272e3b&color=165dff)
+![GitHub issues](https://img.shields.io/github/issues/kwooshung/cvlar?labelColor=272e3b&color=165dff)
+[![NPM Version](https://img.shields.io/npm/v/@kwooshung/cvlar?labelColor=272e3b&color=165dff)](https://www.npmjs.com/package/@kwooshung/cvlar)
+[![Npm.js Downloads/Week](https://img.shields.io/npm/dw/@kwooshung/cvlar?labelColor=272e3b&labelColor=272e3b&color=165dff&logo=npm)](https://www.npmjs.com/package/@kwooshung/cvlar)
+[![Github CI/CD](https://github.com/kwooshung/cvlar/actions/workflows/ci.yml/badge.svg)](https://github.com/kwooshung/cvlar/actions/)
+[![codecov](https://codecov.io/gh/kwooshung/cvlar/graph/badge.svg?token=VVZJE7H0KD)](https://codecov.io/gh/kwooshung/cvlar)
+[![Maintainability](https://api.codeclimate.com/v1/badges/325d0881b1ca19165d35/maintainability)](https://codeclimate.com/github/kwooshung/cvlar/maintainability/)
+[![GitHub License](https://img.shields.io/github/license/kwooshung/cvlar?labelColor=272e3b&color=165dff)](LICENSE)
+[![Gitee Repo](https://img.shields.io/badge/gitee-cvlar-165dff?logo=gitee)](https://gitee.com/kwooshung/cvlar/)
+![Github Stars](https://img.shields.io/github/stars/kwooshung/cvlar?labelColor=272e3b&color=165dff)
 
 <p align="center">
     <a href="README.md">English</a> | 
@@ -27,251 +25,111 @@
 </p>
 </div>
 
-## 为什么开发它？
+# 为什么开发它？
 
-- 我厌倦了命令行式的版本升级，每次都要记住命令，记住参数，记住各种规则，这些都是我不想记住的，我只想专注于业务开发，所以我开发了这个工具。
-- 既然存在 `standard-version`，为何不能再有一个帮助工具呢？
+在这之前，做一个开源项目，我需要使用以下包，才能实现，git提交标准化，版本号管理，changelog自动生成等功能，还得使用我自己开发的项目 [standard-version-helper](https://github.com/kwooshung/standard-version-helper) 才能实现控制台交互式升级版本的功能；当然自然也没有在 Github Actions 中自动发布版本的功能。当您如用了 Cvlar 之后，您只需要选择性保留 `commitlint` 即可实现前面说的所有功能，而且还有更多的功能。
 
-## 特点
+- ~~commitizen~~
+- **commitlint**
+- ~~commitlint-config-cz~~
+- ~~commitlint-config-git-commit-emoji~~
+- ~~conventional-changelog~~
+- ~~conventional-changelog-cli~~
+- ~~cz-conventional-changelog~~
+- ~~cz-customizable~~
+- ~~standard-version~~
+- ~~@kwooshung/standard-version-helper~~
 
-- **无需记忆** 命令
-- **无需记忆** 参数
-- **无需记忆** 语义化版本号
-- **无需记忆** 版本号规则
-- **无需记忆** 版本号撤销规则
-- **无需记忆** 版本号强制规则
-- **无需记忆** 版本号次要规则
-- **无需记忆** 版本号补丁规则
-- 版本号不怕写错，有验证提示
+# 为什么叫 Cvlar？
+
+- C：`commit`
+- V：`version`
+- L：`changelog`
+- R：`release`
+
+> 当然，虽然名字叫 Cvlar，功能并不局限于此。
+
+# 怎么读？
+
+cvlar，是一个工具合集的首字母组成的词，没有具体的意义，但是怎么读呢？根据单词的发音，可以推出音标`[siːvəlɑr]`，而读起来感觉和中文的 `思维乐` 很相似，所以就起了这么一个名字；
+
+> 因为编程这个职业，需要大量的思考，作者更希望大家在乐趣中编程。（好吧，我承认，其实是因为先有的名字，这个是强行解释的😂）
+
+# 特点简述
+
+- **简单记住**：命令 `cvlar` 即可，也可使用 `cvlar -h/help` 查看帮助；
+- **轻松选择并运行**：`package.json` 中的 `scripts` 脚本；
+- **包管理**：
+  - 轻松选择 `npm`、`yarn`、`pnpm`，或其他包管理工具，自动安装；
+  - 可设置源，不会影响原有配置；
+- **git提交**：
+  - 轻松选择 '提交 types' 和 `提交 scopes`；
+  - 写入 '短说明'、'长说明'、'关闭 issues'、自定义 '字段'、验证 '提交信息' 等，同时还能自动 '推送到仓库'；
+  - 若您希望希望 `commit message` 使用英文，而自己又不擅长英文，也支持通过 google 自动翻译成您指定的语言；
+- **版本管理**：
+  - 轻松 '升级版本号' 选择 '主要版本'、'次要版本'、'补丁版本' 和 '预览版本'，而 '预览版本' 可自动迭代 '预览版本号'，比如 `v1.0.0-preview.1`、`v1.0.0-preview.2` 等；
+  - 你也可以指定 '升级版本号'；也可以 '降级版本'；
+  - 可自动生成 'changelog'，并自动 '推送到仓库'；
+- **日志管理**：轻松设置 '模板'，自动根据 `git message` 生成 `changelog`，更是可以通过 Google 翻译，自动翻译成 **多种语言** 日志，自动 '推送到仓库'；
+- **自动发布**：
+  - 在 `Github Actions` 中，调用 `cvlar -r` 命令，将会自动分析 `日志` 文件，将其自动发布到仓库版本页面中。
+  - 参考：[本仓库的 releases 页](https://github.com/kwooshung/cvlar/releases)；
+- **配置简单**：
+  - 也可以通过 `cvlar -i/init`，交互式生成配置文件；
+  - 初始化交互式菜单，支持中文和英文，后续的使用，支持任意语言，只需要在 `cvlar` 的配置文件中自定义即可；
+  - 配置文件本可支持 `js`、`cjs` 和 `mjs`；
+    - 为了方便只配置一次 `commit types` 和 `commit scopes`；
+    - 发现 `commitlint` 无法识别 `mjs`，所以暂时只支持 `cjs` 和 `js`；
+    - 参考：
+      - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
+      - [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
+  - 参考：[本仓库的 cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs)；
+- 菜单可通过配置自定义语言
 - 提升工作效率
 - 对新手友好
 
-## 菜单演示
+# 安装
 
-假设您当前的项目版本是：`v2.0.0`；
-
-- 以下菜单演示的是所有流程，即每个分支流程所应该显示的内容；
-- 实际使用时，并不会像下方那样都展开，而是选择什么就显示什么，就像你使用其他的命令行菜单一样。
-
-```
-- 主菜单
-  ├── 升级版本
-  │ ├── 您打算升级哪个版本？
-  │ ├── 主要版本：v2.0.0 > 3.0.0
-  │ │ └── 是否推送到仓库？
-  │ │ │ ├── Y（默认）：npx standard-version --release-as major && --follow-tags origin master
-  │ │ │ └── N：npx standard-version --release-as major
-  │ ├── 次要版本：v2.0.0 > 2.1.0
-  │ │ └── 是否推送到仓库？
-  │ │ │ ├── Y（默认）：npx standard-version --release-as minor && git push --follow-tags origin master
-  │ │ │ └── N：npx standard-version --release-as minor
-  │ ├── 补丁版本：v2.0.0 > 2.0.1
-  │ │ └── 是否推送到仓库？
-  │ │ │ ├── Y（默认）：npx standard-version --release-as patch && git push --follow-tags origin master
-  │ │ │ └── N：npx standard-version --release-as patch
-  │ └── 返回
-  ├── 指定版本
-  │ ├── 请输入版本号: 4.0.0
-  │ │ └── 你当前的版本号为：v2.0.0，确认打入指定版本号：v4.0.0 Yes
-  │ │ └── 是否推送到仓库？
-  │ │ │ ├── Y（默认）：npx standard-version --release-as 4.0.0 && git push --follow-tags origin master
-  │ │ │ └── N：npx standard-version --release-as 4.0.0
-  ├── 撤销版本
-  │ ├── 您打算撤销哪个版本？
-  │ ├── 当前版本
-  │ │ ├── 保留对文件的更改，仅撤销版本号？
-  │ │ │ ├── 是
-  │ │ │ │ └── 是否将 package.json 文件中的版本号：v2.0.0 更新为撤销后的版本号 v1.9.9？
-  │ │ │ │ ├── 是
-  │ │ │ │ │ └── 当前版本更新为：1.9.9
-  │ │ │ │ └── 否
-  │ │ │ └── 否
-  │ ├── 撤销指定版本
-  │ │ ├── 输入要撤销的版本号: 1.5.0
-  │ │ │ ├── 保留对文件的更改，仅撤销版本号？
-  │ │ │ │ ├── 是
-  │ │ │ │ │ └── 是否将 package.json 文件中的版本号：v2.0.0 更新为撤销后的版本号 v1.4.9？
-  │ │ │ │ │ ├── 是
-  │ │ │ │ │ │ └── 当前版本更新为：1.4.9
-  │ │ │ │ │ └── 否
-  │ │ │ │ └── 否
-  │ └── 返回
-  └── 退出
-```
-
-## 安装
-
-### npm
+## npm
 
 ```bash
-npm install standard-version @kwooshung/standard-version-helper --save-dev
+npm install standard-version @kwooshung/cvlar --save-dev
 ```
 
-### yarn
+## yarn
 
 ```bash
-yarn add standard-version @kwooshung/standard-version-helper -D
+yarn add standard-version @kwooshung/cvlar -D
 ```
 
-### pnpm
+## pnpm
 
 ```bash
-pnpm add standard-version @kwooshung/standard-version-helper -D
+pnpm add standard-version @kwooshung/cvlar -D
 ```
 
-## 推荐适用方法
+# 使用方法
 
-### 在 `package.json` 中添加 `scripts` 脚本，如下：
+## 查看帮助 `cvlar -[h, help]`
 
-```json
-{
-  "scripts": {
-    "release": "standard-version-helper"
-  }
-}
-```
+![Cvlar 帮助](/images/docs/help.png)
 
-### 支持两个参数：`--locale` 和 `--cmd`：
+## 初始化 `cvlar -[i, init]`
 
-#### `--locale`
+![cvlar -i/init](/images/docs/cn/init.gif)
 
-- 默认为简体中文
-- 更改语言，如英文 `en_US` 则 `--locale en_US`，如下方代码所示
-- 其他语言，均使用 Google 翻译，不能保证其准确性，如有翻译不准确的地方，欢迎提 `issue` & `PR`
-- 语言列表见下方表格
+初始化之后的配置，`.ks-cvlarrc.cjs` 可以存在任何位置，上图因为检测到了配置文件，所以没有出现指定保存路径的选项。
 
-```json
-{
-  "scripts": {
-    "release": "standard-version-helper --locale en_US"
-  }
-}
-```
+- [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
+- [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
+- [本仓库的 cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs)；
 
-#### `--cmd`
+## 主菜单 `cvlar`
 
-> 可以加一些自定义的命令，如 `ls -l`，这个命令
+![Cvlar 主菜单](/images/docs/cn/menu-main.png)
 
-```json
-{
-  "scripts": {
-    "release": "standard-version-helper --cmd ls -l"
-  }
-}
-```
+## 运行 `package.json script` 脚本
 
-#### 综合用法
+![Cvlar 主菜单 > 运行 > 脚本](/images/docs/cn/menu-run-scripts.gif)
 
-```json
-{
-  "scripts": {
-    "release": "standard-version-helper --locale en_US --cmd ls -l"
-  }
-}
-```
-
-#### 版本号支持规则如下
-
-验证通过的版本号正则格式：`/^(\d+)\.(\d+)\.(\d+)(?:-([\w-]+(?:\.[\w-]+)*))?(?:\+([\w-]+(?:\.[\w-]+)*))?$/`
-
-- 0.0.1
-- 0.1.2
-- 1.0.0-alpha
-- 1.0.0-beta
-- 1.0.0-alpha.1
-- 1.0.0-beta.2
-- 1.0.0-rc.1
-- 1.0.0+001
-- 1.0.0+20130313144700
-- 1.0.0-alpha+001
-- 1.0.0-alpha.1+001
-- 2.1.0-rc.2+build.5
-
-## 支持的语言
-
-| 语言                 | 代码   |
-| -------------------- | ------ |
-| 阿拉伯语             | ar_EG  |
-| 阿塞拜疆语           | az_AZ  |
-| 保加利亚语           | bg_BG  |
-| 孟加拉语（孟加拉国） | bn_BD  |
-| 白俄罗斯语           | by_BY  |
-| 加泰罗尼亚语         | ca_ES  |
-| 捷克语               | cs_CZ  |
-| 丹麦语               | da_DK  |
-| 德语                 | de_DE  |
-| 希腊语               | el_GR  |
-| 英语                 | en_GB  |
-| 英语（美式）         | en_US  |
-| 西班牙语             | es_ES  |
-| 巴斯克语             | eu_ES  |
-| 爱沙尼亚语           | et_EE  |
-| 波斯语               | fa_IR  |
-| 芬兰语               | fi_FI  |
-| 法语（比利时）       | fr_BE  |
-| 法语（加拿大）       | fr_CA  |
-| 法语（法国）         | fr_FR  |
-| 爱尔兰语             | ga_IE  |
-| 加利西亚语（西班牙） | gl_ES  |
-| 希伯来语             | he_IL  |
-| 印地语               | hi_IN  |
-| 克罗地亚语           | hr_HR  |
-| 匈牙利语             | hu_HU  |
-| 亚美尼亚             | hy_AM  |
-| 印度尼西亚语         | id_ID  |
-| 意大利语             | it_IT  |
-| 冰岛语               | is_IS  |
-| 日语                 | ja_JP  |
-| 格鲁吉亚语           | ka_GE  |
-| 高棉语               | km_KH  |
-| 北库尔德语           | kmr_IQ |
-| 卡纳达语             | kn_IN  |
-| 哈萨克语             | kk_KZ  |
-| 韩语/朝鲜语          | ko_KR  |
-| 立陶宛语             | lt_LT  |
-| 拉脱维亚语           | lv_LV  |
-| 马其顿语             | mk_MK  |
-| 马拉雅拉姆语         | ml_IN  |
-| 蒙古语               | mn_MN  |
-| 马来语 (马来西亚)    | ms_MY  |
-| 缅甸语               | my_MM  |
-| 挪威语               | nb_NO  |
-| 尼泊尔语             | ne_NP  |
-| 荷兰语（比利时）     | nl_BE  |
-| 荷兰语               | nl_NL  |
-| 波兰语               | pl_PL  |
-| 葡萄牙语(巴西)       | pt_BR  |
-| 葡萄牙语             | pt_PT  |
-| 罗马尼亚语           | ro_RO  |
-| 俄罗斯语             | ru_RU  |
-| 僧伽罗语             | si_LK  |
-| 斯洛伐克语           | sk_SK  |
-| 塞尔维亚语           | sr_RS  |
-| 斯洛文尼亚语         | sl_SI  |
-| 瑞典语               | sv_SE  |
-| 泰米尔语             | ta_IN  |
-| 泰语                 | th_TH  |
-| 土耳其语             | tr_TR  |
-| 土库曼               | tk_TK  |
-| 乌尔都语 (巴基斯坦)  | ur_PK  |
-| 乌克兰语             | uk_UA  |
-| 越南语               | vi_VN  |
-| 简体中文             | zh_CN  |
-| 繁体中文（香港市）   | zh_HK  |
-| 繁体中文（澳门市）   | zh_MO  |
-| 繁体中文（台湾省）   | zh_TW  |
-
-## 用到的开源项目
-
-> 感谢项目作者为开源社区的无私贡献，让我们的工作变得更加简单！！！
-
-- [standard-version：一款自动化管理版本和生成符合约定式提交标准的 CHANGELOG 文件的工具。](https://github.com/conventional-changelog/standard-version)
-- [semver：一款实现了语义版本规范的库，提供版本号的解析、比较和满足性检测功能。](https://github.com/semver/semver)
-- [detect-indent：一款实用的工具库，能够智能检测和推断给定文本的缩进样式。](https://github.com/sindresorhus/detect-indent)
-- [inquirer：一款强大、用户友好的命令行界面交互库，用于创建交互式命令行用户界面。](https://github.com/SBoudrias/Inquirer.js)
-- [ora：一款轻量、优雅的命令行加载指示器（spinner），用于在命令行中展示加载状态。](https://github.com/sindresorhus/ora)
-- [Translate tools：一款强大的翻译项目](https://github.com/translate-tools/core)
-
-## 许可证
-
-[MIT](LICENSE)
+## 运行 `提交代码` 脚本

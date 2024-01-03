@@ -140,7 +140,7 @@ class questions {
         case 'changelog':
           await changelog.getInstance(this.CONF, this.addBack, this.cmd).select();
           break;
-        default:
+        case 'help':
           await this.help();
           break;
       }

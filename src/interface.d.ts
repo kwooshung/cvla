@@ -939,7 +939,7 @@ interface IPackagesUpdateInfos {
 /**
  * 类型：菜单类型
  */
-type TMenuType = 'main' | 'scripts' | 'git' | 'package' | 'changelog' | 'exit';
+type TMenuType = 'main' | 'scripts' | 'git' | 'package' | 'changelog' | 'help' | 'exit';
 
 export {
   IPackageJsonData,
