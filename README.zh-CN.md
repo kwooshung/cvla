@@ -143,3 +143,11 @@ pnpm add standard-version @kwooshung/cvlar -D
 ## 运行 包管理
 
 ### 安装依赖
+
+![Cvlar 主菜单 > 运行 > 升级标签](/images/docs/cn/menu-package-install.gif)
+
+### 卸载依赖
+
+![Cvlar 主菜单 > 运行 > 升级标签](/images/docs/cn/menu-package-uninstall.gif)
+
+### 更新依赖
