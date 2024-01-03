@@ -74,10 +74,10 @@ Before Cvlar, for an open-source project, I had to use the following packages to
   - Config file supports `js`, `cjs`, and `mjs`;
     - To configure `commit types` and `commit scopes` once;
     - Discovered that `commitlint` does not recognize `mjs`, hence only `cjs` and `js` configuration formats are currently supported.
-    - See:
-      - [This repository's commit types configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
-      - [This repository's commit scopes configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)
-  - Reference: [This repository's cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs);
+  - See:
+    - [This repository's commit types configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
+    - [This repository's commit scopes configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)
+    - [This repository's cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs);
 - Customizable menu languages through configuration
 - Boosts work efficiency
 - User-friendly for beginners
@@ -117,3 +117,212 @@ After initialization, the `.ks-cvlarrc.cjs` configuration file can be placed any
 - [This repository's commit types configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
 - [This repository's commit scopes configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)
 - [This repository's cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs);
+
+## Main Menu `cvlar`
+
+![Cvlar Main Menu](/images/docs/en/menu-main.png)
+
+## Important Notice
+
+> The following images demonstrate the interface using Chinese GIFs for illustration. However, in practice, this menu can be in any language, customizable through the `cvlar` configuration file.
+> Due to the complexities of recording, English version demonstrations are currently unavailable but will be supplemented when possible.
+> Additionally, English static image screenshots are provided below the titles for reference, if necessary.
+
+## Run `package.json script`
+
+![Cvlar Main Menu > Run > Script](/images/docs/en/menu-run-scripts.png)
+
+![Cvlar Main Menu > Run > Script](/images/docs/cn/menu-run-scripts.gif)
+
+## Run Commit Files
+
+![Cvlar Main Menu > Run > Commit Files](/images/docs/en/menu-git-commit-files.png)
+
+![Cvlar Main Menu > Run > Commit Files](/images/docs/cn/menu-git-commit-files.gif)
+
+## Run Upgrade Version
+
+![Cvlar Main Menu > Run > Upgrade Tag](/images/docs/en/menu-git-commit-tag.png)
+
+![Cvlar Main Menu > Run > Upgrade Tag](/images/docs/cn/menu-git-commit-tag.gif)
+
+## Package Management
+
+### Install Dependencies
+
+![Cvlar Main Menu > Package Management > Install Dependencies](/images/docs/cn/menu-package-install.gif)
+
+### Uninstall Dependencies
+
+![Cvlar Main Menu > Package Management > Uninstall Dependencies](/images/docs/cn/menu-package-uninstall.gif)
+
+### Update Dependencies
+
+![Cvlar Main Menu > Package Management > Update Dependencies](/images/docs/cn/menu-package-update.gif)
+
+### List Outdated Packages
+
+![Cvlar Main Menu > Package Management > List Outdated Packages](/images/docs/cn/menu-package-outdated.gif)
+
+### View Dependency List
+
+![Cvlar Main Menu > Package Management > View Dependency List](/images/docs/cn/menu-package-list.gif)
+
+### View Package Details
+
+![Cvlar Main Menu > Package Management > View Package Details](/images/docs/cn/menu-package-info.gif)
+
+### Search for Packages
+
+![Cvlar Main Menu > Package Management > Search for Packages](/images/docs/cn/menu-package-search.gif)
+
+## Log Management
+
+Here, **Regenerate Logs** is used as a demonstration, as it consists of two steps: **Clear Logs** and **Generate Logs**.
+
+![Cvlar Main Menu > Log Management > Regenerate Logs](/images/docs/cn/menu-package-search.gif)
+
+## Automatic Publishing
+
+### References
+
+- [This repository's releases page](https://github.com/kwooshung/cvlar/releases);
+- [This repository's Github Actions](https://github.com/kwooshung/cvlar/.github/workflows/ci.yml);
+
+### Script Reference
+
+```yml
+- name: Auto Release
+  run: cvlar -r
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+# Configuration
+
+## Default Search Paths and Files
+
+The commented `.mjs` files, as previously mentioned, are not recognized by `commitlint`. Therefore, only `cjs` and `js` format configurations are currently supported.
+
+```javascript
+[
+  '/ks-cvlar.js',
+  '/ks-cvlar.conf.js',
+  '/ks-cvlar.config.js',
+  //'/ks-cvlar.mjs',
+  //'/ks-cvlar.conf.mjs',
+  //'/ks-cvlar.config.mjs',
+  '/ks-cvlar.cjs',
+  '/ks-cvlar.conf.cjs',
+  '/ks-cvlar.config.cjs',
+  '/ks-cvlarrc.js',
+  '/ks-cvlarrc.conf.js',
+  '/ks-cvlarrc.config.js',
+  //'/ks-cvlarrc.mjs',
+  //'/ks-cvlarrc.conf.mjs',
+  //'/ks-cvlarrc.config.mjs',
+  '/ks-cvlarrc.cjs',
+  '/ks-cvlarrc.conf.cjs',
+  '/ks-cvlarrc.config.cjs',
+  'ks-cvlar.js',
+  'ks-cvlar.conf.js',
+  'ks-cvlar.config.js',
+  //'ks-cvlar.mjs',
+  //'ks-cvlar.conf.mjs',
+  //'ks-cvlar.config.mjs',
+  'ks-cvlar.cjs',
+  'ks-cvlar.conf.cjs',
+  'ks-cvlar.config.cjs',
+  'ks-cvlarrc.js',
+  'ks-cvlarrc.conf.js',
+  'ks-cvlarrc.config.js',
+  //'ks-cvlarrc.mjs',
+  //'ks-cvlarrc.conf.mjs',
+  //'ks-cvlarrc.config.mjs',
+  'ks-cvlarrc.cjs',
+  'ks-cvlarrc.conf.cjs',
+  'ks-cvlarrc.config.cjs',
+  '.ks-cvlar.js',
+  '.ks-cvlar.conf.js',
+  '.ks-cvlar.config.js',
+  //'.ks-cvlar.mjs',
+  //'.ks-cvlar.conf.mjs',
+  //'.ks-cvlar.config.mjs',
+  '.ks-cvlar.cjs',
+  '.ks-cvlar.conf.cjs',
+  '.ks-cvlar.config.cjs',
+  '.ks-cvlarrc.js',
+  '.ks-cvlarrc.conf.js',
+  '.ks-cvlarrc.config.js',
+  //'.ks-cvlarrc.mjs',
+  //'.ks-cvlarrc.conf.mjs',
+  //'.ks-cvlarrc.config.mjs',
+  '.ks-cvlarrc.cjs',
+  '.ks-cvlarrc.conf.cjs',
+  '.ks-cvlarrc.config.cjs',
+  'config/ks-cvlar.js',
+  'config/ks-cvlar.conf.js',
+  'config/ks-cvlar.config.js',
+  //'config/ks-cvlar.mjs',
+  //'config/ks-cvlar.conf.mjs',
+  //'config/ks-cvlar.config.mjs',
+  'config/ks-cvlar.cjs',
+  'config/ks-cvlar.conf.cjs',
+  'config/ks-cvlar.config.cjs',
+  'config/ks-cvlarrc.js',
+  'config/ks-cvlarrc.conf.js',
+  'config/ks-cvlarrc.config.js',
+  //'config/ks-cvlarrc.mjs',
+  //'config/ks-cvlarrc.conf.mjs',
+  //'config/ks-cvlarrc.config.mjs',
+  'config/ks-cvlarrc.cjs',
+  'config/ks-cvlarrc.conf.cjs',
+  'config/ks-cvlarrc.config.cjs',
+  '.config/ks-cvlar.js',
+  '.config/ks-cvlar.conf.js',
+  '.config/ks-cvlar.config.js',
+  //'.config/ks-cvlar.mjs',
+  //'.config/ks-cvlar.conf.mjs',
+  //'.config/ks-cvlar.config.mjs',
+  '.config/ks-cvlar.cjs',
+  '.config/ks-cvlar.conf.cjs',
+  '.config/ks-cvlar.config.cjs',
+  '.config/ks-cvlarrc.js',
+  '.config/ks-cvlarrc.conf.js',
+  '.config/ks-cvlarrc.config.js',
+  //'.config/ks-cvlarrc.mjs',
+  //'.config/ks-cvlarrc.conf.mjs',
+  //'.config/ks-cvlarrc.config.mjs',
+  '.config/ks-cvlarrc.cjs',
+  '.config/ks-cvlarrc.conf.cjs',
+  '.config/ks-cvlarrc.config.cjs'
+];
+```
+
+## Specifying the Configuration File
+
+If you wish to store the configuration file in a different location, use the following command to specify the directory. This makes `cvlar` prioritize the directory specified by `-[cd/config-dir]`.
+
+> Note: Specify the folder path, not the file path!
+
+```
+cvlar -[cd/config-dir] xxx/xx/x
+```
+
+It's recommended to set this in the `scripts` section of `package.json`:
+
+```json
+{
+  "scripts": {
+    "cvlar": "cvlar -cd xxx/xx/x"
+  }
+}
+```
+
+## Configuration File Description and Reference
+
+Generate the corresponding configuration file using `cvlar -i/init`, as described in the **Initialization** section above;
+The following two files are configuration files generated by this command, representing configurations in **Chinese** and **English** respectively;
+
+- [`.ks-cvlarrc.cjs`](/`.ks-cvlarrc.cjs`)
+- [`.ks-cvlarrc.en.cjs`](/`.ks-cvlarrc.en.cjs`)

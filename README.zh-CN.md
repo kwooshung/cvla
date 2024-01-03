@@ -80,10 +80,10 @@ cvlar，是一个工具合集的首字母组成的词，没有具体的意义，
   - 配置文件本可支持 `js`、`cjs` 和 `mjs`；
     - 为了方便只配置一次 `commit types` 和 `commit scopes`；
     - 发现 `commitlint` 无法识别 `mjs`，所以暂时只支持 `cjs` 和 `js` 格式的配置；
-    - 参考：
-      - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
-      - [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
-  - 参考：[本仓库的 cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs)；
+  - 参考：
+    - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
+    - [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
+    - [本仓库的 cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs)；
 - 菜单可通过配置自定义语言
 - 提升工作效率
 - 对新手友好
@@ -118,7 +118,9 @@ pnpm add standard-version @kwooshung/cvlar -D
 
 ![cvlar -i/init](/images/docs/cn/init.gif)
 
-初始化之后的配置，`.ks-cvlarrc.cjs` 可以存在任何位置，上图因为检测到了配置文件，所以没有出现指定保存路径的选项。
+1. 初始化配置，生成的配置文件，仅包含 **中文** 和 **英文** 两种语言的配置，且在配置中加入了大量对应的注释，方便理解；
+2. `cvlar` 支持任意语言，只需要在 `cvlar` 的配置文件中自定义即可；
+3. 初始化之后的配置，`.ks-cvlarrc.cjs` 可以存在任何位置，上图因为检测到了配置文件，所以没有出现指定保存路径的选项；
 
 - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
 - [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
@@ -144,10 +146,179 @@ pnpm add standard-version @kwooshung/cvlar -D
 
 ### 安装依赖
 
-![Cvlar 主菜单 > 运行 > 升级标签](/images/docs/cn/menu-package-install.gif)
+![Cvlar 主菜单 > 包管理 > 安装依赖](/images/docs/cn/menu-package-install.gif)
 
 ### 卸载依赖
 
-![Cvlar 主菜单 > 运行 > 升级标签](/images/docs/cn/menu-package-uninstall.gif)
+![Cvlar 主菜单 > 包管理 > 卸载依赖](/images/docs/cn/menu-package-uninstall.gif)
 
 ### 更新依赖
+
+![Cvlar 主菜单 > 包管理 > 更新依赖](/images/docs/cn/menu-package-update.gif)
+
+### 列出过时的包
+
+![Cvlar 主菜单 > 包管理 > 列出过时的包](/images/docs/cn/menu-package-outdated.gif)
+
+### 查看依赖列表
+
+![Cvlar 主菜单 > 包管理 > 列出过时的包](/images/docs/cn/menu-package-list.gif)
+
+### 查看包详细信息
+
+![Cvlar 主菜单 > 包管理 > 查看包详细信息](/images/docs/cn/menu-package-info.gif)
+
+### 搜索包
+
+![Cvlar 主菜单 > 包管理 > 搜索包](/images/docs/cn/menu-package-search.gif)
+
+## 日志管理
+
+这里使用 **重新生成日志** 作为演示，因为它是由 **清理日志** 和 **生成日志** 两个步骤组成的。
+
+![Cvlar 主菜单 > 日志管理 > 重新生成日志](/images/docs/cn/menu-package-search.gif)
+
+## 自动发布
+
+### 参考
+
+- [本仓库的 releases 页](https://github.com/kwooshung/cvlar/releases)；
+- [本仓库的 Github Actions](https://github.com/kwooshung/cvlar/.github/workflows/ci.yml)；
+
+### 脚本参考
+
+```yml
+- name: Auto Release
+  run: cvlar -r
+  env:
+    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+```
+
+# 配置
+
+## 默认搜索路径及文件
+
+其中注释的 `.mjs` 文件，就像前面说的那样，`commitlint` 无法识别 `mjs`，所以暂时只支持 `cjs` 和 `js` 格式的配置；
+
+```javascript
+[
+  '/ks-cvlar.js',
+  '/ks-cvlar.conf.js',
+  '/ks-cvlar.config.js',
+  //'/ks-cvlar.mjs',
+  //'/ks-cvlar.conf.mjs',
+  //'/ks-cvlar.config.mjs',
+  '/ks-cvlar.cjs',
+  '/ks-cvlar.conf.cjs',
+  '/ks-cvlar.config.cjs',
+  '/ks-cvlarrc.js',
+  '/ks-cvlarrc.conf.js',
+  '/ks-cvlarrc.config.js',
+  //'/ks-cvlarrc.mjs',
+  //'/ks-cvlarrc.conf.mjs',
+  //'/ks-cvlarrc.config.mjs',
+  '/ks-cvlarrc.cjs',
+  '/ks-cvlarrc.conf.cjs',
+  '/ks-cvlarrc.config.cjs',
+  'ks-cvlar.js',
+  'ks-cvlar.conf.js',
+  'ks-cvlar.config.js',
+  //'ks-cvlar.mjs',
+  //'ks-cvlar.conf.mjs',
+  //'ks-cvlar.config.mjs',
+  'ks-cvlar.cjs',
+  'ks-cvlar.conf.cjs',
+  'ks-cvlar.config.cjs',
+  'ks-cvlarrc.js',
+  'ks-cvlarrc.conf.js',
+  'ks-cvlarrc.config.js',
+  //'ks-cvlarrc.mjs',
+  //'ks-cvlarrc.conf.mjs',
+  //'ks-cvlarrc.config.mjs',
+  'ks-cvlarrc.cjs',
+  'ks-cvlarrc.conf.cjs',
+  'ks-cvlarrc.config.cjs',
+  '.ks-cvlar.js',
+  '.ks-cvlar.conf.js',
+  '.ks-cvlar.config.js',
+  //'.ks-cvlar.mjs',
+  //'.ks-cvlar.conf.mjs',
+  //'.ks-cvlar.config.mjs',
+  '.ks-cvlar.cjs',
+  '.ks-cvlar.conf.cjs',
+  '.ks-cvlar.config.cjs',
+  '.ks-cvlarrc.js',
+  '.ks-cvlarrc.conf.js',
+  '.ks-cvlarrc.config.js',
+  //'.ks-cvlarrc.mjs',
+  //'.ks-cvlarrc.conf.mjs',
+  //'.ks-cvlarrc.config.mjs',
+  '.ks-cvlarrc.cjs',
+  '.ks-cvlarrc.conf.cjs',
+  '.ks-cvlarrc.config.cjs',
+  'config/ks-cvlar.js',
+  'config/ks-cvlar.conf.js',
+  'config/ks-cvlar.config.js',
+  //'config/ks-cvlar.mjs',
+  //'config/ks-cvlar.conf.mjs',
+  //'config/ks-cvlar.config.mjs',
+  'config/ks-cvlar.cjs',
+  'config/ks-cvlar.conf.cjs',
+  'config/ks-cvlar.config.cjs',
+  'config/ks-cvlarrc.js',
+  'config/ks-cvlarrc.conf.js',
+  'config/ks-cvlarrc.config.js',
+  //'config/ks-cvlarrc.mjs',
+  //'config/ks-cvlarrc.conf.mjs',
+  //'config/ks-cvlarrc.config.mjs',
+  'config/ks-cvlarrc.cjs',
+  'config/ks-cvlarrc.conf.cjs',
+  'config/ks-cvlarrc.config.cjs',
+  '.config/ks-cvlar.js',
+  '.config/ks-cvlar.conf.js',
+  '.config/ks-cvlar.config.js',
+  //'.config/ks-cvlar.mjs',
+  //'.config/ks-cvlar.conf.mjs',
+  //'.config/ks-cvlar.config.mjs',
+  '.config/ks-cvlar.cjs',
+  '.config/ks-cvlar.conf.cjs',
+  '.config/ks-cvlar.config.cjs',
+  '.config/ks-cvlarrc.js',
+  '.config/ks-cvlarrc.conf.js',
+  '.config/ks-cvlarrc.config.js',
+  //'.config/ks-cvlarrc.mjs',
+  //'.config/ks-cvlarrc.conf.mjs',
+  //'.config/ks-cvlarrc.config.mjs',
+  '.config/ks-cvlarrc.cjs',
+  '.config/ks-cvlarrc.conf.cjs',
+  '.config/ks-cvlarrc.config.cjs'
+];
+```
+
+## 指定配置文件
+
+若您想将配置文件存放在其他位置，可以通过以下命令指定配置文件的所在目录，这样 `cvlar` 将会优先寻找 `-[cd/config-dir]` 指定的目录；
+
+> 注意，是文件夹路径，不是文件路径！
+
+```
+cvlar -[cd/config-dir] xxx/xx/x
+```
+
+推荐在 `package.json` 中的 `scripts` 中配置；
+
+```json
+{
+  "scripts": {
+    "cvlar": "cvlar -cd xxx/xx/x"
+  }
+}
+```
+
+## 配置文件说明及参考
+
+通过 `cvlar -i/init`，生成对应配置文件，参考上方的 **初始化** 部分；
+以下两个文件，均使用此命令生成的配置文件，分别是 **中文** 和 **英文** 两种语言的配置；
+
+- [`.ks-cvlarrc.cjs`](/`.ks-cvlarrc.cjs`)
+- [`.ks-cvlarrc.en.cjs`](/`.ks-cvlarrc.en.cjs`)

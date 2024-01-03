@@ -1,17 +1,25 @@
 ## 🎉 1.0.0-rc.4 `2024-01-04`
+### 📦 Release
+- 新版本1.0.0-rc.4 ([#b55404e](https://github.com/kwooshung/cvlar/commit/b55404eb337f7898339833b224192d4fdb8537af))
 ### 📚 Docs
 - 更新文档说明 ([#d4c46cb](https://github.com/kwooshung/cvlar/commit/d4c46cb59973fe43456ed8d357d68684141943df))
 
 ## 🎉 1.0.0-rc.3 `2024-01-04`
+### 📦 Release
+- 新版本1.0.0-rc.3 ([#2b35c7f](https://github.com/kwooshung/cvlar/commit/2b35c7ff4ba15dbe6d3b6130cbac1d58a00dd79e))
 ### 📚 Docs
 - 更新readme.zh-cn.md ([#ce83bed](https://github.com/kwooshung/cvlar/commit/ce83bed5874d3ea752dd7f160bfcd6da8ff85c3f))
 
 ## 🎉 1.0.0-rc.2 `2024-01-03`
+### 📦 Release
+- 新版本1.0.0-rc.2 ([#865a9f7](https://github.com/kwooshung/cvlar/commit/865a9f7895664f40cc73288140981867d57f9a55))
 ### 🐛 Fix
 - 维修版本的帮助 ([#fc48568](https://github.com/kwooshung/cvlar/commit/fc485685f3fde58634843c6401021e34f012b11f))
 - `repares.doper.doby`目录在日志中间 ([#f293958](https://github.com/kwooshung/cvlar/commit/f29395828afe2d5a72de8d1719b8694f1c78e042))
 
 ## 🎉 1.0.0-rc.1 `2024-01-03`
+### 📦 Release
+- 新版本1.0.0-rc.1 ([#bfeb924](https://github.com/kwooshung/cvlar/commit/bfeb92405071bccc91fea09df27a9c6ab108c46c))
 ### 🐛 Fix
 - 根据新的配置，重新加入日志文件 ([#1c62600](https://github.com/kwooshung/cvlar/commit/1c6260044923e1fdb97d6024052d620c22ce8529))
 - 修理提交版本号码迭代编号逻辑的预览版本 ([#4796e38](https://github.com/kwooshung/cvlar/commit/4796e38f407aa113b41ef0e9994385fceb27e9e1))
