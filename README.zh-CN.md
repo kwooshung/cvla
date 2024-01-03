@@ -324,3 +324,43 @@ cvlar -[cd/config-dir] xxx/xx/x
 
 - [`.ks-cvlarrc.cjs`](/`.ks-cvlarrc.cjs`)
 - [`.ks-cvlarrc.en.cjs`](/`.ks-cvlarrc.en.cjs`)
+
+# 其他
+
+## commit message 启用翻译，且 commitlint 已启用的情况下
+
+若是开启了 `commit message` 的翻译功能，短说明一般是72个字符，则不建议 `commitlint` 的 `header-max-length` 规则不建议也是72个字符，因为 `commit message` 的翻译后，可能会超过72个字符，导致 `commitlint` 报错；
+推荐将 `commitlint` 的 `header-max-length` 规则设置方案有3个：
+
+### 方案一（推荐）：将 `commitlint` 的 `header-max-length` 规则，设置为正常字数的 `72` 的 `2倍` 及 `以上`，比如 `200`
+
+```javascript
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'header-max-length': [2, 'always', 200]
+  }
+};
+```
+
+### 方案二：关闭 `commitlint` 的 `header-max-length` 规则，但不确定未来是否会有其他问题
+
+```javascript
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    // 'header-max-length': [0, 'always', 72]
+  }
+};
+```
+
+### 方案三：将 `commitlint` 的 `header-max-length` 规则，设置为如下
+
+```javascript
+module.exports = {
+  extends: ['@commitlint/config-conventional'],
+  rules: {
+    'header-max-length': [0, 'always']
+  }
+};
+```
