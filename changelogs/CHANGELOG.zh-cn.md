@@ -1,3 +1,7 @@
+## 🎉 1.0.0-rc.4 `2024-01-04`
+### 📚 Docs
+- 更新文档说明 ([#d4c46cb](https://github.com/kwooshung/cvlar/commit/d4c46cb59973fe43456ed8d357d68684141943df))
+
 ## 🎉 1.0.0-rc.3 `2024-01-04`
 ### 📚 Docs
 - 更新readme.zh-cn.md ([#ce83bed](https://github.com/kwooshung/cvlar/commit/ce83bed5874d3ea752dd7f160bfcd6da8ff85c3f))
