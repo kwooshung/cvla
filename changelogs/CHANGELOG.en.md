@@ -1,3 +1,13 @@
+## 🎉 1.0.0 `2024-01-04`
+### 📚 Docs
+- Add other descriptions ([#ab0ca19](https://github.com/kwooshung/cvlar/commit/ab0ca199d73f45dd81b279c3d8d2201508c99e60))
+- The explanation document has been improved ([#428b286](https://github.com/kwooshung/cvlar/commit/428b2866647ff48b5b3a882582dbc3b8408969cb))
+### 🐛 Fix
+- Upgraded version number, you must add the version number identifier to the bug that can be submitted ([#ed9643b](https://github.com/kwooshung/cvlar/commit/ed9643b144888dc0114df92f42f09895111e6fb7))
+### ✨ Feature
+- Support Chinese and English help description ([#8f8761a](https://github.com/kwooshung/cvlar/commit/8f8761a59851aa7ddfa24ecf3e67ff0b45143bec))
+- Add the Chinese version of the description document, and currently prepare to add update dependencies demonstrations ([#688f959](https://github.com/kwooshung/cvlar/commit/688f959f3a06d08f95ba5c2dbb50f7f46f197c3b))
+
 ## 🎉 1.0.0-rc.4 `2024-01-04`
 ### 📦 Release
 - the new version 1.0.0-rc.4 ([#b55404e](https://github.com/kwooshung/cvlar/commit/b55404eb337f7898339833b224192d4fdb8537af))

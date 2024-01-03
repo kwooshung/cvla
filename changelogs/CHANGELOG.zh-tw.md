@@ -1,3 +1,13 @@
+## 🎉 1.0.0 `2024-01-04`
+### 📚 Docs
+- 添加其他描述 ([#ab0ca19](https://github.com/kwooshung/cvlar/commit/ab0ca199d73f45dd81b279c3d8d2201508c99e60))
+- 說明文件已得到改進 ([#428b286](https://github.com/kwooshung/cvlar/commit/428b2866647ff48b5b3a882582dbc3b8408969cb))
+### 🐛 Fix
+- 升級的版本號，您必須將版本號標識符添加到可以提交的錯誤 ([#ed9643b](https://github.com/kwooshung/cvlar/commit/ed9643b144888dc0114df92f42f09895111e6fb7))
+### ✨ Feature
+- 支持中文和英語幫助描述 ([#8f8761a](https://github.com/kwooshung/cvlar/commit/8f8761a59851aa7ddfa24ecf3e67ff0b45143bec))
+- 添加描述文檔的中文版本，目前準備添加更新依賴項演示 ([#688f959](https://github.com/kwooshung/cvlar/commit/688f959f3a06d08f95ba5c2dbb50f7f46f197c3b))
+
 ## 🎉 1.0.0-rc.4 `2024-01-04`
 ### 📦 Release
 - 新版本1.0.0-rc.4 ([#b55404e](https://github.com/kwooshung/cvlar/commit/b55404eb337f7898339833b224192d4fdb8537af))
