@@ -79,7 +79,7 @@ cvlar，是一个工具合集的首字母组成的词，没有具体的意义，
   - 初始化交互式菜单，支持中文和英文，后续的使用，支持任意语言，只需要在 `cvlar` 的配置文件中自定义即可；
   - 配置文件本可支持 `js`、`cjs` 和 `mjs`；
     - 为了方便只配置一次 `commit types` 和 `commit scopes`；
-    - 发现 `commitlint` 无法识别 `mjs`，所以暂时只支持 `cjs` 和 `js`；
+    - 发现 `commitlint` 无法识别 `mjs`，所以暂时只支持 `cjs` 和 `js` 格式的配置；
     - 参考：
       - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
       - [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
@@ -137,3 +137,9 @@ pnpm add standard-version @kwooshung/cvlar -D
 ![Cvlar 主菜单 > 运行 > 提交代码](/images/docs/cn/menu-git-commit-files.gif)
 
 ## 运行 `升级版本号`
+
+![Cvlar 主菜单 > 运行 > 升级标签](/images/docs/cn/menu-git-commit-tag.gif)
+
+## 运行 包管理
+
+### 安装依赖

@@ -73,7 +73,7 @@ Before Cvlar, for an open-source project, I had to use the following packages to
   - Multilingual interactive menu during initialization; subsequent use supports any language, configurable in `cvlar`'s file;
   - Config file supports `js`, `cjs`, and `mjs`;
     - To configure `commit types` and `commit scopes` once;
-    - Due to `commitlint`'s inability to recognize `mjs`, currently supports only `cjs` and `js`;
+    - Discovered that `commitlint` does not recognize `mjs`, hence only `cjs` and `js` configuration formats are currently supported.
     - See:
       - [This repository's commit types configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
       - [This repository's commit scopes configuration](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)
