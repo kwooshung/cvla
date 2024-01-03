@@ -134,13 +134,15 @@ After initialization, the `.ks-cvlarrc.cjs` configuration file can be placed any
 
 ![Cvlar Main Menu > Run > Script](/images/docs/cn/menu-run-scripts.gif)
 
-## Run Commit Files
+## Git Commit
+
+### Run Commit Files
 
 ![Cvlar Main Menu > Run > Commit Files](/images/docs/en/menu-git-commit-files.png)
 
 ![Cvlar Main Menu > Run > Commit Files](/images/docs/cn/menu-git-commit-files.gif)
 
-## Run Upgrade Version
+### Run Upgrade Version
 
 ![Cvlar Main Menu > Run > Upgrade Tag](/images/docs/en/menu-git-commit-tag.png)
 

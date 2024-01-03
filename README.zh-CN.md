@@ -134,11 +134,13 @@ pnpm add standard-version @kwooshung/cvlar -D
 
 ![Cvlar 主菜单 > 运行 > 脚本](/images/docs/cn/menu-run-scripts.gif)
 
-## 运行 提交代码
+## git 提交
+
+### 提交代码
 
 ![Cvlar 主菜单 > 运行 > 提交代码](/images/docs/cn/menu-git-commit-files.gif)
 
-## 运行 升级版本号
+### 升级版本号
 
 ![Cvlar 主菜单 > 运行 > 升级标签](/images/docs/cn/menu-git-commit-tag.gif)
 
