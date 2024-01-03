@@ -128,8 +128,12 @@ pnpm add standard-version @kwooshung/cvlar -D
 
 ![Cvlar 主菜单](/images/docs/cn/menu-main.png)
 
-## 运行 `package.json script` 脚本
+## 运行 `package.json script`
 
 ![Cvlar 主菜单 > 运行 > 脚本](/images/docs/cn/menu-run-scripts.gif)
 
-## 运行 `提交代码` 脚本
+## 运行 `提交代码`
+
+![Cvlar 主菜单 > 运行 > 提交代码](/images/docs/cn/menu-git-commit-files.gif)
+
+## 运行 `升级版本号`

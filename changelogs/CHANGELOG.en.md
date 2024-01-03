@@ -1,3 +1,7 @@
+## 🎉 1.0.0-rc.3 `2024-01-04`
+### 📚 Docs
+- Update Readme.zh-CN.MD ([#ce83bed](https://github.com/kwooshung/cvlar/commit/ce83bed5874d3ea752dd7f160bfcd6da8ff85c3f))
+
 ## 🎉 1.0.0-rc.2 `2024-01-03`
 ### 🐛 Fix
 - Repair version help ([#fc48568](https://github.com/kwooshung/cvlar/commit/fc485685f3fde58634843c6401021e34f012b11f))
