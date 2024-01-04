@@ -1,3 +1,8 @@
+## 🎉 1.1.3 `2024-01-04`
+### 🐛 Fix
+- 修改.commitlintrc.cjs的路徑。以前的文件名是寫錯誤的 ([#0fcbd5c](https://github.com/kwooshung/cvlar/commit/0fcbd5c0848c2a1baf3c7a52a9b762d4fe4579b7))
+- 修改歷史記錄文件 ([#ed39e58](https://github.com/kwooshung/cvlar/commit/ed39e5890ce76b5fdef37949094617963c43381d))
+
 ## 🎉 1.1.2 `2024-01-04`
 ### 🐛 Fix
 - 在文檔錯誤中修復演示圖片 ([#5fba958](https://github.com/kwooshung/cvlar/commit/5fba958bbd9321e0f40b0570dfc0f3912d576ed8))
