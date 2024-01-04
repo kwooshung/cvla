@@ -27,7 +27,9 @@
 
 # Why Develop It?
 
-Before Cvlar, for an open-source project, I had to use the following packages to achieve git commit standardization, version management, and automatic changelog generation. Additionally, I utilized my own project [standard-version-helper](https://github.com/kwooshung/standard-version-helper) for interactive console-based version upgrades. Naturally, there was no feature for automatic version publishing in Github Actions. With Cvlar, you only need to optionally retain `commitlint` to access all previously mentioned functionalities and more.
+Before Cvlar, for an open-source project, I had to use the following packages to achieve git commit standardization, version management, and automatic changelog generation. Additionally, I utilized my own project [standard-version-helper](https://github.com/kwooshung/standard-version-helper) for interactive console-based version upgrades.
+Naturally, there was no feature for automatic version publishing in Github Actions.
+With Cvlar, you only need to optionally retain `commitlint` to access all previously mentioned functionalities and more.
 
 - ~~commitizen~~
 - **commitlint**
@@ -45,6 +47,7 @@ Before Cvlar, for an open-source project, I had to use the following packages to
 - C: `commit`
 - V: `version`
 - L: `changelog`
+- A: `auto`
 - R: `release`
 
 > Although named Cvlar, its features are not limited to these.

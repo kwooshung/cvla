@@ -27,7 +27,9 @@
 
 # 为什么开发它？
 
-在这之前，做一个开源项目，我需要使用以下包，才能实现，git提交标准化，版本号管理，changelog自动生成等功能，还得使用我自己开发的项目 [standard-version-helper](https://github.com/kwooshung/standard-version-helper) 才能实现控制台交互式升级版本的功能；当然自然也没有在 Github Actions 中自动发布版本的功能。当您如用了 Cvlar 之后，您只需要选择性保留 `commitlint` 即可实现前面说的所有功能，而且还有更多的功能。
+在这之前，做一个开源项目，我需要使用以下包，才能实现，git提交标准化，版本号管理，changelog自动生成等功能，还得使用我自己开发的项目 [standard-version-helper](https://github.com/kwooshung/standard-version-helper) 才能实现控制台交互式升级版本的功能；
+当然自然也没有在 Github Actions 中自动发布版本的功能。
+当您如用了 Cvlar 之后，您只需要选择性保留 `commitlint` 即可实现前面说的所有功能，而且还有更多的功能。
 
 - ~~commitizen~~
 - **commitlint**
@@ -45,6 +47,7 @@
 - C：`commit`
 - V：`version`
 - L：`changelog`
+- A: `auto`
 - R：`release`
 
 > 当然，虽然名字叫 Cvlar，功能并不局限于此。
