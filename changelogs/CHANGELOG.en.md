@@ -1,3 +1,7 @@
+## 🎉 1.1.2 `2024-01-04`
+### 🐛 Fix
+- Repair the demonstration picture in the document error ([#5fba958](https://github.com/kwooshung/cvlar/commit/5fba958bbd9321e0f40b0570dfc0f3912d576ed8))
+
 ## 🎉 1.1.1 `2024-01-04`
 ### 🐛 Fix
 - I forgot to add the specific usage method of the CommitLint, which has been added ([#6e48843](https://github.com/kwooshung/cvlar/commit/6e4884348d9e031c78c7b2a65684feb66eb93630))
