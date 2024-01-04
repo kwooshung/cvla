@@ -1,3 +1,7 @@
+## 🎉 1.2.0 `2024-01-04`
+### 🐛 Fix
+- Modify the description document address again, all are written as an absolute address ([#75b7004](https://github.com/kwooshung/cvlar/commit/75b7004d348e66dd3046babdeebcf63001f2deba))
+
 ## 🎉 1.1.3 `2024-01-04`
 ### 🐛 Fix
 - Modify the path of the .Commitlintrc.cjs. The previous file name was written wrong ([#0fcbd5c](https://github.com/kwooshung/cvlar/commit/0fcbd5c0848c2a1baf3c7a52a9b762d4fe4579b7))
