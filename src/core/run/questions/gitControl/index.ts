@@ -1080,8 +1080,8 @@ class gitControl {
             console.log('\n\n\n');
           }
         } else {
-          cs.clear.lastLine(4);
-          break;
+          await this.versionPushTag(version);
+          console.log('\n\n\n');
         }
       } else {
         cs.clear.lastLine();

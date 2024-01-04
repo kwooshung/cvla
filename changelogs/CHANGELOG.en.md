@@ -1,9 +1,35 @@
+## 🎉 1.0.0 `2024-01-04`
+### 📚 Docs
+- Add other descriptions ([#ab0ca19](https://github.com/kwooshung/cvlar/commit/ab0ca199d73f45dd81b279c3d8d2201508c99e60))
+- The explanation document has been improved ([#428b286](https://github.com/kwooshung/cvlar/commit/428b2866647ff48b5b3a882582dbc3b8408969cb))
+### 🐛 Fix
+- Upgraded version number, you must add the version number identifier to the bug that can be submitted ([#ed9643b](https://github.com/kwooshung/cvlar/commit/ed9643b144888dc0114df92f42f09895111e6fb7))
+### ✨ Feature
+- Support Chinese and English help description ([#8f8761a](https://github.com/kwooshung/cvlar/commit/8f8761a59851aa7ddfa24ecf3e67ff0b45143bec))
+- Add the Chinese version of the description document, and currently prepare to add update dependencies demonstrations ([#688f959](https://github.com/kwooshung/cvlar/commit/688f959f3a06d08f95ba5c2dbb50f7f46f197c3b))
+
+## 🎉 1.0.0-rc.4 `2024-01-04`
+### 📦 Release
+- the new version 1.0.0-rc.4 ([#b55404e](https://github.com/kwooshung/cvlar/commit/b55404eb337f7898339833b224192d4fdb8537af))
+### 📚 Docs
+- Update document description ([#d4c46cb](https://github.com/kwooshung/cvlar/commit/d4c46cb59973fe43456ed8d357d68684141943df))
+
+## 🎉 1.0.0-rc.3 `2024-01-04`
+### 📦 Release
+- new version 1.0.0-rc.3 ([#2b35c7f](https://github.com/kwooshung/cvlar/commit/2b35c7ff4ba15dbe6d3b6130cbac1d58a00dd79e))
+### 📚 Docs
+- Update Readme.zh-CN.MD ([#ce83bed](https://github.com/kwooshung/cvlar/commit/ce83bed5874d3ea752dd7f160bfcd6da8ff85c3f))
+
 ## 🎉 1.0.0-rc.2 `2024-01-03`
+### 📦 Release
+- new version 1.0.0-rc.2 ([#865a9f7](https://github.com/kwooshung/cvlar/commit/865a9f7895664f40cc73288140981867d57f9a55))
 ### 🐛 Fix
 - Repair version help ([#fc48568](https://github.com/kwooshung/cvlar/commit/fc485685f3fde58634843c6401021e34f012b11f))
 - `Release.poweredby` Directory in the middle of the log ([#f293958](https://github.com/kwooshung/cvlar/commit/f29395828afe2d5a72de8d1719b8694f1c78e042))
 
 ## 🎉 1.0.0-rc.1 `2024-01-03`
+### 📦 Release
+- new version 1.0.0-rc.1 ([#bfeb924](https://github.com/kwooshung/cvlar/commit/bfeb92405071bccc91fea09df27a9c6ab108c46c))
 ### 🐛 Fix
 - According to the new configuration, re -generate the log file ([#1c62600](https://github.com/kwooshung/cvlar/commit/1c6260044923e1fdb97d6024052d620c22ce8529))
 - Repair the preview version of the submitted version number iteration number logic ([#4796e38](https://github.com/kwooshung/cvlar/commit/4796e38f407aa113b41ef0e9994385fceb27e9e1))

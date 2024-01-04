@@ -1136,6 +1136,7 @@ class pm {
    */
   private async outdated(type: string, code: string): Promise<void> {
     await this.cmd(type, [code]);
+    console.log('\n\n');
   }
 
   /**

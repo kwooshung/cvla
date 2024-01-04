@@ -140,7 +140,7 @@ class questions {
         case 'changelog':
           await changelog.getInstance(this.CONF, this.addBack, this.cmd).select();
           break;
-        default:
+        case 'help':
           await this.help();
           break;
       }
@@ -170,7 +170,8 @@ class questions {
 
       // 进程关闭时
       spawnedProcess.on('close', (code) => {
-        if (code === 0) {
+        //暂时不知为什么，outdated 命令会返回 1，所以这里做了兼容
+        if (code === 0 || (args.includes('outdated') && code === 1)) {
           console.log(`${pc.green('✔')} ${command}`);
           resolve();
         } else {
