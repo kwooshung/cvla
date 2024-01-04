@@ -1,3 +1,7 @@
+## 🎉 1.2.1 `2024-01-04`
+### 🐛 Fix
+- Capsule map address is wrong, it has been repaired ([#5476166](https://github.com/kwooshung/cvlar/commit/547616644dec5a9f38ed28fd8088f80d024e4544))
+
 ## 🎉 1.2.0 `2024-01-04`
 ### 🐛 Fix
 - Modify the description document address again, all are written as an absolute address ([#75b7004](https://github.com/kwooshung/cvlar/commit/75b7004d348e66dd3046babdeebcf63001f2deba))
