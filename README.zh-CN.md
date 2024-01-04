@@ -12,7 +12,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/kwooshung/cvlar?labelColor=272e3b&color=165dff)
 [![NPM Version](https://img.shields.io/npm/v/@kwooshung/cvlar?labelColor=272e3b&color=165dff)](https://www.npmjs.com/package/@kwooshung/cvlar)
 [![Npm.js Downloads/Week](https://img.shields.io/npm/dw/@kwooshung/cvlar?labelColor=272e3b&labelColor=272e3b&color=165dff&logo=npm)](https://www.npmjs.com/package/@kwooshung/cvlar)
-[![Github CI/CD](https://github.com/kwooshung/cvlar/blob/main/actions/workflows/ci.yml/badge.svg)](https://github.com/kwooshung/cvlar/blob/main/actions/)
+[![Github CI/CD](https://github.com/kwooshung/cvlar/actions/workflows/ci.yml/badge.svg)](https://github.com/kwooshung/cvlar/actions/)
 [![codecov](https://codecov.io/gh/kwooshung/cvlar/graph/badge.svg?token=VVZJE7H0KD)](https://codecov.io/gh/kwooshung/cvlar)
 [![Maintainability](https://api.codeclimate.com/v1/badges/325d0881b1ca19165d35/maintainability)](https://codeclimate.com/github/kwooshung/cvlar/maintainability/)
 [![GitHub License](https://img.shields.io/github/license/kwooshung/cvlar?labelColor=272e3b&color=165dff)](LICENSE)
