@@ -87,19 +87,19 @@ Before Cvlar, for an open-source project, I had to use the following packages to
 ## npm
 
 ```bash
-npm install standard-version @kwooshung/cvlar --save-dev
+npm install @kwooshung/cvlar --save-dev
 ```
 
 ## yarn
 
 ```bash
-yarn add standard-version @kwooshung/cvlar -D
+yarn add @kwooshung/cvlar -D
 ```
 
 ## pnpm
 
 ```bash
-pnpm add standard-version @kwooshung/cvlar -D
+pnpm add @kwooshung/cvlar -D
 ```
 
 # How to Use
