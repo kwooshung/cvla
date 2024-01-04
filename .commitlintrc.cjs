@@ -1,6 +1,7 @@
 const types = require('./scripts/ks-cvlar.types.cjs');
 const scopes = require('./scripts/ks-cvlar.scopes.cjs');
-const { ConvertToLintTypes, ConvertToLintScopes } = require('./dist/index.cjs');
+const { ConvertToLintTypes, ConvertToLintScopes } = require('./dist/index.cjs'); // 此写法仅在本项目中使用，其他项目请改成下方写法
+// const { ConvertToLintTypes, ConvertToLintScopes } = require('@kwooshung/cvlar');
 
 module.exports = {
   parserPreset: {
