@@ -182,7 +182,7 @@ After initialization, the `.ks-cvlarrc.cjs` configuration file can be placed any
 
 Here, **Regenerate Logs** is used as a demonstration, as it consists of two steps: **Clear Logs** and **Generate Logs**.
 
-![Cvlar Main Menu > Log Management > Regenerate Logs](/images/docs/cn/menu-package-search.gif)
+![Cvlar Main Menu > Log Management > Regenerate Logs](/images/docs/cn/menu-changelog-rebuild.gif)
 
 ## Automatic Publishing
 
