@@ -1,6 +1,6 @@
 {
   "name": "@kwooshung/cvlar",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "title": "cvlar",
   "description": "`Cvlar` is an open-source tool combining commit conventions, version control, auto-changelogs, and release automation for streamlined Git workflows.",
   "private": false,
