@@ -67,7 +67,7 @@ Before Cvlar, for an open-source project, I had to use the following packages to
 - **Log Management**: Easy 'template' setup, auto-generate `changelogs` from `git messages`, with Google Translate support for **multiple languages**, and auto 'push to repository';
 - **Automatic Publishing**:
   - In `Github Actions`, using `cvlar -r` will analyze the `log` file and automatically publish it to the repository's release page.
-  - See: [This repository's releases page](https://github.com/kwooshung/cvlar/blob/main/releases);
+  - See: [This repository's releases page](https://github.com/kwooshung/cvlar/releases);
 - **Simple Configuration**:
   - Initiate with `cvlar -i/init` for interactive configuration file creation;
   - Multilingual interactive menu during initialization; subsequent use supports any language, configurable in `cvlar`'s file;
@@ -188,7 +188,7 @@ Here, **Regenerate Logs** is used as a demonstration, as it consists of two step
 
 ### References
 
-- [This repository's releases page](https://github.com/kwooshung/cvlar/blob/main/releases);
+- [This repository's releases page](https://github.com/kwooshung/cvlar/releases);
 - [This repository's Github Actions](https://github.com/kwooshung/cvlar/blob/main/.github/workflows/ci.yml);
 
 ### Script Reference

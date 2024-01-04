@@ -73,7 +73,7 @@ cvlar，是一个工具合集的首字母组成的词，没有具体的意义，
 - **日志管理**：轻松设置 '模板'，自动根据 `git message` 生成 `changelog`，更是可以通过 Google 翻译，自动翻译成 **多种语言** 日志，自动 '推送到仓库'；
 - **自动发布**：
   - 在 `Github Actions` 中，调用 `cvlar -r` 命令，将会自动分析 `日志` 文件，将其自动发布到仓库版本页面中。
-  - 参考：[本仓库的 releases 页](https://github.com/kwooshung/cvlar/blob/main/releases)；
+  - 参考：[本仓库的 releases 页](https://github.com/kwooshung/cvlar/releases)；
 - **配置简单**：
   - 也可以通过 `cvlar -i/init`，交互式生成配置文件；
   - 初始化交互式菜单，支持中文和英文，后续的使用，支持任意语言，只需要在 `cvlar` 的配置文件中自定义即可；
@@ -184,7 +184,7 @@ pnpm add standard-version @kwooshung/cvlar -D
 
 ### 参考
 
-- [本仓库的 releases 页](https://github.com/kwooshung/cvlar/blob/main/releases)；
+- [本仓库的 releases 页](https://github.com/kwooshung/cvlar/releases)；
 - [本仓库的 Github Actions](https://github.com/kwooshung/cvlar/blob/main/.github/workflows/ci.yml)；
 
 ### 脚本参考

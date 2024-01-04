@@ -1,3 +1,14 @@
+## 🎉 1.3.0 `2024-01-04`
+### 🐛 Fix
+- Modify the releases page address of the English description ([#1d14e38](https://github.com/kwooshung/cvlar/commit/1d14e38d24a8c7ef52907ee6d1e089064178ba10))
+- The link address of this document should have no errors ([#4cb2972](https://github.com/kwooshung/cvlar/commit/4cb2972b089bbb66318ca7fad1c1f0db792678d8))
+### 📦 Release
+- new version 1.2.4 ([#9d7b44c](https://github.com/kwooshung/cvlar/commit/9d7b44c16d192097de5dcde68ae3f54eda856028))
+
+## 🎉 1.2.4 `2024-01-04`
+### 🐛 Fix
+- The link address of this document should have no errors ([#4cb2972](https://github.com/kwooshung/cvlar/commit/4cb2972b089bbb66318ca7fad1c1f0db792678d8))
+
 ## 🎉 1.2.3 `2024-01-04`
 ### 🐛 Fix
 - Forgot to Change the Chinese Capsule Icon ([#d7ee982](https://github.com/kwooshung/cvlar/commit/d7ee982d1b6428ebf96e52468ea217c0377b47f2))
