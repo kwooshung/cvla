@@ -1,3 +1,9 @@
+## 🎉 1.2.2 `2024-01-04`
+### 🐛 Fix
+- 修復錯誤的版本編號 ([#ee6ff01](https://github.com/kwooshung/cvlar/commit/ee6ff0155649872a160de274367fd033773610c0))
+### ✨ Feature
+- .gitignore忽略GIT提交臨時文件 ([#34c0cce](https://github.com/kwooshung/cvlar/commit/34c0cced77fa6b2585486bcd8c1f6b9a099bb1cc))
+
 ## 🎉 1.2.1 `2024-01-04`
 ### 🐛 Fix
 - 膠囊地址是錯誤的，已修復 ([#5476166](https://github.com/kwooshung/cvlar/commit/547616644dec5a9f38ed28fd8088f80d024e4544))
