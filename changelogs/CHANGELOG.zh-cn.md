@@ -1,3 +1,7 @@
+## 🎉 1.1.0 `2024-01-04`
+### 🐛 Fix
+- 修复版本编号，维修链接文本说明 ([#3f38b4a](https://github.com/kwooshung/cvlar/commit/3f38b4a40bfd57d3e3bff63181b1cb7a0eb2315f))
+
 ## 🎉 1.0.2 `2024-01-04`
 ### 🐛 Fix
 - 修复文档文档中的连接错误 ([#96e321d](https://github.com/kwooshung/cvlar/commit/96e321db2c934f4dead7bfcf27364a2e3156a38f))
