@@ -322,8 +322,8 @@ cvlar -[cd/config-dir] xxx/xx/x
 通过 `cvlar -i/init`，生成对应配置文件，参考上方的 **初始化** 部分；
 以下两个文件，均使用此命令生成的配置文件，分别是 **中文** 和 **英文** 两种语言的配置；
 
-- [`.ks-cvlarrc.cjs`](/`.ks-cvlarrc.cjs`)
-- [`.ks-cvlarrc.en.cjs`](/`.ks-cvlarrc.en.cjs`)
+- [`scripts/.ks-cvlarrc.cjs`](/scripts/.ks-cvlarrc.cjs)
+- [`scripts/.ks-cvlarrc.en.cjs`](/scripts/.ks-cvlarrc.en.cjs)
 
 # 其他
 
