@@ -178,7 +178,7 @@ pnpm add standard-version @kwooshung/cvlar -D
 
 这里使用 **重新生成日志** 作为演示，因为它是由 **清理日志** 和 **生成日志** 两个步骤组成的。
 
-![Cvlar 主菜单 > 日志管理 > 重新生成日志](/images/docs/cn/menu-package-search.gif)
+![Cvlar 主菜单 > 日志管理 > 重新生成日志](/images/docs/cn/menu-changelog-rebuild.gif)
 
 ## 自动发布
 

@@ -1,3 +1,7 @@
+## 🎉 1.1.2 `2024-01-04`
+### 🐛 Fix
+- 在文档错误中修复演示图片 ([#5fba958](https://github.com/kwooshung/cvlar/commit/5fba958bbd9321e0f40b0570dfc0f3912d576ed8))
+
 ## 🎉 1.1.1 `2024-01-04`
 ### 🐛 Fix
 - 我忘了添加commitlint的特定用法方法，已添加 ([#6e48843](https://github.com/kwooshung/cvlar/commit/6e4884348d9e031c78c7b2a65684feb66eb93630))
