@@ -12,7 +12,7 @@
 ![GitHub issues](https://img.shields.io/github/issues/kwooshung/cvlar?labelColor=272e3b&color=165dff)
 [![NPM Version](https://img.shields.io/npm/v/@kwooshung/cvlar?labelColor=272e3b&color=165dff)](https://www.npmjs.com/package/@kwooshung/cvlar)
 [![Npm.js Downloads/Week](https://img.shields.io/npm/dw/@kwooshung/cvlar?labelColor=272e3b&labelColor=272e3b&color=165dff&logo=npm)](https://www.npmjs.com/package/@kwooshung/cvlar)
-[![Github CI/CD](https://github.com/kwooshung/cvlar/actions/workflows/ci.yml/badge.svg)](https://github.com/kwooshung/cvlar/actions/)
+[![Github CI/CD](https://github.com/kwooshung/cvlar/blob/main/actions/workflows/ci.yml/badge.svg)](https://github.com/kwooshung/cvlar/blob/main/actions/)
 [![codecov](https://codecov.io/gh/kwooshung/cvlar/graph/badge.svg?token=VVZJE7H0KD)](https://codecov.io/gh/kwooshung/cvlar)
 [![Maintainability](https://api.codeclimate.com/v1/badges/325d0881b1ca19165d35/maintainability)](https://codeclimate.com/github/kwooshung/cvlar/maintainability/)
 [![GitHub License](https://img.shields.io/github/license/kwooshung/cvlar?labelColor=272e3b&color=165dff)](LICENSE)
@@ -67,7 +67,7 @@ Before Cvlar, for an open-source project, I had to use the following packages to
 - **Log Management**: Easy 'template' setup, auto-generate `changelogs` from `git messages`, with Google Translate support for **multiple languages**, and auto 'push to repository';
 - **Automatic Publishing**:
   - In `Github Actions`, using `cvlar -r` will analyze the `log` file and automatically publish it to the repository's release page.
-  - See: [This repository's releases page](https://github.com/kwooshung/cvlar/releases);
+  - See: [This repository's releases page](https://github.com/kwooshung/cvlar/blob/main/releases);
 - **Simple Configuration**:
   - Initiate with `cvlar -i/init` for interactive configuration file creation;
   - Multilingual interactive menu during initialization; subsequent use supports any language, configurable in `cvlar`'s file;
@@ -188,8 +188,8 @@ Here, **Regenerate Logs** is used as a demonstration, as it consists of two step
 
 ### References
 
-- [This repository's releases page](https://github.com/kwooshung/cvlar/releases);
-- [This repository's Github Actions](https://github.com/kwooshung/cvlar/.github/workflows/ci.yml);
+- [This repository's releases page](https://github.com/kwooshung/cvlar/blob/main/releases);
+- [This repository's Github Actions](https://github.com/kwooshung/cvlar/blob/main/.github/workflows/ci.yml);
 
 ### Script Reference
 
