@@ -1,3 +1,7 @@
+## 🎉 1.2.0 `2024-01-04`
+### 🐛 Fix
+- 再次修改描述文档地址，所有内容都写为绝对地址 ([#75b7004](https://github.com/kwooshung/cvlar/commit/75b7004d348e66dd3046babdeebcf63001f2deba))
+
 ## 🎉 1.1.3 `2024-01-04`
 ### 🐛 Fix
 - 修改.commitlintrc.cjs的路径。以前的文件名是写错误的 ([#0fcbd5c](https://github.com/kwooshung/cvlar/commit/0fcbd5c0848c2a1baf3c7a52a9b762d4fe4579b7))
