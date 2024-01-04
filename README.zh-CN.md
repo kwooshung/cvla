@@ -191,7 +191,7 @@ pnpm add standard-version @kwooshung/cvlar -D
 
 ```yml
 - name: Auto Release
-  run: cvlar -r
+  run: npx cvlar -r
   env:
     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 ```
@@ -329,19 +329,19 @@ cvlar -[cd/config-dir] xxx/xx/x
 
 ## commitlint 配置
 
-此文件 [commitlint.cjs](https://github.com/kwooshung/cvlar/blob/main/commitlint.cjs) 是 `commitlint` 的配置文件，用于 `commitlint` 的配置；
+此文件 [.commitlintrc.cjs](https://github.com/kwooshung/cvlar/blob/main/.commitlintrc.cjs) 是 `commitlint` 的配置文件，用于 `commitlint` 的配置；
 为了方便统一管理，所以独立出来了 `ks-cvlar.types.cjs` 和 `ks-cvlar.scopes.cjs` 两个文件，用于 `commitlint` 的 `types` 和 `scopes` 的配置，及 `cvlar` 的 `commit` 菜单的配置；
 
 - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.types.cjs)
 - [本仓库的 commit scopes 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.scopes.cjs)
 
-在 [commitlint.cjs](https://github.com/kwooshung/cvlar/blob/main/commitlint.cjs) 中，可以引入 `ks-cvlar.types.cjs` 和 `ks-cvlar.scopes.cjs` 两个文件，但由于 `cvlar` 的 `commit` 配置 和 `commitlint` 不同，所以您需要这样引入两个函数：
+在 [.commitlintrc.cjs](https://github.com/kwooshung/cvlar/blob/main/.commitlintrc.cjs) 中，可以引入 `ks-cvlar.types.cjs` 和 `ks-cvlar.scopes.cjs` 两个文件，但由于 `cvlar` 的 `commit` 配置 和 `commitlint` 不同，所以您需要这样引入两个函数：
 
 ```javascript
 const { ConvertToLintTypes, ConvertToLintScopes } = require('@kwooshung/cvlar');
 ```
 
-方便转换成 `commitlint` 的配置，具体使用方法，请参考 [commitlint.cjs](https://github.com/kwooshung/cvlar/blob/main/commitlint.cjs)；
+方便转换成 `commitlint` 的配置，具体使用方法，请参考 [.commitlintrc.cjs](https://github.com/kwooshung/cvlar/blob/main/.commitlintrc.cjs)；
 
 ### commit message 启用翻译
 
