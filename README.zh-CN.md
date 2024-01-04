@@ -81,9 +81,9 @@ cvlar，是一个工具合集的首字母组成的词，没有具体的意义，
     - 为了方便只配置一次 `commit types` 和 `commit scopes`；
     - 发现 `commitlint` 无法识别 `mjs`，所以暂时只支持 `cjs` 和 `js` 格式的配置；
   - 参考：
-    - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
-    - [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
-    - [本仓库的 cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs)；
+    - [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.types.cjs)
+    - [本仓库的 commit scopes 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.scopes.cjs)
+    - [本仓库的 cvlar config](https://github.com/kwooshung/cvlar/blob/main/.ks-cvlarrc.cjs)；
 - 菜单可通过配置自定义语言
 - 提升工作效率
 - 对新手友好
@@ -122,9 +122,9 @@ pnpm add standard-version @kwooshung/cvlar -D
 2. `cvlar` 支持任意语言，只需要在 `cvlar` 的配置文件中自定义即可；
 3. 初始化之后的配置，`.ks-cvlarrc.cjs` 可以存在任何位置，上图因为检测到了配置文件，所以没有出现指定保存路径的选项；
 
-- [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.types.cjs)
-- [本仓库的 commit scopes 配置](<[https://](https://github.com/kwooshung/cvlar/scripts/ks-cvlar.scopes.cjs)>)
-- [本仓库的 cvlar config](https://github.com/kwooshung/cvlar/.ks-cvlarrc.cjs)；
+- [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.types.cjs)
+- [本仓库的 commit scopes 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.scopes.cjs)
+- [本仓库的 cvlar config](https://github.com/kwooshung/cvlar/blob/main/.ks-cvlarrc.cjs)；
 
 ## 主菜单 `cvlar`
 
@@ -322,8 +322,8 @@ cvlar -[cd/config-dir] xxx/xx/x
 通过 `cvlar -i/init`，生成对应配置文件，参考上方的 **初始化** 部分；
 以下两个文件，均使用此命令生成的配置文件，分别是 **中文** 和 **英文** 两种语言的配置；
 
-- [`scripts/.ks-cvlarrc.cjs`](/scripts/.ks-cvlarrc.cjs)
-- [`scripts/.ks-cvlarrc.en.cjs`](/scripts/.ks-cvlarrc.en.cjs)
+- [scripts/.ks-cvlarrc.cjs](https://github.com/kwooshung/cvlar/blob/main/scripts/.ks-cvlarrc.cjs)
+- [scripts/.ks-cvlarrc.en.cjs](https://github.com/kwooshung/cvlar/blob/main/scripts/.ks-cvlarrc.en.cjs)
 
 # 其他
 
