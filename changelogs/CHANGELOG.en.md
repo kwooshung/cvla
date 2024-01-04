@@ -1,3 +1,7 @@
+## 🎉 1.2.4 `2024-01-04`
+### 🐛 Fix
+- The link address of this document should have no errors ([#4cb2972](https://github.com/kwooshung/cvlar/commit/4cb2972b089bbb66318ca7fad1c1f0db792678d8))
+
 ## 🎉 1.2.3 `2024-01-04`
 ### 🐛 Fix
 - Forgot to Change the Chinese Capsule Icon ([#d7ee982](https://github.com/kwooshung/cvlar/commit/d7ee982d1b6428ebf96e52468ea217c0377b47f2))
