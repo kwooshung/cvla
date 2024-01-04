@@ -327,12 +327,28 @@ cvlar -[cd/config-dir] xxx/xx/x
 
 # 其他
 
-## commit message 启用翻译，且 commitlint 已启用的情况下
+## commitlint 配置
+
+此文件 [commitlint.cjs](https://github.com/kwooshung/cvlar/blob/main/commitlint.cjs) 是 `commitlint` 的配置文件，用于 `commitlint` 的配置；
+为了方便统一管理，所以独立出来了 `ks-cvlar.types.cjs` 和 `ks-cvlar.scopes.cjs` 两个文件，用于 `commitlint` 的 `types` 和 `scopes` 的配置，及 `cvlar` 的 `commit` 菜单的配置；
+
+- [本仓库的 commit types 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.types.cjs)
+- [本仓库的 commit scopes 配置](https://github.com/kwooshung/cvlar/blob/main/scripts/ks-cvlar.scopes.cjs)
+
+在 [commitlint.cjs](https://github.com/kwooshung/cvlar/blob/main/commitlint.cjs) 中，可以引入 `ks-cvlar.types.cjs` 和 `ks-cvlar.scopes.cjs` 两个文件，但由于 `cvlar` 的 `commit` 配置 和 `commitlint` 不同，所以您需要这样引入两个函数：
+
+```javascript
+const { ConvertToLintTypes, ConvertToLintScopes } = require('@kwooshung/cvlar');
+```
+
+方便转换成 `commitlint` 的配置，具体使用方法，请参考 [commitlint.cjs](https://github.com/kwooshung/cvlar/blob/main/commitlint.cjs)；
+
+### commit message 启用翻译
 
 若是开启了 `commit message` 的翻译功能，短说明一般是72个字符，则不建议 `commitlint` 的 `header-max-length` 规则不建议也是72个字符，因为 `commit message` 的翻译后，可能会超过72个字符，导致 `commitlint` 报错；
 推荐将 `commitlint` 的 `header-max-length` 规则设置方案有3个：
 
-### 方案一（推荐）：将 `commitlint` 的 `header-max-length` 规则，设置为正常字数的 `72` 的 `2倍` 及 `以上`，比如 `200`
+#### 方案一（推荐）：将 `commitlint` 的 `header-max-length` 规则，设置为正常字数的 `72` 的 `2倍` 及 `以上`，比如 `200`
 
 ```javascript
 module.exports = {
@@ -343,7 +359,7 @@ module.exports = {
 };
 ```
 
-### 方案二：关闭 `commitlint` 的 `header-max-length` 规则，但不确定未来是否会有其他问题
+#### 方案二：关闭 `commitlint` 的 `header-max-length` 规则，但不确定未来是否会有其他问题
 
 ```javascript
 module.exports = {
@@ -354,7 +370,7 @@ module.exports = {
 };
 ```
 
-### 方案三：将 `commitlint` 的 `header-max-length` 规则，设置为如下
+#### 方案三：将 `commitlint` 的 `header-max-length` 规则，设置为如下
 
 ```javascript
 module.exports = {

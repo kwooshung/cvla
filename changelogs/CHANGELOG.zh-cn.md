@@ -1,3 +1,7 @@
+## 🎉 1.1.1 `2024-01-04`
+### 🐛 Fix
+- 我忘了添加commitlint的特定用法方法，已添加 ([#6e48843](https://github.com/kwooshung/cvlar/commit/6e4884348d9e031c78c7b2a65684feb66eb93630))
+
 ## 🎉 1.1.0 `2024-01-04`
 ### 🐛 Fix
 - 修复版本编号，维修链接文本说明 ([#3f38b4a](https://github.com/kwooshung/cvlar/commit/3f38b4a40bfd57d3e3bff63181b1cb7a0eb2315f))
