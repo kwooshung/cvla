@@ -11,5 +11,5 @@
     "esModuleInterop": true,
     "resolveJsonModule": true
   },
-  "exclude": ["node_modules", ".vscode", "dist"]
+  "exclude": ["node_modules", ".vscode", ".github", "dist"]
 }
