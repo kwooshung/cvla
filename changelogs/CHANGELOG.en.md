@@ -1,3 +1,8 @@
+## 🎉 1.0.1 `2024-01-04`
+### 🐛 Fix
+- Modify the link again and write it directly ([#50de3f4](https://github.com/kwooshung/cvlar/commit/50de3f4d90d64859d197a55d0e574a448e4b6dcd))
+- Explain some link errors in the documentation ([#7af7fe3](https://github.com/kwooshung/cvlar/commit/7af7fe3e69cbc636a9d4feaf238d605514b28ac8))
+
 ## 🎉 1.0.0 `2024-01-04`
 ### 📚 Docs
 - Add other descriptions ([#ab0ca19](https://github.com/kwooshung/cvlar/commit/ab0ca199d73f45dd81b279c3d8d2201508c99e60))
