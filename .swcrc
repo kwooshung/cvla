@@ -3,8 +3,8 @@
     "target": "es5",
     "parser": {
       "syntax": "typescript",
-      "decorators": false,
-      "dynamicImport": false
+      "dynamicImport": false,
+      "decorators": false
     }
   }
 }

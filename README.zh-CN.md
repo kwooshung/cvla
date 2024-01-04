@@ -47,7 +47,7 @@
 - C：`commit`
 - V：`version`
 - L：`changelog`
-- A: `auto`
+- A：`auto`
 - R：`release`
 
 > 当然，虽然名字叫 Cvlar，功能并不局限于此。

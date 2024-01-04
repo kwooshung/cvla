@@ -11,8 +11,6 @@ module.exports = {
   // 使用单引号
   singleQuote: true,
   // 对象的 key 仅在必要时用引号
-  singleQuote: true,
-  // 对象的 key 仅在必要时用引号
   quoteProps: 'as-needed',
   // jsx 使用单引号
   jsxSingleQuote: true,

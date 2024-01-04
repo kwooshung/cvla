@@ -1,9 +1,7 @@
 import { package as _pack } from '@/utils';
 const packageJson = _pack.read();
 let dependencies = [];
-if (!packageJson.data) {
-  dependencies = Object.keys(packageJson.data['dependencies']);
-}
+!packageJson.data && (dependencies = Object.keys(packageJson.data['dependencies']));
 
 export default {
   clean: true,
