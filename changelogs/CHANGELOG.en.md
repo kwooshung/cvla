@@ -1,3 +1,7 @@
+## 🎉 1.3.4 `2024-01-04`
+### 🐛 Fix
+- Adjust the configuration again to make it clearer ([#037a633](https://github.com/kwooshung/cvlar/commit/037a633aeee29b4c338834e478fbb7d3c5b997e1))
+
 ## 🎉 1.3.3 `2024-01-04`
 ### 🐛 Fix
 - Fix the subtle adjustment of some configuration files ([#00098b7](https://github.com/kwooshung/cvlar/commit/00098b7a0168a8c462b94a867cad4687d5c4832f))
