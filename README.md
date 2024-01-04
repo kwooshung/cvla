@@ -383,7 +383,17 @@ module.exports = {
 };
 ```
 
-## Development & Maintenance
+## .gitignore: Ignoring Temporary Files in Git Commit
+
+It's recommended to add the following line to your `.gitignore` file to prevent the accidental inclusion of `cvlar` temporary files in your repository.
+This helps avoid the unintended submission of temporary files under certain edge cases, preventing unnecessary files in your repository.
+Such files are automatically deleted when appropriate, so there's no need to worry. This practice serves as a double safeguard!
+
+```
+.cvlar-commit-message-*.tmp
+```
+
+# Development & Maintenance
 
 - This project was primarily developed to accelerate development processes. Given the limited daily development time and tight schedules, some unforeseen `issues` may arise. Your valuable opinions and suggestions are most welcome. Please submit them in a friendly and kind manner!
 - Recently, due to a hectic work schedule, responses to `issues` and `pull requests (pr)` might be slower than usual. Your understanding is greatly appreciated. However, I still encourage everyone to actively submit `issues` and `pr`. As time permits, they will be addressed collectively!
