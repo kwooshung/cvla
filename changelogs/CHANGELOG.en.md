@@ -1,3 +1,7 @@
+## 🎉 1.1.1 `2024-01-04`
+### 🐛 Fix
+- I forgot to add the specific usage method of the CommitLint, which has been added ([#6e48843](https://github.com/kwooshung/cvlar/commit/6e4884348d9e031c78c7b2a65684feb66eb93630))
+
 ## 🎉 1.1.0 `2024-01-04`
 ### 🐛 Fix
 - Fix the version number, repair the link text description ([#3f38b4a](https://github.com/kwooshung/cvlar/commit/3f38b4a40bfd57d3e3bff63181b1cb7a0eb2315f))
