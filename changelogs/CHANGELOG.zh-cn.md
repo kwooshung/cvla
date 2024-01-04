@@ -1,3 +1,7 @@
+## 🎉 1.2.3 `2024-01-04`
+### 🐛 Fix
+- 忘了更改中国胶囊图标 ([#d7ee982](https://github.com/kwooshung/cvlar/commit/d7ee982d1b6428ebf96e52468ea217c0377b47f2))
+
 ## 🎉 1.2.2 `2024-01-04`
 ### 🐛 Fix
 - 修复错误的版本编号 ([#ee6ff01](https://github.com/kwooshung/cvlar/commit/ee6ff0155649872a160de274367fd033773610c0))
