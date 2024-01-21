@@ -1,3 +1,7 @@
+## 🎉 1.3.6 `2024-01-21`
+### 📚 Docs
+- 更详细的安装说明 ([#2b639a7](https://github.com/kwooshung/cvlar/commit/2b639a7411299bcf7467b67738467b1de37624ed))
+
 ## 🎉 1.3.5 `2024-01-21`
 ### 🐛 Fix
 - 在文档错误中修复安装说明 ([#88c78db](https://github.com/kwooshung/cvlar/commit/88c78dbab3d5694ad11a92589af6c201b9e33916))
