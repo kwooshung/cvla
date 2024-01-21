@@ -1,3 +1,7 @@
+## 🎉 1.3.6 `2024-01-21`
+### 📚 Docs
+- More detailed installation instructions ([#2b639a7](https://github.com/kwooshung/cvlar/commit/2b639a7411299bcf7467b67738467b1de37624ed))
+
 ## 🎉 1.3.5 `2024-01-21`
 ### 🐛 Fix
 - Fix the installation instructions in the document error ([#88c78db](https://github.com/kwooshung/cvlar/commit/88c78dbab3d5694ad11a92589af6c201b9e33916))
