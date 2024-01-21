@@ -1,3 +1,7 @@
+## 🎉 1.3.5 `2024-01-21`
+### 🐛 Fix
+- 在文档错误中修复安装说明 ([#88c78db](https://github.com/kwooshung/cvlar/commit/88c78dbab3d5694ad11a92589af6c201b9e33916))
+
 ## 🎉 1.3.4 `2024-01-04`
 ### 🐛 Fix
 - 再次调整配置以使其更清晰 ([#037a633](https://github.com/kwooshung/cvlar/commit/037a633aeee29b4c338834e478fbb7d3c5b997e1))

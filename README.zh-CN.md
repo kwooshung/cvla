@@ -96,19 +96,19 @@ cvlar，是一个工具合集的首字母组成的词，没有具体的意义，
 ## npm
 
 ```bash
-npm install @kwooshung/cvlar --save-dev
+npm install @kwooshung/cvlar -g
 ```
 
 ## yarn
 
 ```bash
-yarn add @kwooshung/cvlar -D
+yarn add @kwooshung/cvlar -g
 ```
 
 ## pnpm
 
 ```bash
-pnpm add @kwooshung/cvlar -D
+pnpm add @kwooshung/cvlar -g
 ```
 
 # 使用方法

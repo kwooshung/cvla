@@ -90,19 +90,19 @@ With Cvlar, you only need to optionally retain `commitlint` to access all previo
 ## npm
 
 ```bash
-npm install @kwooshung/cvlar --save-dev
+npm install @kwooshung/cvlar -g
 ```
 
 ## yarn
 
 ```bash
-yarn add @kwooshung/cvlar -D
+yarn add @kwooshung/cvlar -g
 ```
 
 ## pnpm
 
 ```bash
-pnpm add @kwooshung/cvlar -D
+pnpm add @kwooshung/cvlar -g
 ```
 
 # How to Use

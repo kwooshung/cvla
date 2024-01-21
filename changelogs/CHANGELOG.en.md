@@ -1,3 +1,7 @@
+## 🎉 1.3.5 `2024-01-21`
+### 🐛 Fix
+- Fix the installation instructions in the document error ([#88c78db](https://github.com/kwooshung/cvlar/commit/88c78dbab3d5694ad11a92589af6c201b9e33916))
+
 ## 🎉 1.3.4 `2024-01-04`
 ### 🐛 Fix
 - Adjust the configuration again to make it clearer ([#037a633](https://github.com/kwooshung/cvlar/commit/037a633aeee29b4c338834e478fbb7d3c5b997e1))
