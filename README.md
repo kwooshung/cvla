@@ -90,20 +90,73 @@ With Cvlar, you only need to optionally retain `commitlint` to access all previo
 ## npm
 
 ```bash
-npm install @kwooshung/cvlar -g
+npm install @kwooshung/cvlar -D
 ```
 
 ## yarn
 
 ```bash
-yarn add @kwooshung/cvlar -g
+yarn add @kwooshung/cvlar -D
 ```
 
 ## pnpm
 
 ```bash
-pnpm add @kwooshung/cvlar -g
+pnpm add @kwooshung/cvlar -D
 ```
+
+### You may choose to install this package either as a `development dependency` in your project or `globally`.
+
+#### Development Dependency
+
+If you use `commitlint`, it's recommended to install it within the project. You might need to do the following in `.commitlintrc.cjs`:
+
+```javascript
+const types = require('./scripts/ks-cvlar.types.cjs');
+const scopes = require('./scripts/ks-cvlar.scopes.cjs');
+const { ConvertToLintTypes, ConvertToLintScopes } = require('@kwooshung/cvlar'); // Import is necessary
+```
+
+##### Advantages
+
+Convenient for importing @kwooshung/cvlar.
+
+##### Disadvantages
+
+You need to configure the cvlar command in `package.json` under `scripts` as follows:
+
+```json
+{
+  "scripts": {
+    "cvlar": "cvlar"
+  }
+}
+```
+
+Then execute with `npm cvlar [-xxx]`
+
+#### Global
+
+If you don't use `commitlint`, it is advisable to install globally.
+
+##### Advantages
+
+Execute directly with `cvlar [-xxx]`.
+
+##### Disadvantages
+
+If you need to use `commitlint` later, you will have to install it again in the project.
+
+#### Global + Development Dependency Installation (Recommended)
+
+##### Advantages
+
+- Easy to import `@kwooshung/cvlar`.
+- Execute directly with `cvlar [-xxx]`.
+
+##### Disadvantages
+
+- The first time, you need to install it twice, once `globally` and once as a `development dependency`. Subsequently, you only need to selectively install in the project as needed.
 
 # How to Use
 

@@ -96,20 +96,73 @@ cvlar，是一个工具合集的首字母组成的词，没有具体的意义，
 ## npm
 
 ```bash
-npm install @kwooshung/cvlar -g
+npm install @kwooshung/cvlar -D
 ```
 
 ## yarn
 
 ```bash
-yarn add @kwooshung/cvlar -g
+yarn add @kwooshung/cvlar -D
 ```
 
 ## pnpm
 
 ```bash
-pnpm add @kwooshung/cvlar -g
+pnpm add @kwooshung/cvlar -D
 ```
+
+### 你可以选择把此包安装在项目 `开发依赖` 中，也可以选择安装在 `全局`。
+
+#### 开发依赖
+
+如果你有 `commitlint` 的话，建议项目中安装，因为你可能需要在 `.commitlintrc.cjs` 中这样做：
+
+```javascript
+const types = require('./scripts/ks-cvlar.types.cjs');
+const scopes = require('./scripts/ks-cvlar.scopes.cjs');
+const { ConvertToLintTypes, ConvertToLintScopes } = require('@kwooshung/cvlar'); // 需要引入它
+```
+
+##### 优点
+
+方便引入 `@kwooshung/cvlar`
+
+##### 缺点
+
+需要在 `package.json` 中的 `scripts` 中配置 `cvlar` 命令，如下：
+
+```json
+{
+  "scripts": {
+    "cvlar": "cvlar"
+  }
+}
+```
+
+而后 `npm cvlar [-xxx]` 执行
+
+#### 全局
+
+如果你没有 `commitlint` 的话，建议全局安装；
+
+##### 优点
+
+直接使用 `cvlar [-xxx]` 执行
+
+##### 缺点
+
+后续如果需要使用 `commitlint`，需要再在项目中安装一次；
+
+#### 全局 + 开发依赖 方式安装 （推荐）
+
+##### 优点
+
+- 方便引入 `@kwooshung/cvlar`
+- 直接使用 `cvlar [-xxx]` 执行
+
+##### 缺点
+
+- 第一次使用，需要安装两次，一次 `全局`，一次 `开发依赖`，后续只需要根据需要，项目中选择性安装即可。
 
 # 使用方法
 
