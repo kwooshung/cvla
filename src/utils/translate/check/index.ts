@@ -2,10 +2,10 @@ import https from 'https';
 
 /**
  * 检查 Google 翻译是否可用
- * @param {number} [timeout = 5000] 超时时间
+ * @param {number} [timeout = 20000] 超时时间
  * @returns {Promise<boolean>} 是否可用
  */
-const check = async (timeout: number = 5000): Promise<boolean> => {
+const check = async (timeout: number = 20000): Promise<boolean> => {
   return new Promise((resolve) => {
     const timer = setTimeout(() => {
       typeof req.destroy === 'function' ? req.destroy() : req.abort(); // 如果请求存在 destroy 方法，则调用 destroy 方法，否则调用 abort 方法
