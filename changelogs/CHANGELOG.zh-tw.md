@@ -1,3 +1,9 @@
+## 🎉 1.3.7 `2024-01-25`
+### 📦 Release
+- 新版本1.3.7 ([#3a95d12](https://github.com/kwooshung/cvlar/commit/3a95d1206d173cd88449a6804cc4c905a1380bf9))
+### 🐛 Fix
+- Google翻譯連接檢查超時，以避免無法翻譯時間是否太短的問題 ([#abbcc2c](https://github.com/kwooshung/cvlar/commit/abbcc2c0e11272824f2c94830366e3dc3e95be83))
+
 ## 🎉 1.3.6 `2024-01-21`
 ### 📚 Docs
 - 更詳細的安裝說明 ([#2b639a7](https://github.com/kwooshung/cvlar/commit/2b639a7411299bcf7467b67738467b1de37624ed))
