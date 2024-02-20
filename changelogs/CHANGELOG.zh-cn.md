@@ -1,3 +1,7 @@
+## 🎉 1.3.8 `2024-02-21`
+### 🐛 Fix
+- 更新依赖 ([#7f8eea7](https://github.com/kwooshung/cvlar/commit/7f8eea7c429f4c3014bfb2310cc3e2c53964e710))
+
 ## 🎉 1.3.7 `2024-01-25`
 ### 📦 Release
 - 新版本1.3.7 ([#3a95d12](https://github.com/kwooshung/cvlar/commit/3a95d1206d173cd88449a6804cc4c905a1380bf9))
